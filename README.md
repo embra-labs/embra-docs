@@ -13,7 +13,7 @@ Tài liệu công khai của Embra tại `docs.embra.cloud`, dựng bằng [Astr
 - `src/content/docs/` — trang tiếng Việt (ngôn ngữ gốc). `src/content/docs/en/` — bản tiếng Anh; trang chưa dịch tự hiện bản tiếng Việt.
 - Tham chiếu API tạm ẩn (founder 25/10) cho tới khi API ổn định và đã lọc endpoint nội bộ (webhook GitHub/SePay, billing). Khi bật lại: plugin `starlight-openapi` với bản chụp `embra/api/openapi.yaml` đã lọc.
 - `/llms.txt`, `/llms-full.txt`, `/llms-small.txt` — sinh tự động cho AI agent.
-- `src/styles/theme.css` — Monochrome, theo `BRAND_GUIDE.md` của embra-dashboard.
+- Giao diện giống console (Monochrome, chỉ có nền sáng): `src/styles/theme.css` chép token từ `embra-dashboard/src/lib/ui/tokens.css`; font Inter và JetBrains Mono tự host ở `src/assets/fonts/` (chép từ dashboard); logo, bỏ chọn theme ở `src/components/`. Đổi màu hay font ở console thì chép sang đây.
 
 ## Quy ước viết
 

@@ -10,7 +10,6 @@ export default defineConfig({
 			title: 'Embra Docs',
 			description:
 				'Tài liệu Embra: hosting app kèm Postgres riêng cho Việt Nam. Deploy từ GitHub, migration có cổng duyệt, backup và khôi phục.',
-			logo: { src: './src/assets/logo.svg', alt: 'Embra' },
 			favicon: '/favicon.svg',
 			defaultLocale: 'root',
 			locales: {
@@ -18,7 +17,13 @@ export default defineConfig({
 				en: { label: 'English', lang: 'en' },
 			},
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/embra-labs' }],
-			customCss: ['./src/styles/theme.css'],
+			customCss: ['./src/styles/fonts.css', './src/styles/theme.css'],
+			components: {
+				SiteTitle: './src/components/SiteTitle.astro',
+				ThemeProvider: './src/components/ThemeProvider.astro',
+				ThemeSelect: './src/components/ThemeSelect.astro',
+			},
+			expressiveCode: { themes: ['github-light'] },
 			lastUpdated: true,
 			plugins: [
 				starlightLlmsTxt({
