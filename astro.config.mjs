@@ -32,6 +32,10 @@ export default defineConfig({
 					items: [{ autogenerate: { directory: 'bat-dau' } }],
 				},
 				{
+					label: 'Workspace',
+					items: [{ autogenerate: { directory: 'workspace' } }],
+				},
+				{
 					label: 'CLI',
 					items: [{ autogenerate: { directory: 'cli' } }],
 				},

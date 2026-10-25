@@ -38,3 +38,21 @@
 	--sl-card-border: var(--sl-color-gray-5);
 	--sl-card-bg: var(--sl-color-gray-7);
 }
+
+/* Permission matrix: many narrow tick columns, so tighten cells and keep the action column readable. */
+.matrix table {
+	font-size: var(--sl-text-sm);
+}
+.matrix th,
+.matrix td {
+	padding-inline: 0.5rem;
+}
+.matrix th {
+	white-space: nowrap;
+}
+.matrix td:first-child {
+	min-width: 13rem;
+}
+.matrix td:last-child {
+	white-space: nowrap;
+}
