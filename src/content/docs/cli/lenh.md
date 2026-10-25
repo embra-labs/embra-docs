@@ -3,6 +3,10 @@ title: Danh sách lệnh
 description: Các lệnh của CLI embra.
 ---
 
+:::note[Đăng nhập CLI sắp có]
+Lệnh `embra login` cần một trang duyệt trên trình duyệt, trang này chưa được bật cho khách. Trong lúc chờ, mọi việc làm được trên web: xem [Bắt đầu nhanh](/bat-dau/bat-dau-nhanh/).
+:::
+
 Chạy `embra <lệnh> --help` để xem đủ cờ. Thêm `--json` để lấy kết quả dạng máy đọc.
 
 ## Tài khoản và workspace

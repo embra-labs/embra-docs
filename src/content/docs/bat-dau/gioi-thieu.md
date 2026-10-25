@@ -24,6 +24,8 @@ Embra là nền tảng hosting cho Việt Nam. Bạn nối một repo GitHub; Em
 | Operation | Mỗi việc có tác dụng phụ (deploy, restore, xoá…) là một operation có trạng thái, xem lại được. |
 | Plan | Bản mô tả việc sẽ làm kèm giá dự kiến. Việc quan trọng phải được duyệt plan trước khi chạy. |
 
+Bắt tay vào việc: xem [Bắt đầu nhanh](/bat-dau/bat-dau-nhanh/).
+
 ## Cách dùng
 
 - **Web console** — giao diện chính.

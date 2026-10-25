@@ -37,6 +37,11 @@ export default defineConfig({
 					items: [{ autogenerate: { directory: 'bat-dau' } }],
 				},
 				{
+					label: 'Hướng dẫn',
+					translations: { en: 'Guides' },
+					items: [{ autogenerate: { directory: 'huong-dan' } }],
+				},
+				{
 					label: 'Workspace',
 					items: [{ autogenerate: { directory: 'workspace' } }],
 				},
