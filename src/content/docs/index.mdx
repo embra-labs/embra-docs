@@ -1,0 +1,28 @@
+---
+title: Embra Docs
+description: Tài liệu Embra — hosting app kèm Postgres riêng cho Việt Nam.
+template: splash
+hero:
+  tagline: Nối repo GitHub, Embra build, deploy app kèm Postgres riêng, và mỗi lần deploy đều có đường lui.
+  actions:
+    - text: Giới thiệu
+      link: /bat-dau/gioi-thieu/
+      icon: right-arrow
+    - text: Lệnh CLI
+      link: /cli/lenh/
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid>
+	<Card title="Bắt đầu" icon="rocket">
+		Embra là gì, các khái niệm workspace, project, environment. [Đọc](/bat-dau/gioi-thieu/)
+	</Card>
+	<Card title="CLI" icon="seti:shell">
+		Lệnh `embra` để deploy, duyệt plan, quản lý Postgres và secret. [Xem lệnh](/cli/lenh/)
+	</Card>
+	<Card title="Cho AI agent" icon="puzzle">
+		[`/llms.txt`](/llms.txt) và [`/llms-full.txt`](/llms-full.txt) cho agent đọc toàn bộ tài liệu.
+	</Card>
+</CardGrid>

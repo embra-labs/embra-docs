@@ -1,0 +1,40 @@
+/* Monochrome, matching the console (embra-dashboard BRAND_GUIDE): black is the
+   accent, color is reserved for status. */
+:root {
+	--sl-font-system-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+
+:root[data-theme='light'] {
+	--sl-color-accent-low: #f4f4f5;
+	--sl-color-accent: #0a0a0a;
+	--sl-color-accent-high: #0a0a0a;
+	--sl-color-white: #0a0a0a;
+	--sl-color-gray-1: #262626;
+	--sl-color-gray-2: #404040;
+	--sl-color-gray-3: #6b6b6b;
+	--sl-color-gray-4: #a3a3a3;
+	--sl-color-gray-5: #d4d4d8;
+	--sl-color-gray-6: #eaeaea;
+	--sl-color-gray-7: #fafafa;
+	--sl-color-black: #ffffff;
+}
+
+:root[data-theme='dark'] {
+	--sl-color-accent-low: #262626;
+	--sl-color-accent: #fafafa;
+	--sl-color-accent-high: #ffffff;
+	--sl-color-white: #fafafa;
+	--sl-color-gray-1: #eaeaea;
+	--sl-color-gray-2: #d4d4d8;
+	--sl-color-gray-3: #a3a3a3;
+	--sl-color-gray-4: #6b6b6b;
+	--sl-color-gray-5: #404040;
+	--sl-color-gray-6: #262626;
+	--sl-color-black: #0a0a0a;
+}
+
+/* Starlight cycles card icons through rainbow tints; keep them neutral. */
+.card.card {
+	--sl-card-border: var(--sl-color-gray-5);
+	--sl-card-bg: var(--sl-color-gray-7);
+}
