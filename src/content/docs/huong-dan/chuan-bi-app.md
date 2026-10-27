@@ -9,7 +9,7 @@ sidebar:
 
 | Yêu cầu | Chi tiết |
 |---|---|
-| Lắng nghe đúng cổng | Lắng nghe ở `0.0.0.0` (không phải `127.0.0.1`) trên cổng khai ở `[deploy] port`, mặc định **3000**, trong khoảng 1024–65535. Embra **không** đặt biến `PORT`, nên hãy đặt cổng cố định trong code hoặc trong `embra.toml`. |
+| Lắng nghe đúng cổng | Lắng nghe ở `0.0.0.0` (không phải `127.0.0.1`) trên cổng khai ở `[deploy] port`, mặc định **3000**, trong khoảng 1024–65535. Embra đặt biến `PORT` bằng đúng cổng này (trừ khi bạn tự đặt secret `PORT`), nên app đọc `PORT` hoặc lắng nghe cố định trên cổng đó đều được. |
 | Có đường dẫn kiểm tra sức khoẻ | `GET` tới `[deploy] health_path` (mặc định `/`) phải trả mã **2xx**. Chuyển hướng (3xx) không được tính là đạt. |
 | Không ghi ra đĩa | Hệ thống file chỉ đọc. Chỉ `/tmp` ghi được (tối đa 256 MB, mất khi app khởi động lại). File người dùng tải lên thì lưu vào S3 hoặc bucket của Embra. |
 | Không tự chạy migration | Tài khoản database của app chỉ đọc và ghi dữ liệu, không đổi được schema. Bỏ các lệnh như `prisma migrate deploy` khi khởi động. Migration đi qua Embra: xem [Database và migration](/huong-dan/database-va-migration/). |
@@ -29,7 +29,7 @@ App khởi động chậm (ví dụ nạp cache lớn) thì tăng `startup_grace
 
 - Repo có `Dockerfile` ở thư mục gốc (hoặc ở `root`) thì Embra dùng nó. Không có thì Embra dùng **Railpack** để tự nhận diện và build (Node, Python, Go…).
 - Mỗi lần build tối đa 25 phút, chạy trong máy ảo riêng.
-- Lúc build, mạng chỉ đi được tới: GitHub (gồm `ghcr.io`), npm (`registry.npmjs.org`, `nodejs.org`), Docker Hub và `deb.debian.org`. Cần tải từ nơi khác thì gửi email hello@embra.cloud.
+- Lúc build, mạng chỉ đi được tới: GitHub (gồm `ghcr.io`), npm và yarn (`registry.npmjs.org`, `registry.yarnpkg.com`, `nodejs.org`), PyPI (`pypi.org`, `files.pythonhosted.org`), Docker Hub, kho gói Alpine, Debian và Ubuntu, và `binaries.prisma.sh`. Image, gói npm và Node được Embra cache sẵn nên build lần sau nhanh hơn. Log build báo `egress từ chối "<host>"` nghĩa là build cần một host chưa được mở: gửi tên host đó tới hello@embra.cloud.
 - **Build không nhận secret.** `[build] env` chỉ dùng lúc build, không vào app và không được chứa giá trị bí mật.
 - Image phải nằm trong dung lượng đĩa của gói.
 

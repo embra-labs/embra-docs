@@ -50,9 +50,9 @@ https://<tên-app>-production-<mã workspace>.onembra.com
 ## Xem log
 
 - **Log build:** "Xem log build" ở trang Tổng quan.
-- **Log app:** tab **"Nhật ký"**.
+- **Log app:** mục **"Logs"**. Container chạy giờ UTC, nên giờ app tự in ra trong log là giờ UTC. Muốn app in giờ Việt Nam, đặt secret `TZ` = `Asia/Ho_Chi_Minh`.
 - Thời gian giữ log và metrics tuỳ gói (gói dùng thử 1 ngày).
 
 ## Rollback
 
-Embra giữ các bản đã chạy để trả code về bản trước. Rollback code không cần duyệt, vì nó chỉ chạy lại code đã được duyệt; Embra từ chối nếu migration đã đi tiếp sau bản đó. **Nút rollback trên web sắp có**, và lệnh `embra rollback` cần đăng nhập CLI (cũng sắp có). Trong lúc chờ, cần rollback gấp thì gửi email hello@embra.cloud.
+Embra giữ các bản đã chạy để trả code về bản trước. Rollback code không cần duyệt, vì nó chỉ chạy lại code đã được duyệt; Embra từ chối nếu migration đã đi tiếp sau bản đó. Trên web, mở **"Lần deploy"** và bấm **"Quay về bản trước"** ở bản muốn trả về. Cần hỗ trợ gấp thì gửi email hello@embra.cloud.

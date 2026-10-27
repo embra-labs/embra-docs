@@ -10,8 +10,9 @@ sidebar:
 Open the console and click **"Đăng nhập bằng GitHub"** (sign in with GitHub).
 
 - On your first sign-in, Embra creates a **trial workspace** named after your GitHub account, with you as Owner.
-- The GitHub account must have been created **at least 30 days** ago.
-- The number of new trials per day is limited. If you see "Đợt dùng thử hôm nay đã đầy" (today's trials are full), try again tomorrow or email hello@embra.cloud.
+- The GitHub account must have been created **at least 30 days** ago. For a newer account, email your GitHub username to hello@embra.cloud to have it let in individually.
+- The number of new trials per day is limited.
+- If you see **"Chưa vào được Embra"** (you can't sign in yet), there are three possible reasons: you signed in with a Google email nobody invited (ask an Owner to invite that exact email), your GitHub account is younger than 30 days, or today's trials are used up (try again tomorrow). For help, email hello@embra.cloud.
 - **"Đăng nhập bằng Google" (sign in with Google) is only for people invited** to an existing workspace. Google sign-in never creates a workspace.
 - If your GitHub email has a pending invite to someone else's workspace, you go straight into that workspace and do **not** get a trial.
 

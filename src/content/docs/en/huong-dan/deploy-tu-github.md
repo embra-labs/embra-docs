@@ -50,9 +50,9 @@ On plans with previews (see [pricing](https://embra.cloud/bang-gia/)), each pull
 ## Logs
 
 - **Build log:** "Xem log build" (view build log) on the overview page.
-- **App log:** the **"Nhật ký"** (logs) tab.
+- **App log:** the **"Logs"** section. Containers run on UTC, so times your app prints in its own log lines are UTC. To print Vietnam time, set the secret `TZ` = `Asia/Ho_Chi_Minh`.
 - Log and metrics retention depends on the plan (1 day on the trial).
 
 ## Rollback
 
-Embra keeps the versions that ran so code can go back to an earlier one. A code rollback needs no approval, because it only reruns code that was already approved; Embra refuses it if a migration has moved on since that version. **A rollback button on the web is coming soon**, and `embra rollback` needs CLI sign-in (also coming soon). Meanwhile, if you need an urgent rollback, email hello@embra.cloud.
+Embra keeps the versions that ran so code can go back to an earlier one. A code rollback needs no approval, because it only reruns code that was already approved; Embra refuses it if a migration has moved on since that version. On the web, open **"Lần deploy"** (deploys) and click **"Quay về bản trước"** (roll back) on the version to return to. For urgent help, email hello@embra.cloud.

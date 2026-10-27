@@ -25,7 +25,7 @@ Lưu secret không tự khởi động lại app. Secret mới hoặc giá trị
 - `DATABASE_URL` và tên bắt đầu bằng `EMBRA_` dành cho Embra, không đặt được.
 - Mỗi giá trị tối đa 64 KiB.
 - Sau khi lưu, **không xem lại được giá trị**, kể cả Owner. Chỉ thấy tên và version.
-- Cấu hình không bí mật (tên shop, URL công khai…) cũng đặt ở đây. `[build] env` trong `embra.toml` chỉ dùng lúc build, không vào app.
+- Cấu hình không bí mật (tên shop, URL công khai, `TZ=Asia/Ho_Chi_Minh` để app in giờ Việt Nam…) cũng đặt ở đây. `[build] env` trong `embra.toml` chỉ dùng lúc build, không vào app.
 - Environment có bucket của Embra thì các biến `S3_*` do Embra đặt sẽ ghi đè secret cùng tên.
 
 ## Đổi hoặc gỡ secret

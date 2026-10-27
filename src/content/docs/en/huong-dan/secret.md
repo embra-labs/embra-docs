@@ -25,7 +25,7 @@ Saving a secret does not restart the app. A new secret or value only reaches the
 - `DATABASE_URL` and names starting with `EMBRA_` are reserved for Embra.
 - Each value is at most 64 KiB.
 - After saving, **the value cannot be read back**, not even by the Owner. Only the name and version are shown.
-- Put non-secret config (shop name, public URL…) here too. `[build] env` in `embra.toml` is only used during the build and never reaches the app.
+- Put non-secret config (shop name, public URL, `TZ=Asia/Ho_Chi_Minh` so the app prints Vietnam time…) here too. `[build] env` in `embra.toml` is only used during the build and never reaches the app.
 - If the environment has an Embra bucket, the `S3_*` variables Embra sets override secrets with the same names.
 
 ## Changing or removing a secret

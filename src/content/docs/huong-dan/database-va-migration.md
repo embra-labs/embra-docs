@@ -43,7 +43,25 @@ migrations/
 - Mỗi file chạy trong một transaction. Không viết `BEGIN` hay `COMMIT`.
 - Mỗi file tối đa 256 KiB; mỗi lần deploy tối đa 100 file, tổng 2 MiB.
 
-**Dùng Prisma?** Prisma lưu migration dạng `migrations/<thời gian>/migration.sql`, Embra không đọc được. Hãy sinh file SQL bằng `prisma migrate diff … --script > migrations/0002_ten.sql`, kiểm file rồi commit. Bỏ `prisma migrate deploy` khỏi lệnh khởi động app.
+**Dùng Prisma?** Prisma lưu migration dạng `prisma/migrations/<thời gian>_<tên>/migration.sql`, Embra không đọc được. Bỏ `prisma migrate deploy` khỏi lệnh khởi động app (giữ `prisma generate` lúc build), rồi chọn một trong hai cách:
+
+- **Repo đã có sẵn migration của Prisma:** chép chúng sang thư mục phẳng, đánh số theo thứ tự:
+
+  ```sh
+  mkdir -p migrations
+  i=0
+  for d in prisma/migrations/*/; do
+    [ -f "$d/migration.sql" ] || continue
+    i=$((i + 1))
+    name=$(basename "$d" | sed 's/^[0-9]*_//' | tr 'A-Z-' 'a-z_' | tr -cd 'a-z0-9_')
+    cp "$d/migration.sql" "migrations/$(printf '%04d' "$i")_${name:-migration}.sql"
+  done
+  ```
+
+  `prisma/migrations/20261027120000_init/migration.sql` thành `migrations/0001_init.sql`. Sau mỗi lần `prisma migrate dev`, chạy lại đoạn trên rồi commit: file cũ giữ nguyên tên, chỉ thêm file mới. Đừng sửa hay xoá migration cũ của Prisma, vì sẽ làm lệch số.
+- **Viết từng file:** sinh SQL bằng `prisma migrate diff … --script > migrations/0002_ten.sql`, kiểm file rồi commit.
+
+Dockerfile dựa trên Alpine cần `RUN apk add --no-cache openssl` để Prisma chạy; build tải được gói này.
 
 ## Embra kiểm migration thế nào
 

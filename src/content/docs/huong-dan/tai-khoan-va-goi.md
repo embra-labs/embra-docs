@@ -10,8 +10,9 @@ sidebar:
 Vào console và bấm **"Đăng nhập bằng GitHub"**.
 
 - Lần đầu đăng nhập, Embra tạo cho bạn một **workspace dùng thử** mang tên tài khoản GitHub, và bạn là Owner.
-- Tài khoản GitHub phải được tạo **ít nhất 30 ngày** trước.
-- Số lượt dùng thử mới mỗi ngày có giới hạn. Gặp thông báo "Đợt dùng thử hôm nay đã đầy" thì thử lại hôm sau, hoặc gửi email hello@embra.cloud.
+- Tài khoản GitHub phải được tạo **ít nhất 30 ngày** trước. Tài khoản mới hơn: gửi username GitHub tới hello@embra.cloud để được mở cho riêng tài khoản đó.
+- Số lượt dùng thử mới mỗi ngày có giới hạn.
+- Gặp thông báo **"Chưa vào được Embra"** thì có ba khả năng: đăng nhập Google bằng email chưa được mời (nhờ Owner mời đúng email đó), tài khoản GitHub chưa đủ 30 ngày, hoặc lượt dùng thử hôm nay đã hết (thử lại hôm sau). Cần giúp thì gửi email hello@embra.cloud.
 - **"Đăng nhập bằng Google" chỉ dành cho người được mời** vào một workspace có sẵn. Google không tạo workspace mới.
 - Nếu email GitHub của bạn đang có lời mời vào workspace của người khác, bạn vào thẳng workspace đó và **không** nhận gói dùng thử.
 

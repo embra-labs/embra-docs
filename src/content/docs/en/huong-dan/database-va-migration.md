@@ -43,7 +43,25 @@ migrations/
 - Each file runs in one transaction. Do not write `BEGIN` or `COMMIT`.
 - Each file is at most 256 KiB; each deploy at most 100 files and 2 MiB in total.
 
-**Using Prisma?** Prisma stores migrations as `migrations/<timestamp>/migration.sql`, which Embra does not read. Generate a SQL file with `prisma migrate diff … --script > migrations/0002_name.sql`, review it and commit it. Remove `prisma migrate deploy` from the app's start command.
+**Using Prisma?** Prisma stores migrations as `prisma/migrations/<timestamp>_<name>/migration.sql`, which Embra does not read. Remove `prisma migrate deploy` from the app's start command (keep `prisma generate` in the build), then pick one of two ways:
+
+- **The repo already has Prisma migrations:** copy them into a flat folder, numbered in order:
+
+  ```sh
+  mkdir -p migrations
+  i=0
+  for d in prisma/migrations/*/; do
+    [ -f "$d/migration.sql" ] || continue
+    i=$((i + 1))
+    name=$(basename "$d" | sed 's/^[0-9]*_//' | tr 'A-Z-' 'a-z_' | tr -cd 'a-z0-9_')
+    cp "$d/migration.sql" "migrations/$(printf '%04d' "$i")_${name:-migration}.sql"
+  done
+  ```
+
+  `prisma/migrations/20261027120000_init/migration.sql` becomes `migrations/0001_init.sql`. After each `prisma migrate dev`, run it again and commit: existing files keep their names and only new ones are added. Do not edit or delete old Prisma migrations, or the numbers shift.
+- **Write each file yourself:** generate SQL with `prisma migrate diff … --script > migrations/0002_name.sql`, review it and commit it.
+
+A Dockerfile based on Alpine needs `RUN apk add --no-cache openssl` for Prisma; the build can download it.
 
 ## How Embra checks migrations
 
