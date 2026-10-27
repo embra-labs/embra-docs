@@ -2,7 +2,7 @@
 title: Custom domains
 description: Pointing your domain at your app, the DNS records to add, HTTPS, and what to watch for on Cloudflare.
 sidebar:
-  order: 6
+  order: 7
 ---
 
 The trial has no custom domains. The number of domains per plan is on the [pricing page](https://embra.cloud/bang-gia/). **Each name counts as one domain**: `shop.vn` and `www.shop.vn` are two domains.

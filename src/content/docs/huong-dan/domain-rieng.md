@@ -2,7 +2,7 @@
 title: Domain riêng
 description: Gắn domain của bạn vào app, bản ghi DNS cần thêm, HTTPS và lưu ý khi dùng Cloudflare.
 sidebar:
-  order: 6
+  order: 7
 ---
 
 Gói dùng thử không có domain riêng. Số domain theo gói ở [bảng giá](https://embra.cloud/bang-gia/). **Mỗi tên tính là một domain**: `shop.vn` và `www.shop.vn` là hai domain.
