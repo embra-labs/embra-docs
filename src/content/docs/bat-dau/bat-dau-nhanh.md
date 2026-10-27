@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-Tám bước để đưa một app từ GitHub lên Embra. Mỗi bước có trang hướng dẫn riêng.
+Các bước để đưa một app từ GitHub lên Embra. Mỗi bước có trang hướng dẫn riêng.
 
 Bạn cần:
 
