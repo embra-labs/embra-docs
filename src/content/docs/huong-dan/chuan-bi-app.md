@@ -10,12 +10,12 @@ sidebar:
 | Yêu cầu | Chi tiết |
 |---|---|
 | Lắng nghe đúng cổng | Lắng nghe ở `0.0.0.0` (không phải `127.0.0.1`) trên cổng khai ở `[deploy] port`, mặc định **3000**, trong khoảng 1024–65535. Embra đặt biến `PORT` bằng đúng cổng này (trừ khi bạn tự đặt secret `PORT`), nên app đọc `PORT` hoặc lắng nghe cố định trên cổng đó đều được. |
-| Có đường dẫn kiểm tra sức khoẻ | `GET` tới `[deploy] health_path` (mặc định `/`) phải trả mã **2xx**. Chuyển hướng (3xx) không được tính là đạt. |
+| Có đường dẫn health check | `GET` tới `[deploy] health_path` (mặc định `/`) phải trả mã **2xx**. Chuyển hướng (3xx) không được tính là đạt. |
 | Không ghi ra đĩa | Hệ thống file chỉ đọc. Chỉ `/tmp` ghi được (tối đa 256 MB, mất khi app khởi động lại). File người dùng tải lên thì lưu vào S3 hoặc bucket của Embra. |
 | Không tự chạy migration | Tài khoản database của app chỉ đọc và ghi dữ liệu, không đổi được schema. Bỏ các lệnh như `prisma migrate deploy` khi khởi động. Migration đi qua Embra: xem [Database và migration](/huong-dan/database-va-migration/). |
 | Đọc cấu hình từ biến môi trường | `DATABASE_URL` (khi có Postgres) và mỗi secret một biến cùng tên. |
 
-## Kiểm tra sức khoẻ
+## Health check
 
 Khi deploy, bản mới chạy song song với bản cũ.
 
@@ -51,7 +51,7 @@ health_path = "/healthz"     # mặc định "/"
 startup_grace_seconds = 60   # 5–300
 # start = ["node", "dist/main.js"]   # thay lệnh khởi động của image
 migrations = "migrations"    # thư mục chứa file NNNN_ten.sql, mặc định "migrations"
-database = true              # cần Postgres: đặt TRƯỚC lần deploy đầu tiên
+database = true              # cần Postgres: Embra dựng DB và đặt DATABASE_URL
 
 [processes.worker]           # tiến trình chạy nền (theo giới hạn gói)
 command = ["node", "dist/worker.js"]
@@ -64,8 +64,8 @@ command = ["node", "dist/cleanup.js"]
 seed = "seed/preview.sql"    # dữ liệu mẫu cho preview theo PR
 ```
 
-:::caution[`database = true` chỉ có tác dụng ở lần deploy đầu]
-Sau khi environment đã có bản đang chạy, Embra giữ cấu hình database của bản đó; sửa `database` trong `embra.toml` không đổi được nữa. Nếu lần đầu bạn quên, gửi email hello@embra.cloud để đội Embra bật giúp.
+:::note[Thêm `database = true` sau lần deploy đầu]
+Được. Lần build kế tiếp, Embra dựng Postgres cho environment trước rồi mới deploy bản mới, kèm `DATABASE_URL`. Bỏ dòng này khỏi `embra.toml` sau đó **không** gỡ hay xoá database đang có.
 :::
 
 Quy tắc chi tiết:

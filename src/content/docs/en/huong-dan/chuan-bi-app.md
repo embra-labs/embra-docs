@@ -51,7 +51,7 @@ health_path = "/healthz"     # default "/"
 startup_grace_seconds = 60   # 5–300
 # start = ["node", "dist/main.js"]   # replaces the image's start command
 migrations = "migrations"    # folder with NNNN_name.sql files, default "migrations"
-database = true              # needs Postgres: set BEFORE the first deploy
+database = true              # needs Postgres: Embra creates it and sets DATABASE_URL
 
 [processes.worker]           # background process (within plan limits)
 command = ["node", "dist/worker.js"]
@@ -64,8 +64,8 @@ command = ["node", "dist/cleanup.js"]
 seed = "seed/preview.sql"    # sample data for PR previews
 ```
 
-:::caution[`database = true` only counts on the first deploy]
-Once the environment has a running version, Embra keeps that version's database setting; changing `database` in `embra.toml` no longer has any effect. If you forgot it the first time, email hello@embra.cloud and the Embra team will turn it on.
+:::note[Adding `database = true` after the first deploy]
+That works. On the next build, Embra sets up Postgres for the environment first, then deploys the new version with `DATABASE_URL`. Removing the line from `embra.toml` later does **not** detach or delete the existing database.
 :::
 
 Detailed rules:

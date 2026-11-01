@@ -7,14 +7,14 @@ sidebar:
 
 ## Bật Postgres
 
-Đặt trong `embra.toml` **trước lần deploy đầu tiên**:
+Đặt trong `embra.toml`:
 
 ```toml
 [deploy]
 database = true
 ```
 
-Lần build đầu tiên, Embra dựng Postgres riêng cho environment rồi mới deploy app.
+Ở lần build đầu tiên có dòng này, Embra dựng Postgres riêng cho environment rồi mới deploy app. Bật ngay từ đầu hay thêm sau lần deploy đầu đều được.
 
 - Phiên bản: **PostgreSQL 18**.
 - App nhận chuỗi kết nối qua biến **`DATABASE_URL`**. Đừng tự đặt biến này.
@@ -22,8 +22,8 @@ Lần build đầu tiên, Embra dựng Postgres riêng cho environment rồi m�
 - Tài khoản của app chỉ **đọc và ghi dữ liệu** (SELECT, INSERT, UPDATE, DELETE), không tạo hay sửa bảng được. Schema chỉ đổi qua migration.
 - Dung lượng và RAM theo gói. Chưa hỗ trợ extension (`CREATE EXTENSION`).
 
-:::caution
-`database = true` chỉ có tác dụng ở lần deploy đầu. Quên bật thì gửi email hello@embra.cloud.
+:::note
+Bỏ `database = true` khỏi `embra.toml` sau này **không** gỡ hay xoá database đang có.
 :::
 
 ## Viết migration

@@ -121,7 +121,7 @@ Invite people on the web, under **Settings → Members**. `embra members list` o
 - An invite lasts **14 days**. Inviting the same email again refreshes it.
 - **Accepting with GitHub:** the GitHub account's **primary** verified email must match the invited email. A secondary email doesn't count.
 - **Accepting with Google:** the Google account needs a verified email, and that email must not already belong to another Embra account.
-- **The invitee must not already have an Embra workspace of their own**, such as a trial workspace. For now, each person belongs to one workspace. If they already have one, they sign in to it and the invite stays pending without an error. In that case, contact the Embra team.
+- **People who already have a workspace can still accept** (a trial workspace, or an agency member working for several clients). The invite is accepted on their **next sign-in**, with the invited email. Someone already signed in sees "Lời mời vào …: đăng xuất rồi đăng nhập lại để nhận" (invite to …: sign out and back in to accept) in the **Workspace** menu. After that, they switch between workspaces from that menu.
 - A workspace always keeps at least one owner. Removing or demoting the last owner is refused (`LAST_OWNER`).
 - Someone who was removed from a workspace can't start a new trial workspace on their own. An owner has to invite them again.
 
@@ -157,7 +157,6 @@ What Embra **can't** do yet, so you know up front:
 - **No two-person approval.** An admin who creates a production plan can approve it themselves.
 - **No "Guest: view and approve" role.**
 - **No token page on the web.** Use `embra token list` and `embra token revoke`.
-- **Each person belongs to one workspace.**
 - No SSO.
 
 ## Related error codes

@@ -7,14 +7,14 @@ sidebar:
 
 ## Turning on Postgres
 
-Set this in `embra.toml` **before the first deploy**:
+Set this in `embra.toml`:
 
 ```toml
 [deploy]
 database = true
 ```
 
-On the first build, Embra sets up a dedicated Postgres for the environment, then deploys the app.
+On the first build with this line, Embra sets up a dedicated Postgres for the environment, then deploys the app. Turning it on from the start or after the first deploy both work.
 
 - Version: **PostgreSQL 18**.
 - The app gets the connection string in **`DATABASE_URL`**. Do not set this variable yourself.
@@ -22,8 +22,8 @@ On the first build, Embra sets up a dedicated Postgres for the environment, then
 - The app's account can only **read and write data** (SELECT, INSERT, UPDATE, DELETE); it cannot create or alter tables. The schema only changes through migrations.
 - Size and RAM follow your plan. Extensions (`CREATE EXTENSION`) are not supported yet.
 
-:::caution
-`database = true` only counts on the first deploy. If you forgot it, email hello@embra.cloud.
+:::note
+Removing `database = true` from `embra.toml` later does **not** detach or delete the existing database.
 :::
 
 ## Writing migrations

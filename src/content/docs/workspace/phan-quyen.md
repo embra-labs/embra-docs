@@ -121,7 +121,7 @@ Mời người trên web, ở **Cài đặt → Thành viên**. `embra members l
 - Lời mời có hạn **14 ngày**. Mời lại cùng một email thì lời mời cũ được làm mới.
 - **Nhận lời mời bằng GitHub:** email **chính** đã xác minh của tài khoản GitHub phải trùng với email được mời. Email phụ không dùng được.
 - **Nhận lời mời bằng Google:** tài khoản Google phải có email đã xác minh, và email đó chưa gắn với một tài khoản Embra khác.
-- **Người được mời không được có sẵn workspace Embra riêng**, ví dụ workspace dùng thử. Hiện mỗi người chỉ thuộc một workspace. Nếu đã có, họ sẽ đăng nhập vào workspace của mình, còn lời mời vẫn treo mà không báo lỗi. Trường hợp này, liên hệ đội Embra.
+- **Đã có workspace riêng vẫn nhận lời mời được** (ví dụ workspace dùng thử, hoặc người của agency làm cho nhiều khách). Lời mời được nhận ở **lần đăng nhập sau**, bằng đúng email được mời. Người đang đăng nhập thấy dòng "Lời mời vào …: đăng xuất rồi đăng nhập lại để nhận" trong menu **Workspace**. Sau khi nhận, đổi qua lại giữa các workspace ở menu đó.
 - Workspace luôn còn ít nhất một owner. Gỡ hoặc hạ owner cuối cùng bị từ chối (`LAST_OWNER`).
 - Người đã bị gỡ khỏi workspace thì không tự tạo được workspace dùng thử mới. Họ cần owner mời lại.
 
@@ -157,7 +157,6 @@ Những điều Embra **chưa** làm được, để bạn biết trước:
 - **Chưa có duyệt hai người.** Admin tự tạo plan production thì tự duyệt được.
 - **Chưa có vai trò "Khách: xem và duyệt".**
 - **Chưa có trang quản lý token trên web.** Dùng `embra token list` và `embra token revoke`.
-- **Mỗi người chỉ thuộc một workspace.**
 - Chưa có SSO.
 
 ## Mã lỗi liên quan

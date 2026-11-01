@@ -46,6 +46,8 @@ Chạy `embra <lệnh> --help` để xem đủ cờ. Thêm `--json` để lấy 
 | `embra events` | Dòng sự kiện của workspace |
 | `embra schema` | In JSON Schema của `embra.json` |
 
+`embra.json` chỉ dùng cho `embra deploy`, khi bạn đã có image build sẵn. Deploy từ GitHub và `embra build` đọc `embra.toml` trong repo (xem [Chuẩn bị app](/huong-dan/chuan-bi-app/)).
+
 ## Postgres
 
 | Lệnh | Việc |
