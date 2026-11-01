@@ -55,4 +55,4 @@ On plans with previews (see [pricing](https://embra.cloud/bang-gia/)), each pull
 
 ## Rollback
 
-Embra keeps the versions that ran so code can go back to an earlier one. A code rollback needs no approval, because it only reruns code that was already approved; Embra refuses it if a migration has moved on since that version. On the web, open **"Lần deploy"** (deploys) and click **"Quay về bản trước"** (roll back) on the version to return to. For urgent help, email hello@embra.cloud.
+Embra keeps the versions that ran so code can go back to an earlier one. A code rollback needs no approval, because it only reruns code that was already approved; Embra refuses it if a migration has moved on since that version. On the web, click **Quay về bản trước** (roll back) on the **Lịch sử & khôi phục** (history & restore) rail of the environment page; the web always goes back exactly one version. See [Rollback and restoring backups](/en/huong-dan/rollback-va-khoi-phuc/). For urgent help, email hello@embra.cloud.

@@ -47,18 +47,49 @@ export default defineConfig({
 					items: [{ autogenerate: { directory: 'bat-dau' } }],
 				},
 				{
-					label: 'Hướng dẫn',
-					translations: { en: 'Guides' },
-					items: [{ autogenerate: { directory: 'huong-dan' } }],
+					label: 'Đưa app lên',
+					translations: { en: 'Ship your app' },
+					items: [
+						'huong-dan/chuan-bi-app',
+						'huong-dan/deploy-tu-github',
+						'huong-dan/chuyen-app-co-san',
+						'huong-dan/ai-agent',
+					],
+				},
+				{
+					label: 'Cấu hình app',
+					translations: { en: 'Configure your app' },
+					items: [
+						'huong-dan/bien-moi-truong',
+						'huong-dan/secret',
+						'huong-dan/database-va-migration',
+						'huong-dan/luu-file',
+						'huong-dan/domain-rieng',
+					],
+				},
+				{
+					label: 'Vận hành',
+					translations: { en: 'Operate' },
+					items: [
+						'huong-dan/staging-production-va-duyet',
+						'huong-dan/log-va-theo-doi',
+						'huong-dan/rollback-va-khoi-phuc',
+					],
+				},
+				{
+					label: 'Tài khoản và thanh toán',
+					translations: { en: 'Account and billing' },
+					items: [
+						'huong-dan/tai-khoan-va-goi',
+						'huong-dan/goi-gioi-han-va-hoa-don',
+						'workspace/phan-quyen',
+						'workspace/thanh-vien-va-agency',
+					],
 				},
 				{
 					label: 'Xử lý lỗi',
 					translations: { en: 'Troubleshooting' },
 					items: [{ autogenerate: { directory: 'loi' } }],
-				},
-				{
-					label: 'Workspace',
-					items: [{ autogenerate: { directory: 'workspace' } }],
 				},
 				{
 					label: 'CLI',

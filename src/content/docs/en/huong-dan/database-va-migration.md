@@ -85,9 +85,9 @@ Production **always** needs an Owner or Admin to approve, even with no migration
 
 ## Backups and restore
 
-- Every change is recorded continuously (WAL), plus a full backup every 7 days. Backups live on the server, on a separate disk from the database. **A copy outside the server is being rolled out**; this page will be updated when it is on.
-- After each full backup, Embra **test-restores** it to make sure it works. Once the outside copy is on, a test restore from that copy runs every day. The overview page shows the latest result.
-- **Restoring to a point in time:** choose "Khôi phục về thời điểm…" (restore to a point in time) and a moment within the range shown.
+- Every change is recorded continuously (WAL), plus a full backup every 7 days. Backups live on the server, on a separate disk from the database. **A copy outside the server is not on yet.**
+- After each full backup, Embra **test-restores** it to make sure it works. The overview page shows the latest result.
+- **Restoring to a point in time:** choose **Khôi phục dữ liệu…** (Restore data…) and a moment within the range shown.
   - Embra builds a new database from that moment and runs it in parallel, without touching the running one.
   - An Owner or Admin reviews and approves within 2 hours to switch the app to the new database.
   - The old database is kept for 72 hours (24 hours on the trial) in case you need to go back.

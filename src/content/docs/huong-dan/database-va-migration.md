@@ -85,9 +85,9 @@ Production **luôn** cần Owner hoặc Admin duyệt, kể cả khi không có 
 
 ## Backup và khôi phục
 
-- Mọi thay đổi được ghi lại liên tục (WAL), cộng một bản backup đầy đủ mỗi 7 ngày. Backup nằm trên máy chủ, ở ổ đĩa riêng, tách khỏi ổ chứa database. **Bản sao bên ngoài máy chủ đang được triển khai**; trang này sẽ cập nhật khi bật.
-- Sau mỗi bản backup đầy đủ, Embra **tự khôi phục thử** để chắc backup dùng được. Khi có bản sao bên ngoài, việc khôi phục thử từ bản đó chạy mỗi ngày. Trang Tổng quan hiện kết quả lần thử gần nhất.
-- **Khôi phục về một thời điểm:** chọn "Khôi phục về thời điểm…" và một mốc trong khoảng hiển thị.
+- Mọi thay đổi được ghi lại liên tục (WAL), cộng một bản backup đầy đủ mỗi 7 ngày. Backup nằm trên máy chủ, ở ổ đĩa riêng, tách khỏi ổ chứa database. **Bản sao bên ngoài máy chủ chưa bật.**
+- Sau mỗi bản backup đầy đủ, Embra **tự khôi phục thử** để chắc backup dùng được. Trang Tổng quan hiện kết quả lần thử gần nhất.
+- **Khôi phục về một thời điểm:** chọn **Khôi phục dữ liệu…** và một mốc trong khoảng hiển thị.
   - Embra dựng một database mới từ mốc đó, chạy song song, chưa đụng tới database đang chạy.
   - Owner hoặc Admin xem rồi duyệt trong vòng 2 giờ để chuyển app sang database mới.
   - Database cũ được giữ 72 giờ (gói dùng thử 24 giờ) phòng khi cần quay lại.

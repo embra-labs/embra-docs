@@ -55,4 +55,4 @@ https://<tên-app>-production-<mã workspace>.onembra.com
 
 ## Rollback
 
-Embra giữ các bản đã chạy để trả code về bản trước. Rollback code không cần duyệt, vì nó chỉ chạy lại code đã được duyệt; Embra từ chối nếu migration đã đi tiếp sau bản đó. Trên web, mở **"Lần deploy"** và bấm **"Quay về bản trước"** ở bản muốn trả về. Cần hỗ trợ gấp thì gửi email hello@embra.cloud.
+Embra giữ các bản đã chạy để trả code về bản trước. Rollback code không cần duyệt, vì nó chỉ chạy lại code đã được duyệt; Embra từ chối nếu migration đã đi tiếp sau bản đó. Trên web, bấm **Quay về bản trước** ở dải **Lịch sử & khôi phục** trên trang environment; web luôn trả về đúng một bản liền trước. Xem [Rollback và khôi phục backup](/huong-dan/rollback-va-khoi-phuc/). Cần hỗ trợ gấp thì gửi email hello@embra.cloud.

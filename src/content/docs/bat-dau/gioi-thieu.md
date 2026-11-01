@@ -30,5 +30,5 @@ Bắt tay vào việc: xem [Bắt đầu nhanh](/bat-dau/bat-dau-nhanh/).
 
 - **Web console** — giao diện chính.
 - **CLI `embra`** — xem [danh sách lệnh](/cli/lenh/).
-- **HTTP API** `/v1` — tài liệu tham chiếu sẽ có sau.
+- **HTTP API** `/v1` — tài liệu tham chiếu chưa công bố.
 - **MCP** (`embra mcp`) — cho AI agent. Agent không bao giờ được duyệt, xoá hay export.

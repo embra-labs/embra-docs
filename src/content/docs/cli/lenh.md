@@ -17,7 +17,7 @@ Chạy `embra <lệnh> --help` để xem đủ cờ. Thêm `--json` để lấy 
 | `embra login --agent` | Xin token `agent` cho `embra mcp` |
 | `embra logout` | Xoá token khỏi cấu hình |
 | `embra workspace show` | Xem workspace và quyền của token |
-| `embra token create --scope <dev\|viewer\|agent\|ci> --name <tên> --ttl <hạn>` | Tạo token (in một lần). `--ttl` bắt buộc, tối đa `90d` |
+| `embra token create --scope <dev\|viewer\|agent\|ci> --name <name> --ttl <ttl>` | Tạo token (in một lần). `--ttl` bắt buộc, tối đa `90d` |
 | `embra token list` / `revoke <token_id>` | Liệt kê, thu hồi token |
 | `embra members list` | Liệt kê thành viên và lời mời (Owner, Admin). Mời, đổi vai trò, gỡ: làm trên web |
 
@@ -34,7 +34,7 @@ Chạy `embra <lệnh> --help` để xem đủ cờ. Thêm `--json` để lấy 
 
 | Lệnh | Việc |
 |---|---|
-| `embra up [thư mục]` | Upload thư mục, build và deploy |
+| `embra up [directory]` | Upload thư mục, build và deploy |
 | `embra build` | Build từ repo đã nối; build xong tự tạo plan deploy |
 | `embra deploy` | Tạo plan deploy từ `embra.json` và image theo digest |
 | `embra approve <op_id> --binding <sha256:…>` | Owner hoặc Admin duyệt plan đã xem |
@@ -57,8 +57,10 @@ Chạy `embra <lệnh> --help` để xem đủ cờ. Thêm `--json` để lấy 
 | `embra db verify` | Kiểm chứng khả năng khôi phục backup |
 | `embra db restore-points` | Khoảng thời gian có thể khôi phục (PITR) |
 | `embra db restore` | Khôi phục về một mốc thời gian; chờ Owner hoặc Admin duyệt rồi mới chuyển |
+| `embra db import --env <project>/<env> <file>` | Nhập dữ liệu từ file `pg_dump --data-only` (gzip được). Bảng đích phải trống; production chờ Owner hoặc Admin duyệt. Xem [Chuyển app có sẵn](/huong-dan/chuyen-app-co-san/) |
+| `embra db undo start` / `run` / `fix` … | Hoàn tác từng dòng: dựng bản sao về một mốc, so với production, sinh file SQL sửa (không tự áp). Xem `embra db undo --help` |
 
-## Secret, log, metrics
+## Secret, log, metrics, cỡ app
 
 | Lệnh | Việc |
 |---|---|
@@ -67,6 +69,7 @@ Chạy `embra <lệnh> --help` để xem đủ cờ. Thêm `--json` để lấy 
 | `embra secret unset KEY --version N` | Thu hồi một version của secret |
 | `embra logs` | Log của app (`--env`) hoặc của một build (`--build <op_id>`) |
 | `embra metrics` | CPU, RAM, HTTP, Postgres kèm mốc deploy/migration |
+| `embra size <project>/<env> [<size>]` | Xem cỡ app và tài nguyên; thêm cỡ (ví dụ `256MiB`) để đặt cỡ app production, áp dụng ở lần deploy sau |
 
 ## Xoá và export
 
@@ -74,7 +77,7 @@ Chạy `embra <lệnh> --help` để xem đủ cờ. Thêm `--json` để lấy 
 |---|---|
 | `embra export --env <project>/<env>` | Xuất bundle app + dữ liệu để chạy ở nơi khác (Owner, Admin) |
 | `embra delete <project>/<env> --confirm <env-slug>` | Xoá environment, không quay lại được (Owner, Admin) |
-| `embra delete --confirm <tên workspace>` | Xoá cả workspace, không quay lại được (chỉ Owner) |
+| `embra delete --confirm <workspace-name>` | Xoá cả workspace, không quay lại được (chỉ Owner) |
 
 Export và xoá production cần người thật: làm trên web, hoặc trong 12 giờ sau `embra login`. Xem [Thành viên và phân quyền](/workspace/phan-quyen/#việc-cần-người-thật).
 

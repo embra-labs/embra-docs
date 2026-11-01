@@ -17,4 +17,32 @@ hero:
       variant: minimal
 ---
 
-English pages are being translated. Untranslated pages show the Vietnamese version.
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Get started
+
+<CardGrid>
+	<Card title="Quick start" icon="rocket">
+		Nine steps from sign-in to an app running with Postgres, secrets and your own domain. [Start](/en/bat-dau/bat-dau-nhanh/)
+	</Card>
+	<Card title="Move an existing app" icon="right-arrow">
+		Running on Vercel, Railway, Render or a VPS? What to change, importing data, moving the domain. [See how](/en/huong-dan/chuyen-app-co-san/)
+	</Card>
+	<Card title="Hit an error?" icon="warning">
+		Look up the code the CLI or console shows: cause, fix, whether your data is safe. [Error codes and fixes](/en/loi/)
+	</Card>
+	<Card title="For AI agents" icon="puzzle">
+		An `AGENTS.md` template, a prompt to hand over the work, and [`/llms-full.txt`](/llms-full.txt) with all the docs. [Read the guide](/en/huong-dan/ai-agent/)
+	</Card>
+</CardGrid>
+
+## Common tasks
+
+<CardGrid>
+	<LinkCard title="Prepare your app and embra.toml" description="Port, health check, writable paths, build config." href="/en/huong-dan/chuan-bi-app/" />
+	<LinkCard title="Database and migrations" description="Turn on Postgres, write migrations, how they are checked." href="/en/huong-dan/database-va-migration/" />
+	<LinkCard title="Staging, production and approval" description="Deploy plans, who approves, where." href="/en/huong-dan/staging-production-va-duyet/" />
+	<LinkCard title="Rollback and restoring backups" description="Go back to an earlier release, restore data to a point in time." href="/en/huong-dan/rollback-va-khoi-phuc/" />
+	<LinkCard title="Environment variables and secrets" description="Paste a .env, variables Embra sets, when changes apply." href="/en/huong-dan/bien-moi-truong/" />
+	<LinkCard title="Plans, limits and invoices" description="Limits per plan, what happens past them, a sample invoice." href="/en/huong-dan/goi-gioi-han-va-hoa-don/" />
+</CardGrid>

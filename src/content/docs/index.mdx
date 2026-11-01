@@ -17,19 +17,32 @@ hero:
       variant: minimal
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Bắt đầu
 
 <CardGrid>
 	<Card title="Bắt đầu nhanh" icon="rocket">
 		Chín bước từ đăng nhập tới app chạy kèm Postgres, secret và domain riêng. [Bắt đầu](/bat-dau/bat-dau-nhanh/)
 	</Card>
-	<Card title="CLI" icon="seti:shell">
-		Lệnh `embra` để deploy, duyệt plan, quản lý Postgres và secret. [Xem lệnh](/cli/lenh/)
+	<Card title="Chuyển app có sẵn" icon="right-arrow">
+		Đang chạy ở Vercel, Railway, Render hay VPS? Đổi gì trong app, nhập dữ liệu, chuyển domain. [Xem cách chuyển](/huong-dan/chuyen-app-co-san/)
 	</Card>
-	<Card title="Phân quyền" icon="approve-check">
-		Owner, Admin, Developer, Viewer: ai làm được gì, việc nào cần người thật. [Xem bảng quyền](/workspace/phan-quyen/)
+	<Card title="Gặp lỗi?" icon="warning">
+		Tra mã lỗi CLI hoặc console đang báo: nguyên nhân, cách sửa, dữ liệu có an toàn không. [Mã lỗi và cách sửa](/loi/)
 	</Card>
 	<Card title="Cho AI agent" icon="puzzle">
-		[`/llms.txt`](/llms.txt) và [`/llms-full.txt`](/llms-full.txt) cho agent đọc toàn bộ tài liệu.
+		Mẫu `AGENTS.md`, câu lệnh giao việc và [`/llms-full.txt`](/llms-full.txt) để agent đọc toàn bộ tài liệu. [Xem hướng dẫn](/huong-dan/ai-agent/)
 	</Card>
+</CardGrid>
+
+## Việc hay làm
+
+<CardGrid>
+	<LinkCard title="Chuẩn bị app và embra.toml" description="Cổng, health check, thư mục ghi được, cấu hình build." href="/huong-dan/chuan-bi-app/" />
+	<LinkCard title="Database và migration" description="Bật Postgres, viết migration, migration được kiểm thế nào." href="/huong-dan/database-va-migration/" />
+	<LinkCard title="Staging, production và duyệt" description="Plan deploy, ai duyệt, duyệt ở đâu." href="/huong-dan/staging-production-va-duyet/" />
+	<LinkCard title="Rollback và khôi phục backup" description="Quay lại bản trước, khôi phục dữ liệu về một mốc." href="/huong-dan/rollback-va-khoi-phuc/" />
+	<LinkCard title="Biến môi trường và secret" description="Dán .env, biến Embra tự đặt, khi nào có hiệu lực." href="/huong-dan/bien-moi-truong/" />
+	<LinkCard title="Gói, giới hạn và hoá đơn" description="Giới hạn từng gói, vượt giới hạn thì sao, ví dụ hoá đơn." href="/huong-dan/goi-gioi-han-va-hoa-don/" />
 </CardGrid>
