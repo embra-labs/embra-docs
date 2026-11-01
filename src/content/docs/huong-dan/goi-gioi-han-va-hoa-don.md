@@ -18,13 +18,14 @@ Giá tính theo **mỗi workspace (một project) mỗi tháng**, bằng VND. Gi
 | **Postgres** | 256 MiB RAM, 2 GiB | 512 MiB RAM, 5 GiB | 1 GiB RAM, 10 GiB | Nhập dữ liệu: file dump lớn hơn dung lượng bị từ chối. Build: image app lớn hơn dung lượng đĩa của gói thì build lỗi |
 | **Worker, cron** | 1 worker, 2 cron | 2 worker, 5 cron | 4 worker, 10 cron | Không tạo được plan deploy |
 | **Preview theo PR** | Không có | 1 | 3 | Pull request mới không có preview |
+| **Domain riêng** | 3 | 5 | 10 | Thêm domain bị từ chối (`QUOTA_EXCEEDED`) |
 | **Bucket lưu file** | 1 GiB | 2 GiB | 5 GiB | App ghi vượt nhận lỗi từ S3 |
 | **Lịch sử log, metrics** | 7 ngày | 14 ngày | 30 ngày | Không xem được khoảng xa hơn |
 | **Staging** | Không có | +149.000đ/tháng | +299.000đ/tháng | Start: không tạo được staging |
 
 Việc làm trên console, CLI hoặc API mà vượt giới hạn bị từ chối với mã [`QUOTA_EXCEEDED`](/loi/#quota_exceeded), câu lỗi ghi rõ giới hạn nào. Embra từ chối trước khi làm, nên app và dữ liệu đang chạy không bị ảnh hưởng. Riêng bucket: app ghi vượt dung lượng thì nhận lỗi từ S3 ngay trong app, xem [Lưu file](/huong-dan/luu-file/).
 
-Gói còn giới hạn **số tên miền riêng** và **số database cho app production**. Thêm quá số đó thì bị từ chối với `QUOTA_EXCEEDED`, câu lỗi ghi con số của gói bạn. Gói dùng thử xem ở [Gói dùng thử](/huong-dan/tai-khoan-va-goi/#gói-dùng-thử).
+Số domain đếm chung mọi environment của workspace; `shop.vn` và `www.shop.vn` là hai domain. Gói còn giới hạn **số database cho app production**. Thêm quá số đó thì bị từ chối với `QUOTA_EXCEEDED`, câu lỗi ghi con số của gói bạn. Gói dùng thử xem ở [Gói dùng thử](/huong-dan/tai-khoan-va-goi/#gói-dùng-thử).
 
 ## Hồ tài nguyên app hoạt động thế nào
 
