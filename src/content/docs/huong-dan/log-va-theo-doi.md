@@ -73,8 +73,6 @@ Container chạy giờ UTC, nên giờ app tự in ra là giờ UTC. Muốn app 
 
 ## Tìm trong lịch sử log
 
-Nếu thấy `Máy chủ này chưa bật lịch sử log` ([`TEMPORARILY_UNAVAILABLE`](/loi/#temporarily_unavailable)), lịch sử log chưa bật trên máy chủ của bạn. Dùng chế độ **"Trực tiếp"**.
-
 1. Ở **"Logs"** → **"Runtime"**, chọn **"Lịch sử"**.
 2. Nhập chuỗi cần tìm (tìm đúng chuỗi, không phải regex).
 3. Chọn khoảng thời gian, từ **"30 phút qua"** tới **"30 ngày qua"**, rồi bấm **"Tìm"**.
@@ -82,6 +80,8 @@ Nếu thấy `Máy chủ này chưa bật lịch sử log` ([`TEMPORARILY_UNAVAI
 - Lịch sử gồm log của các bản đã chạy trước, và dòng request ở edge (chọn nguồn **"Request (edge)"**).
 - Mỗi lần tìm trả tối đa 500 dòng mới nhất. Còn dòng cũ hơn thì thu hẹp khoảng thời gian hoặc thêm chuỗi tìm.
 - Số ngày giữ tuỳ gói, tối đa 30 ngày; console ghi số ngày của gói bạn. Chọn khoảng dài hơn thì báo [`QUOTA_EXCEEDED`](/loi/#quota_exceeded).
+
+Nếu thấy `Máy chủ này chưa bật lịch sử log` ([`TEMPORARILY_UNAVAILABLE`](/loi/#temporarily_unavailable)), lịch sử log chưa bật trên máy chủ của bạn. Dùng chế độ **"Trực tiếp"**.
 
 ## Xem metrics
 

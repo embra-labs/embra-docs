@@ -73,8 +73,6 @@ Containers run on UTC, so times your app prints itself are UTC. To print Vietnam
 
 ## Searching log history
 
-If you see `Máy chủ này chưa bật lịch sử log` ([`TEMPORARILY_UNAVAILABLE`](/en/loi/#temporarily_unavailable)), log history is not turned on for your server. Use **"Trực tiếp"** (live) mode.
-
 1. In **"Logs"** → **"Runtime"**, choose **"Lịch sử"** (history).
 2. Enter the text to find (an exact string, not a regex).
 3. Pick a time span, from **"30 phút qua"** (last 30 minutes) to **"30 ngày qua"** (last 30 days), and click **"Tìm"** (search).
@@ -82,6 +80,8 @@ If you see `Máy chủ này chưa bật lịch sử log` ([`TEMPORARILY_UNAVAILA
 - History includes logs of earlier versions, and request lines from the edge (choose the **"Request (edge)"** source).
 - Each search returns at most the 500 newest lines. If older lines remain, narrow the time span or add search text.
 - How many days are kept depends on your plan, up to 30 days; the console shows the number for your plan. Picking a longer span fails with [`QUOTA_EXCEEDED`](/en/loi/#quota_exceeded).
+
+If you see `Máy chủ này chưa bật lịch sử log` ([`TEMPORARILY_UNAVAILABLE`](/en/loi/#temporarily_unavailable)), log history is not turned on for your server. Use **"Trực tiếp"** (live) mode.
 
 ## Viewing metrics
 
