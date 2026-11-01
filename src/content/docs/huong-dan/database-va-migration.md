@@ -81,7 +81,7 @@ Production **luôn** cần Owner hoặc Admin duyệt, kể cả khi không có 
 
 - **Diễn tập lỗi** (`MIGRATION_REHEARSAL_FAILED`): sửa file migration, push lại.
 - **Migration đã chạy nhưng app mới lỗi:** code cũ tiếp tục chạy trên schema mới. Sửa code để tương thích rồi deploy lại.
-- **Environment hiện "Cần Embra kiểm tra database":** Embra không chắc migration đã chạy xong hay chưa nên dừng mọi thay đổi, không tự thử lại. Gửi email hello@embra.cloud.
+- **Environment hiện "Cần xác minh dữ liệu"** ([`MIGRATION_UNKNOWN`](/loi/#migration_unknown)): Embra không chắc migration đã chạy xong hay chưa nên dừng mọi thay đổi, không tự thử lại. Gửi email hello@embra.cloud.
 
 ## Backup và khôi phục
 

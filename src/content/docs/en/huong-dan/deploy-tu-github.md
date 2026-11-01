@@ -20,7 +20,7 @@ Only people signed in with GitHub can link a repo, and only repos that their Git
 After the build, Embra makes a **plan**: a summary of the change (new image, secrets added, removed or re-versioned, pending migrations).
 
 - **Production always waits for an Owner or Admin to approve**, even with no migration. Developers and AI agents cannot approve.
-- The plan bar shows "… thay đổi chờ áp dụng" (changes waiting). Click **"Chi tiết"** (details) to review, or **"Duyệt"** (approve). In the **"Quyết định"** (decision) panel, type the environment name to confirm and click **"Duyệt"** again. If a migration may lose data, you must also type `CONFIRM_MIGRATION`.
+- The plan bar shows "… thay đổi chờ áp dụng" (changes waiting). Click **"Xem và duyệt"** (review and approve) to see the code, config and data changes. Type the environment name to confirm and click **"Duyệt và deploy"** (approve and deploy). If a migration may lose data, you must also type `CONFIRM_MIGRATION`.
 - A pending plan expires after 24 hours. A new build cancels the older plan, so you can never approve a stale version by mistake.
 - Approving needs a real person: a web session signed in within the last 12 hours. See [Members and permissions](/en/workspace/phan-quyen/#actions-that-need-a-real-person).
 
@@ -34,7 +34,7 @@ https://<app-name>-production-<workspace code>.onembra.com
 
 - Every **push to the linked branch** builds that commit. Pushes to other branches and new tags do not.
 - A new build cancels a running build of the same environment.
-- To rebuild the latest commit of the branch without pushing, click **"Triển khai"** (deploy) on the overview page.
+- To rebuild the latest commit of the branch without pushing, click **"Deploy"** on the overview page (it reads **"Build lại"**, rebuild, while a plan is waiting for approval).
 - Production still waits for approval after each build. Staging and previews deploy on their own, unless a migration changes data.
 
 ## Pull request previews
@@ -49,7 +49,7 @@ On plans with previews (see [pricing](https://embra.cloud/bang-gia/)), each pull
 
 ## Logs
 
-- **Build log:** "Xem log build" (view build log) on the overview page.
+- **Build log:** **"Xem build logs"** (view build logs) on the overview page. Look up the error code in [Error codes and fixes](/en/loi/).
 - **App log:** the **"Logs"** section. Containers run on UTC, so times your app prints in its own log lines are UTC. To print Vietnam time, set the secret `TZ` = `Asia/Ho_Chi_Minh`.
 - Log and metrics retention depends on the plan (1 day on the trial).
 

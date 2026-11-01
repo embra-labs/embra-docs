@@ -20,7 +20,7 @@ You need:
 4. **Database and migrations.** Write schema changes as files like `migrations/0001_name.sql`. Embra rehearses them on a copy of your data before running them for real. → [Database and migrations](/en/huong-dan/database-va-migration/)
 5. **Store files (optional).** Each plan has one S3 bucket per environment: "＋ Tạo mới" (create) → "Lưu file" (store files). The app gets the `S3_*` variables from the next deploy on. → [Store files (S3 bucket)](/en/huong-dan/luu-file/)
 6. **Set secrets.** Cài đặt (Settings) → Secrets. The app reads each secret from an env var of the same name, from the next build on. → [Secrets](/en/huong-dan/secret/)
-7. **Approve production and open the app.** Production always needs an Owner or Admin to approve. Click "Duyệt" (approve) and type the environment name to confirm. The app gets an address like `https://<app>-production-<code>.onembra.com`.
+7. **Approve production and open the app.** Production always needs an Owner or Admin to approve. Click **"Xem và duyệt"** (review and approve), type the environment name to confirm, then click **"Duyệt và deploy"** (approve and deploy). The app gets an address like `https://<app>-production-<code>.onembra.com`.
 8. **Add your own domain.** Cài đặt → Domain riêng (custom domain). Add the TXT and CNAME records. On Cloudflare, keep the cloud **grey** (DNS only). → [Custom domains](/en/huong-dan/domain-rieng/)
 9. **Invite your team and pay.** Cài đặt → Thành viên (members). Invitees accept on their next sign-in with the invited email, even if they already have a workspace of their own. Choose a plan before the 7-day trial ends, or the app and data are deleted. → [Members and permissions](/en/workspace/phan-quyen/), [Account, trial and payment](/en/huong-dan/tai-khoan-va-goi/)
 
@@ -32,6 +32,6 @@ The `embra` CLI has the full command set ([command list](/en/cli/lenh/)), but **
 
 ## If something goes wrong
 
-- **Build failed:** click "Xem log build" (view build log) on the overview page.
+- **Build failed:** click **"Xem build logs"** (view build logs) on the overview page. Look up the error code in [Error codes and fixes](/en/loi/).
 - **App does not come up (`HEALTHCHECK_FAILED`):** check the port and the health-check path. See [Prepare your app](/en/huong-dan/chuan-bi-app/#health-check).
-- **The environment shows "Cần Embra kiểm tra database" or "Cần Embra hỗ trợ"** (needs the Embra team): an action ended with an unknown outcome. Embra stops instead of retrying on its own. Email hello@embra.cloud.
+- **The environment shows "Cần xác minh dữ liệu" (data needs checking), "Cần đội Embra hỗ trợ" (needs the Embra team) or "Chờ đội Embra kiểm tra" (waiting for the Embra team):** an action ended with an unknown outcome. Embra stops instead of retrying on its own. Email hello@embra.cloud, and see [When Embra stops for a check](/en/loi/#recovery_required).

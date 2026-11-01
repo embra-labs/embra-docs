@@ -11,7 +11,7 @@ Secret là giá trị app cần lúc chạy mà không được nằm trong code
 
 1. Mở **Cài đặt → Secrets** của environment.
 2. Nhập **Tên secret** và **Giá trị secret**, bấm **"Lưu secret"**.
-3. Bấm **"Triển khai"** ở trang Tổng quan, hoặc push code. Production thì chờ Owner hoặc Admin duyệt như mọi lần deploy.
+3. Bấm **"Deploy"** ở trang Tổng quan, hoặc push code. Production thì chờ Owner hoặc Admin duyệt như mọi lần deploy.
 
 App đọc mỗi secret qua **biến môi trường cùng tên**: secret `JWT_SECRET` là `process.env.JWT_SECRET`, `os.environ["JWT_SECRET"]`…
 

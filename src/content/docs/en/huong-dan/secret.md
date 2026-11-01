@@ -11,7 +11,7 @@ A secret is a value the app needs at runtime that must not live in code: API key
 
 1. Open the environment's **Cài đặt → Secrets** (settings, secrets).
 2. Enter the **name** ("Tên secret") and **value** ("Giá trị secret"), then click **"Lưu secret"** (save).
-3. Click **"Triển khai"** (deploy) on the overview page, or push code. Production waits for an Owner or Admin to approve, as with every deploy.
+3. Click **"Deploy"** on the overview page, or push code. Production waits for an Owner or Admin to approve, as with every deploy.
 
 The app reads each secret from an **env var of the same name**: secret `JWT_SECRET` is `process.env.JWT_SECRET`, `os.environ["JWT_SECRET"]`…
 

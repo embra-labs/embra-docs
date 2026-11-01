@@ -22,7 +22,7 @@ Ghi vượt dung lượng thì bị từ chối. Bucket được backup mỗi đ
 ## Tạo bucket
 
 1. Mở environment cần bucket, bấm **"＋ Tạo mới"** → **"Lưu file"** → **"Xác nhận tạo bucket"**.
-2. Bấm **"Triển khai"** hoặc push code. App nhận các biến `S3_*` **từ lần deploy tiếp theo**. Production chờ duyệt như mọi lần deploy.
+2. Bấm **"Deploy"** ở trang Tổng quan hoặc push code. App nhận các biến `S3_*` **từ lần deploy tiếp theo**. Production chờ duyệt như mọi lần deploy.
 
 Mỗi bucket có một khoá riêng, chỉ có quyền trên đúng bucket đó. Xoá environment thì bucket và mọi file trong đó bị xoá theo.
 

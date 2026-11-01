@@ -22,7 +22,7 @@ Writes beyond the size are refused. Buckets are backed up nightly, but cannot be
 ## Create a bucket
 
 1. Open the environment, click **"＋ Tạo mới"** (create) → **"Lưu file"** (file storage) → **"Xác nhận tạo bucket"** (confirm).
-2. Click **"Triển khai"** (deploy) or push code. The app receives the `S3_*` variables **from the next deploy**. Production waits for approval as usual.
+2. Click **"Deploy"** on the overview page or push code. The app receives the `S3_*` variables **from the next deploy**. Production waits for approval as usual.
 
 Each bucket has its own key, which can only access that bucket. Deleting the environment deletes the bucket and every file in it.
 

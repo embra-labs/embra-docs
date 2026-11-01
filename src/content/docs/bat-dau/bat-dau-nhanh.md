@@ -20,7 +20,7 @@ Bạn cần:
 4. **Database và migration.** Viết thay đổi schema thành file `migrations/0001_ten.sql`. Embra diễn tập trên bản sao dữ liệu rồi mới chạy thật. → [Database và migration](/huong-dan/database-va-migration/)
 5. **Lưu file (tuỳ chọn).** Mỗi gói có một bucket S3 cho mỗi environment: "＋ Tạo mới" → "Lưu file". App nhận biến `S3_*` từ lần deploy sau. → [Lưu file (bucket S3)](/huong-dan/luu-file/)
 6. **Đặt secret.** Cài đặt → Secrets. App đọc mỗi secret qua biến môi trường cùng tên, từ lần build tiếp theo. → [Secret](/huong-dan/secret/)
-7. **Duyệt production và mở app.** Production luôn cần Owner hoặc Admin duyệt. Bấm "Duyệt", gõ tên environment để xác nhận. App có địa chỉ `https://<app>-production-<mã>.onembra.com`.
+7. **Duyệt production và mở app.** Production luôn cần Owner hoặc Admin duyệt. Bấm **"Xem và duyệt"**, gõ tên environment để xác nhận rồi bấm **"Duyệt và deploy"**. App có địa chỉ `https://<app>-production-<mã>.onembra.com`.
 8. **Gắn domain riêng.** Cài đặt → Domain riêng. Thêm bản ghi TXT và CNAME. Dùng Cloudflare thì để đám mây **xám** (DNS only). → [Domain riêng](/huong-dan/domain-rieng/)
 9. **Mời đội và trả tiền.** Cài đặt → Thành viên. Người được mời nhận lời mời ở lần đăng nhập sau, bằng đúng email được mời, kể cả khi họ đã có workspace riêng. Chọn gói trước khi hết 7 ngày dùng thử, nếu không app và dữ liệu bị xoá. → [Thành viên và phân quyền](/workspace/phan-quyen/), [Tài khoản, dùng thử và thanh toán](/huong-dan/tai-khoan-va-goi/)
 
@@ -30,6 +30,6 @@ CLI `embra` đã có đủ lệnh ([danh sách lệnh](/cli/lenh/)), nhưng **đ
 
 ## Nếu có lỗi
 
-- **Build lỗi:** bấm "Xem log build" ở trang Tổng quan.
+- **Build lỗi:** bấm **"Xem build logs"** ở trang Tổng quan. Tra mã lỗi ở [Mã lỗi và cách sửa](/loi/).
 - **App không lên (`HEALTHCHECK_FAILED`):** kiểm cổng và đường dẫn health check. Xem [Chuẩn bị app](/huong-dan/chuan-bi-app/#health-check).
-- **Environment hiện "Cần Embra kiểm tra database" hoặc "Cần Embra hỗ trợ":** một thao tác chưa rõ kết quả. Embra dừng lại thay vì tự thử lại. Gửi email hello@embra.cloud.
+- **Environment hiện "Cần xác minh dữ liệu", "Cần đội Embra hỗ trợ" hoặc "Chờ đội Embra kiểm tra":** một thao tác chưa rõ kết quả. Embra dừng lại thay vì tự thử lại. Gửi email hello@embra.cloud, xem [Khi Embra dừng lại chờ kiểm tra](/loi/#recovery_required).

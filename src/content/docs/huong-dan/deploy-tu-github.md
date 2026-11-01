@@ -20,7 +20,7 @@ Chỉ người đăng nhập bằng GitHub mới kết nối được repo, và 
 Build xong, Embra lập **plan**: bản tóm tắt thay đổi (image mới, secret thêm, bớt hoặc đổi version, migration chờ chạy).
 
 - **Production luôn chờ Owner hoặc Admin duyệt**, kể cả khi không có migration. Developer và AI agent không duyệt được.
-- Thanh plan hiện "… thay đổi chờ áp dụng". Bấm **"Chi tiết"** để xem, hoặc **"Duyệt"**. Trong phần **"Quyết định"**, gõ tên environment để xác nhận rồi bấm **"Duyệt"** lần nữa. Nếu migration có thể làm mất dữ liệu, bạn phải gõ thêm `CONFIRM_MIGRATION`.
+- Thanh plan hiện "… thay đổi chờ áp dụng". Bấm **"Xem và duyệt"** để xem thay đổi về code, config và dữ liệu. Gõ tên environment để xác nhận rồi bấm **"Duyệt và deploy"**. Nếu migration có thể làm mất dữ liệu, bạn phải gõ thêm `CONFIRM_MIGRATION`.
 - Plan chờ duyệt hết hạn sau 24 giờ. Có build mới thì plan cũ bị huỷ, để không bao giờ duyệt nhầm bản cũ.
 - Duyệt cần người thật: phiên web đăng nhập trong vòng 12 giờ. Xem [Thành viên và phân quyền](/workspace/phan-quyen/#việc-cần-người-thật).
 
@@ -34,7 +34,7 @@ https://<tên-app>-production-<mã workspace>.onembra.com
 
 - Mỗi lần **push lên nhánh đã nối**, Embra build commit đó. Push lên nhánh khác hay tạo tag thì không.
 - Build mới huỷ build cũ đang chạy của cùng environment.
-- Muốn build lại commit mới nhất của nhánh mà không push, bấm **"Triển khai"** ở trang Tổng quan.
+- Muốn build lại commit mới nhất của nhánh mà không push, bấm **"Deploy"** ở trang Tổng quan (nút thành **"Build lại"** khi đang có plan chờ duyệt).
 - Production vẫn chờ duyệt sau mỗi build. Staging và preview tự deploy, trừ khi có migration đổi dữ liệu.
 
 ## Preview theo pull request
@@ -49,7 +49,7 @@ https://<tên-app>-production-<mã workspace>.onembra.com
 
 ## Xem log
 
-- **Log build:** "Xem log build" ở trang Tổng quan.
+- **Log build:** **"Xem build logs"** ở trang Tổng quan. Tra mã lỗi ở [Mã lỗi và cách sửa](/loi/).
 - **Log app:** mục **"Logs"**. Container chạy giờ UTC, nên giờ app tự in ra trong log là giờ UTC. Muốn app in giờ Việt Nam, đặt secret `TZ` = `Asia/Ho_Chi_Minh`.
 - Thời gian giữ log và metrics tuỳ gói (gói dùng thử 1 ngày).
 

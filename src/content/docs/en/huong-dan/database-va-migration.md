@@ -81,7 +81,7 @@ Production **always** needs an Owner or Admin to approve, even with no migration
 
 - **Rehearsal failed** (`MIGRATION_REHEARSAL_FAILED`): fix the migration file and push again.
 - **The migration ran but the new app failed:** the old code keeps running on the new schema. Make the code compatible and deploy again.
-- **The environment shows "Cần Embra kiểm tra database"** (needs Embra to check the database): Embra is not sure whether a migration finished, so it stops all changes and does not retry on its own. Email hello@embra.cloud.
+- **The environment shows "Cần xác minh dữ liệu"** (data needs checking, [`MIGRATION_UNKNOWN`](/en/loi/#migration_unknown)): Embra is not sure whether a migration finished, so it stops all changes and does not retry on its own. Email hello@embra.cloud.
 
 ## Backups and restore
 

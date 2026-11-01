@@ -52,6 +52,11 @@ export default defineConfig({
 					items: [{ autogenerate: { directory: 'huong-dan' } }],
 				},
 				{
+					label: 'Xử lý lỗi',
+					translations: { en: 'Troubleshooting' },
+					items: [{ autogenerate: { directory: 'loi' } }],
+				},
+				{
 					label: 'Workspace',
 					items: [{ autogenerate: { directory: 'workspace' } }],
 				},
