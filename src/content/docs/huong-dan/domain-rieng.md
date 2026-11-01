@@ -5,7 +5,7 @@ sidebar:
   order: 7
 ---
 
-Gói dùng thử không có domain riêng. Số domain theo gói ở [bảng giá](https://embra.cloud/bang-gia/). **Mỗi tên tính là một domain**: `shop.vn` và `www.shop.vn` là hai domain.
+Gói dùng thử không có domain riêng. Gói Start có 3 domain, Build 5, Grow 10, đếm chung mọi environment của workspace. **Mỗi tên tính là một domain**: `shop.vn` và `www.shop.vn` là hai domain.
 
 ## Các bước
 

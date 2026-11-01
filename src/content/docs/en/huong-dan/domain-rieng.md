@@ -5,7 +5,7 @@ sidebar:
   order: 7
 ---
 
-The trial has no custom domains. The number of domains per plan is on the [pricing page](https://embra.cloud/bang-gia/). **Each name counts as one domain**: `shop.vn` and `www.shop.vn` are two domains.
+The trial has no custom domains. Start includes 3 domains, Build 5, Grow 10, counted across all environments of the workspace. **Each name counts as one domain**: `shop.vn` and `www.shop.vn` are two domains.
 
 ## Steps
 

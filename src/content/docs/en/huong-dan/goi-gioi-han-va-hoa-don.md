@@ -18,13 +18,14 @@ Prices are **per workspace (one project) per month**, in VND. The price is the a
 | **Postgres** | 256 MiB RAM, 2 GiB | 512 MiB RAM, 5 GiB | 1 GiB RAM, 10 GiB | Data import: a dump file larger than the disk is refused. Build: an app image larger than the plan's disk fails the build |
 | **Workers, cron** | 1 worker, 2 cron | 2 workers, 5 cron | 4 workers, 10 cron | No deploy plan can be created |
 | **Pull request previews** | None | 1 | 3 | New pull requests get no preview |
+| **Custom domains** | 3 | 5 | 10 | Adding a domain is refused (`QUOTA_EXCEEDED`) |
 | **File bucket** | 1 GiB | 2 GiB | 5 GiB | The app gets an S3 error when writing over the quota |
 | **Log and metrics history** | 7 days | 14 days | 30 days | Older ranges cannot be viewed |
 | **Staging** | None | +149.000đ/month | +299.000đ/month | Start: staging cannot be created |
 
 Actions in the console, CLI or API that go over a limit are refused with [`QUOTA_EXCEEDED`](/en/loi/#quota_exceeded), and the message names the limit. Embra refuses before doing anything, so running apps and data are not affected. The bucket is the exception: an app writing over its quota gets an S3 error inside the app, see [File storage](/en/huong-dan/luu-file/).
 
-Plans also limit the **number of custom domains** and the **number of databases for production apps**. Adding more is refused with `QUOTA_EXCEEDED`, and the message gives your plan's number. For the trial plan, see [The trial](/en/huong-dan/tai-khoan-va-goi/#the-trial).
+Domains are counted across all environments of the workspace; `shop.vn` and `www.shop.vn` are two domains. Plans also limit the **number of databases for production apps**. Adding more is refused with `QUOTA_EXCEEDED`, and the message gives your plan's number. For the trial plan, see [The trial](/en/huong-dan/tai-khoan-va-goi/#the-trial).
 
 ## How the app resource pool works
 
