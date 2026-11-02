@@ -1,11 +1,11 @@
 ---
 title: File storage (S3 bucket)
-description: Every plan includes one S3 bucket per environment. How to create it, the variables your app receives, and backend code samples.
+description: Every environment gets one S3 bucket. How to create it, the env vars your app receives, backend code samples.
 sidebar:
   order: 6
 ---
 
-Apps on Embra cannot write to disk (only `/tmp`, which is lost on restart). Files your users upload, such as images, videos and documents, belong in an **Embra S3 bucket**. It lives on the same servers in Vietnam and speaks the S3 protocol, so any S3 library works.
+Apps on Embra can't write to disk (only `/tmp`, lost on restart). Files your users upload, such as images, videos and documents, belong in an **Embra S3 bucket**: it lives on the same servers in Vietnam and speaks S3, so any S3 library works.
 
 ## Which plans include a bucket
 
@@ -17,16 +17,17 @@ Every plan includes **1 bucket per environment**:
 | Build | 2 GiB |
 | Grow | 5 GiB |
 
-Writes beyond the size are refused. Buckets are backed up nightly, but cannot be restored to an arbitrary point in time the way Postgres can.
+Writes beyond the size are refused. Buckets are backed up nightly, but can't be restored to an arbitrary point in time the way Postgres can.
 
 ## Create a bucket
 
-1. Open the environment, click **"＋ Tạo mới"** (create) → **"Lưu file"** (file storage) → **"Xác nhận tạo bucket"** (confirm).
+1. Open the environment → **"＋ Tạo mới"** (create) → **"Bucket"** → **"Xác nhận tạo bucket"** (confirm).
 2. Click **"Deploy"** on the overview page or push code. The app receives the `S3_*` variables **from the next deploy**. Production waits for approval as usual.
 
-Each bucket has its own key, which can only access that bucket. Deleting the environment deletes the bucket and every file in it.
+- Each bucket has its own key, which can only access that bucket.
+- Deleting the environment deletes the bucket and every file in it.
 
-## Variables your app receives
+## Env vars your app receives
 
 | Variable | Value | Use it to |
 |---|---|---|
@@ -37,13 +38,13 @@ Each bucket has its own key, which can only access that bucket. Deleting the env
 | `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` | the bucket's own key | |
 | `S3_FORCE_PATH_STYLE` | `true` | path-style addressing is required |
 
-Embra sets these variables. A secret with the same name is overridden, and the dashboard never shows the key values.
+Embra sets these: a secret with the same name is overridden, and the dashboard never shows the key values.
 
 :::caution[Two endpoints, two jobs]
-Browsers **cannot** reach `S3_ENDPOINT`. Any link you hand to a browser (images, downloads) must be signed by a client that uses `S3_PUBLIC_ENDPOINT`.
+Browsers **cannot** reach `S3_ENDPOINT`. Any link sent to a browser (images, downloads) must be signed with a client that uses `S3_PUBLIC_ENDPOINT`.
 :::
 
-## Node.js (AWS SDK v3)
+## Code sample: Node.js (AWS SDK v3)
 
 ```js
 import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
@@ -74,7 +75,7 @@ export function fileUrl(key) {
 }
 ```
 
-## Python (boto3)
+## Code sample: Python (boto3)
 
 ```python
 import os, boto3
@@ -97,7 +98,14 @@ url = s3_public.generate_presigned_url("get_object", Params={"Bucket": bucket, "
 
 ## Current limits
 
-- **No direct uploads from the browser yet.** Buckets have no CORS, so a browser cannot PUT straight to `s3.embra.cloud`. Upload through your backend instead: the browser sends the file to your app, and the app writes it to the bucket as `saveUpload` does above.
-- **No unsigned public files.** Every link to a file is a time-limited presigned URL. If a page shows images, your backend creates the links while rendering, as `fileUrl` does above.
-- **No custom CDN in front of the bucket.**
-- If you already use external S3 (Cloudflare R2, AWS S3…) and need those features, keep it. Set that provider's `S3_*` values as [secrets](/en/huong-dan/secret/) and do **not** create an Embra bucket for that environment, because an Embra bucket overrides those variables. Remember to allow your app's origins (`*.onembra.com`, your custom domain) in that bucket's CORS.
+| Not supported yet | Do this instead |
+|---|---|
+| **Direct uploads from the browser.** Buckets have no CORS, so a browser can't PUT straight to `s3.embra.cloud` | Upload through your backend: the browser sends the file to your app, the app writes it to the bucket as `saveUpload` does above |
+| **Unsigned public files.** Every link is a time-limited presigned URL | Your backend creates links while rendering, as `fileUrl` does above |
+| **A custom CDN in front of the bucket** | — |
+
+If you already use external S3 (Cloudflare R2, AWS S3…) and need those features, keep it:
+
+- Set that provider's `S3_*` values as [secrets](/en/huong-dan/secret/).
+- Do **not** create an Embra bucket for that environment, because an Embra bucket overrides those variables.
+- Allow your app's origins (`*.onembra.com`, your custom domain) in that bucket's CORS.

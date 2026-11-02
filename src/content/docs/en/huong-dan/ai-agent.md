@@ -5,9 +5,7 @@ sidebar:
   order: 8
 ---
 
-This page is for you if an AI agent (Claude Code, Cursor, GitHub Copilot, ChatGPT…) is changing your repo to run on Embra.
-
-Today agents do best at **preparing the repo**: port, health check, `embra.toml`, migrations, Dockerfile. You push to GitHub and Embra builds and deploys as usual. Anything that needs permissions, such as setting secrets and approving production, you still do on the web.
+AI agents (Claude Code, Cursor, GitHub Copilot, ChatGPT…) do best at **preparing the repo**: port, health check, `embra.toml`, migrations, Dockerfile. You push to GitHub and Embra builds and deploys as usual. Anything that needs permissions, like setting secrets and approving production, you still do on the web.
 
 ## Let the agent read the docs
 
@@ -19,11 +17,11 @@ The Embra docs have plain-text versions for AI:
 | `https://docs.embra.cloud/llms-small.txt` | Short version |
 | `https://docs.embra.cloud/llms.txt` | Index |
 
-These files are in Vietnamese. Current models read Vietnamese well, so you can use them as they are. If the agent can't fetch URLs, open the file in a browser and paste the part you need into the chat.
+These files are in Vietnamese; current models read Vietnamese well, so use them as they are. If the agent can't fetch URLs, open the file in a browser and paste the part you need into the chat.
 
 ## Add AGENTS.md to the repo
 
-Create `AGENTS.md` at the repo root. Claude Code, Cursor, Copilot and Codex all read it when working in the repo. Copy the template below and fill in the two lines marked `<…>`.
+Create `AGENTS.md` at the repo root: Claude Code, Cursor, Copilot and Codex all read it. Copy the template below and fill in the two lines marked `<…>`.
 
 ```markdown
 # AGENTS.md
@@ -70,9 +68,9 @@ If the repo already has Prisma or other ORM migrations, add: "Convert the migrat
 
 ## Check before you push
 
-Agents make mistakes. Before pushing, check quickly:
+Agents make mistakes. Check quickly before pushing:
 
-1. Open `embra.toml` and compare it with [Prepare your app](/en/huong-dan/chuan-bi-app/#embratoml).
+1. Compare `embra.toml` with [Prepare your app](/en/huong-dan/chuan-bi-app/#embratoml).
 2. Run the app locally with `PORT=3000`, open `http://localhost:3000<health_path>` and see a 2xx.
 3. Look through the diff for anything that looks like a secret (API keys, passwords, connection strings).
 4. Review new migration files: numbers in order, no old file edited.
@@ -81,8 +79,8 @@ If a deploy fails, paste the exact error code and the build log to the agent, wi
 
 ## Agents using the CLI and MCP
 
-The `embra` CLI has `embra mcp`, which lets an agent call Embra directly with an `agent` token. That token can read, build, deploy staging and create production plans, but **never** approve, delete, export or read the database URL. See [Permissions](/en/workspace/phan-quyen/).
+`embra mcp` lets an agent call Embra directly with an `agent` token. That token can read, build, deploy staging and create production plans, but **never** approve, delete, export or read the database URL. See [Permissions](/en/workspace/phan-quyen/).
 
 :::note[CLI sign-in is not on for customers yet]
-The `agent` token comes from `embra login --agent`, which needs a browser approval page that is not switched on for customers yet. Meanwhile, the agent prepares the repo, and you deploy and approve on the web.
+The `agent` token comes from `embra login --agent`, which needs a browser approval page that is not switched on for customers yet. Meanwhile: the agent prepares the repo, you deploy and approve on the web.
 :::

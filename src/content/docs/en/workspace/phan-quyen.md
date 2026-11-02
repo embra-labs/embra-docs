@@ -17,17 +17,15 @@ Three principles:
 
 | Role | For | Summary |
 |---|---|---|
-| **Owner** | The business owner | Everything, including choosing a plan, paying and deleting the workspace. A workspace always has at least one owner. |
-| **Admin** | The customer's technical lead | Approves production, manages members, deletes environments, exports. Doesn't pay, can't delete the workspace. |
-| **Developer** (`dev`) | Developers, agencies | Builds, deploys staging, creates production plans for approval, manages secrets, domains, databases. Can't approve production. |
-| **Viewer** | People who need to follow along | Only sees status, activity, logs and metrics. Can't see secrets or the database URL. |
+| **Owner** | The business owner | Everything, including choosing a plan, paying and deleting the workspace. A workspace always has at least one owner |
+| **Admin** | The customer's technical lead | Approves production, manages members, deletes environments, exports. Doesn't pay, can't delete the workspace |
+| **Developer** (`dev`) | Developers, agencies | Builds, deploys staging, creates production plans for approval, manages secrets, domains, databases. Can't approve production |
+| **Viewer** | People who need to follow along | Only sees status, activity, logs and metrics. Can't see secrets or the database URL |
 
-Two kinds of machine token:
-
-| Token | Used by | Summary |
+| Machine token | Used by | Summary |
 |---|---|---|
-| **Agent** (`agent`) | AI agents through `embra mcp` | Reads, builds, deploys staging, creates production plans. **Never** approves, deletes, exports or reads the database URL. |
-| **CI** (`ci`) | CI pipelines | Reads and rehearses migrations. Doesn't build or deploy. |
+| **Agent** (`agent`) | AI agents through `embra mcp` | Reads, builds, deploys staging, creates production plans. **Never** approves, deletes, exports or reads the database URL |
+| **CI** (`ci`) | CI pipelines | Reads and rehearses migrations. Doesn't build or deploy |
 
 In the CLI and the API, the Developer role is called `dev`.
 
@@ -79,20 +77,23 @@ In the CLI and the API, the Developer role is called `dev`.
 
 ## Production always needs approval
 
-- **Every deploy plan for production waits for an Owner or Admin to approve, even when it has no migration.** A pending plan expires (24 hours by default); after that, create a new plan.
-- Deploys to staging and previews run straight away, unless a migration is classified as needing a person to look at it. Then the plan waits for approval too.
-- Developers and AI agents can **create** a production plan, but can never **approve** one.
-- A **point-in-time restore** has two steps. A developer or above proposes it. Embra restores into a new database. An Owner or Admin reviews and approves before Embra switches over.
-- **Rolling code back needs no approval**, because it only reruns code that was already approved and run in that environment. Embra refuses a rollback that isn't safe, for example when migrations have moved on or a secret was revoked. A rollback that has to go back to an earlier database (after a restore) loses data written since the switch, so only Owners and Admins can do it.
+| Action | Rule |
+|---|---|
+| Production deploy | **Every plan waits for an Owner or Admin to approve, even with no migration.** A pending plan expires (24 hours by default); after that, create a new plan |
+| Staging, preview deploy | Runs straight away, unless a migration is classified as needing a person to look: then the plan waits for approval too |
+| Developers, AI agents | Can **create** a production plan, never **approve** one |
+| Point-in-time restore | Two steps: a developer or above proposes → Embra restores into a new database → an Owner or Admin reviews and approves before the switch |
+| Code rollback | **No approval needed**, because it only reruns code that was already approved and run in that environment. Embra refuses an unsafe rollback (migrations moved on, a secret was revoked) |
+| Rollback to an earlier database (after a restore) | Loses data written since the switch, so only Owners and Admins can do it |
 
 ## Actions that need a real person
 
-The actions marked "Yes" in the Person column are only accepted when a real person has signed in recently:
+Actions marked "Yes" in the Person column are only accepted when a real person signed in recently:
 
-- A **web session** signed in with GitHub or Google **within the last 12 hours**. A web session lasts 7 days, but once the sign-in is older than 12 hours, Embra asks you to sign in again before it lets you continue.
-- Or a **CLI token from `embra login`**, used within 12 hours of the moment you approved it in the browser. After 12 hours that token still works for everyday actions. For the critical ones, run `embra login` again.
+- A **web session** signed in with GitHub or Google **within the last 12 hours**. A web session lasts 7 days, but once the sign-in is older than 12 hours, Embra asks you to sign in again first.
+- Or a **CLI token from `embra login`**, within 12 hours of approving it in the browser. After 12 hours the token still works for everyday actions; for critical ones, run `embra login` again.
 
-**A machine token can never do these actions, whatever its scope.** Machine tokens are tokens from `embra token create`, `embra login --agent`, and the initial setup token. So a token leaked in a file, a CI log or an AI agent's machine can't approve production, delete production or export data.
+**A machine token can never do these actions, whatever its scope.** Machine tokens: tokens from `embra token create`, `embra login --agent`, and the initial setup token. So a token leaked in a file, a CI log or an AI agent's machine can't approve production, delete production or export data.
 
 Actions marked "Web only" (choosing a plan, paying, managing members, approving a CLI login) can only be done in the browser.
 
@@ -105,52 +106,59 @@ Actions marked "Web only" (choosing a plan, paying, managing members, approving 
 | `embra token create --scope … --name … --ttl …` | Machine token | `dev`, `viewer`, `agent` or `ci` | **Required**, 1 minute to 90 days |
 
 - **Every token expires.** Owner and admin tokens can't be created through the API or CLI.
-- **A token is never stronger than its creator.** On every use, Embra recomputes its rights from the creator's *current* role:
-  - Demote an admin to developer: from the next request, their tokens only have developer rights.
-  - Demote to viewer: the `agent` and `ci` tokens they created **stop working**.
-  - Remove from the workspace: **all** their sessions and tokens are revoked at once, including CI tokens a pipeline is using.
-- Creating a token needs a real person too. A CI pipeline can't mint more tokens.
-- `embra token list` shows each token's kind, creator, last use and expiry. `embra token revoke <id>` revokes one.
+- **A token is never stronger than its creator.** On every request, Embra recomputes its rights from the creator's *current* role:
+
+  | Creator is | Their tokens |
+  |---|---|
+  | Demoted from admin to developer | Only developer rights from the next request |
+  | Demoted to viewer | The `agent` and `ci` tokens they created **stop working** |
+  | Removed from the workspace | **All** their sessions and tokens are revoked at once, including CI tokens a pipeline is using |
+
+- Creating a token needs a real person too: a CI pipeline can't mint more tokens.
+- `embra token list`: each token's kind, creator, last use and expiry. `embra token revoke <id>`: revoke one.
 
 ## Inviting members
 
-Invite people on the web, under **Settings → Members**. `embra members list` only lists them.
+Invite on the web under **Cài đặt → Thành viên** (settings, members). `embra members list` only lists them.
 
-- Owners invite Admins, Developers and Viewers. Admins invite Developers and Viewers.
-- **Nobody is invited straight in as owner.** For a second owner, invite them as Admin, then an owner promotes them.
-- An invite lasts **14 days**. Inviting the same email again refreshes it.
-- **Accepting with GitHub:** the GitHub account's **primary** verified email must match the invited email. A secondary email doesn't count.
-- **Accepting with Google:** the Google account needs a verified email, and that email must not already belong to another Embra account.
-- **People who already have a workspace can still accept** (a trial workspace, or an agency member working for several clients). The invite is accepted on their **next sign-in**, with the invited email. Someone already signed in sees "Lời mời vào …: đăng xuất rồi đăng nhập lại để nhận" (invite to …: sign out and back in to accept) in the **Workspace** menu. After that, they switch between workspaces from that menu.
-- A workspace always keeps at least one owner. Removing or demoting the last owner is refused (`LAST_OWNER`).
-- Someone who was removed from a workspace can't start a new trial workspace on their own. An owner has to invite them again.
+| Rule | Detail |
+|---|---|
+| Who invites whom | Owners invite Admins, Developers and Viewers. Admins invite Developers and Viewers |
+| Second owner | **Nobody is invited straight in as owner.** Invite as Admin, then an owner promotes them |
+| Invite lifetime | **14 days**. Inviting the same email again refreshes it |
+| Accepting with GitHub | The GitHub account's **primary** verified email must match the invited email. A secondary email doesn't count |
+| Accepting with Google | The Google account needs a verified email, not already used by another Embra account |
+| Last owner | A workspace always keeps at least one owner. Removing or demoting the last owner is refused (`LAST_OWNER`) |
+| Removed people | Can't start a new trial workspace on their own; an owner has to invite them again |
+
+**People who already have a workspace can still accept** (a trial workspace, or an agency member working for several clients). The invite is accepted on their **next sign-in**, with the invited email. Someone already signed in sees "Lời mời vào …: đăng xuất rồi đăng nhập lại để nhận" (invite to …: sign out and back in to accept) in the **Workspace** menu, and switches between workspaces from that menu afterwards.
 
 ## Agencies working for a business
 
-The recommended split: **the business owner is Owner, the agency is Developer.** The agency deploys staging and prepares production plans. The business owner (or an Admin on their side) approves production.
+Recommended split: **the business owner is Owner, the agency is Developer.** The agency deploys staging and prepares production plans; the business owner (or an Admin on their side) approves production.
 
 If the agency created the workspace, hand it over like this:
 
 1. The agency invites the business owner as **Admin**.
-2. The business owner signs in. The agency, still an owner, promotes them to **Owner**.
+2. The business owner signs in. The agency (still an owner) promotes them to **Owner**.
 3. The business owner demotes the agency to **Developer**, or removes them when the contract ends.
 
-Before step 3, check CI and agent tokens. Tokens belong to whoever created them: removing the agency stops every token the agency created, immediately. Demoting the agency to Viewer stops their `agent` and `ci` tokens too. If a pipeline must keep running, have someone who is staying create a new token first.
+:::caution[Check CI and agent tokens before step 3]
+Tokens belong to whoever created them: removing the agency stops every token the agency created, immediately; demoting the agency to Viewer stops their `agent` and `ci` tokens too. If a pipeline must keep running, someone who is staying creates a new token first.
+:::
 
 ## Activity history
 
-Activity shows the **person's name** and role (for example "lan (Developer)"), not just the role. Invites, accepted invites, revoked invites, role changes, removals, and token creation and revocation are all recorded.
+**Hoạt động** (activity) shows the **person's name** with their role (for example "lan (Developer)"). Recorded: invites, accepted invites, revoked invites, role changes, removals, token creation and revocation.
 
 ## The Embra team
 
 - Tokens the Embra team creates always expire and always carry a reason. You see "Đội Embra đã tạo token để truy cập workspace. Lý do: …" (the Embra team created a token to access the workspace; reason: …) in Activity.
-- When the Embra team views your logs, metrics, build logs, database URL or an export, Activity records it with the reason. Repeated views in a short window are grouped into one entry.
-- When supporting you at your request, the Embra team can create a short-lived person token to **approve on your behalf**, for example a production plan. That token also shows in Activity with its reason.
+- When the Embra team views your logs, metrics, build logs, database URL or an export, Activity records it with the reason. Repeated views are grouped into one entry.
+- When supporting you at your request, the Embra team can create a short-lived person token to **approve on your behalf** (for example a production plan). That token also shows in Activity with its reason.
 - An owner can revoke an Embra team token at any time with `embra token revoke`. A token with owner scope is tied to the owner, so an Admin can't revoke that kind.
 
 ## Not yet available
-
-What Embra **can't** do yet, so you know up front:
 
 - **No per-environment permissions.** A developer can still set secrets and domains, see the database URL, pause, and roll back code on production. Only approving deploys is locked.
 - **No tokens limited to one project or environment.** A token works across the whole workspace.

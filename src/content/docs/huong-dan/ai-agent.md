@@ -5,13 +5,11 @@ sidebar:
   order: 8
 ---
 
-Trang này dành cho bạn nếu đang nhờ AI agent (Claude Code, Cursor, GitHub Copilot, ChatGPT…) sửa repo để chạy trên Embra.
-
-Hôm nay agent làm tốt nhất phần **chuẩn bị repo**: cổng, health check, `embra.toml`, migration, Dockerfile. Bạn push lên GitHub, Embra build và deploy như bình thường. Những việc cần quyền như đặt secret và duyệt production vẫn do bạn làm trên web.
+AI agent (Claude Code, Cursor, GitHub Copilot, ChatGPT…) làm tốt nhất phần **chuẩn bị repo**: port, health check, `embra.toml`, migration, Dockerfile. Bạn push lên GitHub, Embra build và deploy như bình thường. Việc cần quyền như đặt secret và approve production vẫn do bạn làm trên web.
 
 ## Cho agent đọc docs
 
-Docs Embra có bản văn bản thuần cho AI đọc:
+Docs Embra có bản plain text cho AI đọc:
 
 | File | Nội dung |
 |---|---|
@@ -19,11 +17,11 @@ Docs Embra có bản văn bản thuần cho AI đọc:
 | `https://docs.embra.cloud/llms-small.txt` | Bản rút gọn |
 | `https://docs.embra.cloud/llms.txt` | Mục lục |
 
-Agent đọc tiếng Việt tốt, nên bạn có thể dùng thẳng bản tiếng Việt. Nếu agent không tự tải được URL, mở file trên trình duyệt rồi dán phần cần thiết vào cuộc trò chuyện.
+Agent đọc tiếng Việt tốt, dùng thẳng bản tiếng Việt được. Agent không tự fetch được URL thì mở file trên browser rồi dán phần cần vào chat.
 
 ## Thêm AGENTS.md vào repo
 
-Tạo file `AGENTS.md` ở gốc repo. Claude Code, Cursor, Copilot và Codex đều đọc file này khi làm việc trong repo. Chép mẫu dưới đây, rồi sửa hai dòng có dấu `<…>`.
+Tạo `AGENTS.md` ở root repo: Claude Code, Cursor, Copilot và Codex đều đọc file này. Copy mẫu dưới đây, sửa hai dòng có `<…>`.
 
 ```markdown
 # AGENTS.md
@@ -49,13 +47,13 @@ App này deploy lên Embra. Docs: https://docs.embra.cloud/llms-full.txt
 - Chạy local: <lệnh start, ví dụ PORT=3000 npm start>
 ```
 
-Dùng Claude Code thì tạo thêm `CLAUDE.md` ở gốc repo, chỉ một dòng:
+Dùng Claude Code thì tạo thêm `CLAUDE.md` ở root repo, chỉ một dòng:
 
 ```markdown
 @AGENTS.md
 ```
 
-## Câu lệnh mẫu để giao việc
+## Prompt mẫu để giao việc
 
 Dán vào agent sau khi đã có `AGENTS.md`:
 
@@ -70,19 +68,19 @@ Repo đã có migration Prisma hoặc ORM khác thì thêm: "Chuyển migration 
 
 ## Kiểm lại trước khi push
 
-Agent có thể làm sai. Trước khi push, kiểm nhanh:
+Agent có thể sai. Kiểm nhanh trước khi push:
 
-1. Mở `embra.toml` và đối chiếu với [Chuẩn bị app](/huong-dan/chuan-bi-app/#embratoml).
-2. Chạy app local với `PORT=3000`, mở `http://localhost:3000<health_path>` và thấy mã 2xx.
-3. Tìm trong diff xem có giá trị giống secret không (khoá API, mật khẩu, chuỗi kết nối).
-4. Xem lại file migration mới: đúng thứ tự số, không sửa file cũ.
+1. Đối chiếu `embra.toml` với [Chuẩn bị app](/huong-dan/chuan-bi-app/#embratoml).
+2. Chạy app local với `PORT=3000`, mở `http://localhost:3000<health_path>`, phải thấy 2xx.
+3. Soát diff xem có giá trị giống secret không (API key, password, connection string).
+4. Xem file migration mới: đúng thứ tự số, không sửa file cũ.
 
-Deploy lỗi thì dán nguyên văn mã lỗi và log build cho agent, kèm link [Mã lỗi và cách sửa](/loi/).
+Deploy fail thì dán nguyên văn mã lỗi + build log cho agent, kèm link [Mã lỗi và cách sửa](/loi/).
 
 ## Agent dùng CLI và MCP
 
-CLI `embra` có lệnh `embra mcp` để agent gọi Embra trực tiếp, với token `agent`. Token này đọc, build, deploy staging và tạo plan production, nhưng **không bao giờ** duyệt, xoá, export hay đọc URL database. Xem [Phân quyền](/workspace/phan-quyen/).
+`embra mcp` cho agent gọi Embra trực tiếp bằng token `agent`. Token này đọc, build, deploy staging, tạo plan production, nhưng **không bao giờ** approve, xoá, export hay đọc URL database. Xem [Phân quyền](/workspace/phan-quyen/).
 
-:::note[Đăng nhập CLI chưa bật cho khách]
-Token `agent` lấy bằng `embra login --agent`, lệnh này cần trang duyệt trên trình duyệt mà hiện chưa bật cho khách. Trong lúc chờ, agent chuẩn bị repo, còn bạn deploy và duyệt trên web.
+:::note[CLI login chưa bật cho khách]
+Token `agent` lấy bằng `embra login --agent`, lệnh này cần trang approve trên browser mà hiện chưa bật cho khách. Trong lúc chờ: agent chuẩn bị repo, bạn deploy và approve trên web.
 :::

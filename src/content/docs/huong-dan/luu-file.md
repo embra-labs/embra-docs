@@ -1,11 +1,11 @@
 ---
 title: Lưu file (bucket S3)
-description: Mỗi gói có một bucket S3 cho mỗi environment. Cách tạo, biến môi trường app nhận được, và code mẫu cho backend.
+description: Mỗi environment có một bucket S3. Cách tạo, env var app nhận được, code mẫu cho backend.
 sidebar:
   order: 6
 ---
 
-App trên Embra không ghi được ra đĩa (chỉ `/tmp`, mất khi khởi động lại). File người dùng tải lên như ảnh, video hay tài liệu thì lưu vào **bucket S3 của Embra**. Bucket nằm cùng máy chủ tại Việt Nam và dùng giao thức S3, nên mọi thư viện S3 đều dùng được.
+App trên Embra không ghi được ra disk (chỉ `/tmp`, mất khi restart). File user upload như ảnh, video, tài liệu thì lưu vào **bucket S3 của Embra**: nằm cùng server tại Việt Nam, dùng giao thức S3 nên thư viện S3 nào cũng dùng được.
 
 ## Gói nào có bucket
 
@@ -17,30 +17,31 @@ Mọi gói đều có **1 bucket cho mỗi environment**:
 | Build | 2 GiB |
 | Grow | 5 GiB |
 
-Ghi vượt dung lượng thì bị từ chối. Bucket được backup mỗi đêm, nhưng không khôi phục về một thời điểm tuỳ ý như Postgres.
+Ghi vượt dung lượng thì bị từ chối. Bucket được backup mỗi đêm, nhưng không restore về thời điểm tuỳ ý như Postgres.
 
 ## Tạo bucket
 
-1. Mở environment cần bucket, bấm **"＋ Tạo mới"** → **"Lưu file"** → **"Xác nhận tạo bucket"**.
-2. Bấm **"Deploy"** ở trang Tổng quan hoặc push code. App nhận các biến `S3_*` **từ lần deploy tiếp theo**. Production chờ duyệt như mọi lần deploy.
+1. Mở environment cần bucket → **"＋ Tạo mới"** → **"Bucket"** → **"Xác nhận tạo bucket"**.
+2. Bấm **"Deploy"** ở trang Tổng quan hoặc push code. App nhận các biến `S3_*` **từ lần deploy tiếp theo**. Production chờ approve như mọi lần deploy.
 
-Mỗi bucket có một khoá riêng, chỉ có quyền trên đúng bucket đó. Xoá environment thì bucket và mọi file trong đó bị xoá theo.
+- Mỗi bucket có key riêng, chỉ có quyền trên đúng bucket đó.
+- Xoá environment thì bucket và mọi file trong đó bị xoá theo.
 
-## Biến môi trường app nhận được
+## Env var app nhận được
 
 | Biến | Giá trị | Dùng để |
 |---|---|---|
 | `S3_ENDPOINT` | địa chỉ nội bộ, ví dụ `http://10.200.x.1:3900` | **app đọc/ghi file** (nhanh, không ra internet) |
-| `S3_PUBLIC_ENDPOINT` | `https://s3.embra.cloud` | **tạo link cho trình duyệt** (presigned URL) |
+| `S3_PUBLIC_ENDPOINT` | `https://s3.embra.cloud` | **tạo link cho browser** (presigned URL) |
 | `S3_BUCKET` | tên bucket | |
 | `S3_REGION` | `garage` | |
-| `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` | khoá riêng của bucket | |
-| `S3_FORCE_PATH_STYLE` | `true` | bắt buộc bật path-style |
+| `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` | key riêng của bucket | |
+| `S3_FORCE_PATH_STYLE` | `true` | bắt buộc dùng path-style |
 
-Đây là biến do Embra đặt. Secret trùng tên sẽ bị ghi đè, và Embra không hiện giá trị khoá trên dashboard.
+Embra đặt các biến này: secret trùng tên bị ghi đè, dashboard không hiện giá trị key.
 
 :::caution[Hai endpoint, hai việc]
-Trình duyệt **không** truy cập được `S3_ENDPOINT`. Link nào gửi cho trình duyệt (ảnh, file tải về) phải được ký bằng một client dùng `S3_PUBLIC_ENDPOINT`.
+Browser **không** truy cập được `S3_ENDPOINT`. Link nào gửi cho browser (ảnh, file download) phải được ký bằng client dùng `S3_PUBLIC_ENDPOINT`.
 :::
 
 ## Code mẫu: Node.js (AWS SDK v3)
@@ -97,7 +98,14 @@ url = s3_public.generate_presigned_url("get_object", Params={"Bucket": bucket, "
 
 ## Giới hạn hiện tại
 
-- **Upload thẳng từ trình duyệt chưa được hỗ trợ.** Bucket chưa có CORS, nên trình duyệt không PUT trực tiếp lên `s3.embra.cloud` được. Hãy upload qua backend: trình duyệt gửi file cho app, app ghi vào bucket như ví dụ `saveUpload` ở trên.
-- **Không có file công khai không cần ký.** Mọi link xem file là presigned URL có hạn. Trang cần hiện ảnh thì backend tạo link khi render, ví dụ `fileUrl` ở trên.
-- **Không đặt CDN riêng trước bucket.**
-- Đang dùng S3 bên ngoài (Cloudflare R2, AWS S3…) mà cần đúng các tính năng trên thì cứ giữ nguyên. Đặt `S3_*` của nhà cung cấp đó làm [secret](/huong-dan/secret/) và **không** tạo bucket Embra cho environment đó, vì bucket Embra sẽ ghi đè các biến này. Nhớ cho phép origin của app (`*.onembra.com`, domain riêng) trong CORS của bucket bên ngoài.
+| Chưa hỗ trợ | Làm thay |
+|---|---|
+| **Upload thẳng từ browser.** Bucket chưa có CORS, browser không PUT trực tiếp lên `s3.embra.cloud` được | Upload qua backend: browser gửi file cho app, app ghi vào bucket như `saveUpload` ở trên |
+| **File public không cần ký.** Mọi link là presigned URL có hạn | Backend tạo link khi render trang, như `fileUrl` ở trên |
+| **CDN riêng trước bucket** | — |
+
+Đang dùng S3 bên ngoài (Cloudflare R2, AWS S3…) và cần các tính năng trên thì cứ giữ:
+
+- Đặt `S3_*` của provider đó làm [secret](/huong-dan/secret/).
+- **Không** tạo bucket Embra cho environment đó, vì bucket Embra ghi đè các biến này.
+- Cho phép origin của app (`*.onembra.com`, domain riêng) trong CORS của bucket bên ngoài.

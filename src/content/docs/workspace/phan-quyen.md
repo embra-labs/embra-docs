@@ -1,39 +1,37 @@
 ---
 title: Thành viên và phân quyền
-description: Vai trò trong workspace, ai làm được gì, việc nào cần người thật, token và lời mời.
+description: Role trong workspace, ai làm được gì, việc nào cần người thật, token và lời mời.
 sidebar:
   order: 1
 ---
 
-Mỗi người trong workspace có một **vai trò**. Ngoài người còn có **token máy** cho AI agent và CI. Vai trò, lời mời và lịch sử hoạt động có ở **mọi gói**, kể cả gói Start.
+Mỗi người trong workspace có một **role**. Ngoài người còn có **token máy** cho AI agent và CI. Role, lời mời và lịch sử hoạt động có ở **mọi gói**, kể cả gói Start.
 
 Ba nguyên tắc:
 
-- **Production luôn cần Owner hoặc Admin duyệt.**
-- **Việc không quay lại được thì phải do người thật làm.** Token máy không làm được, kể cả token mang quyền owner.
-- **Token luôn có hạn, và không bao giờ mạnh hơn người đã tạo ra nó.**
+- **Production luôn cần Owner hoặc Admin approve.**
+- **Việc không quay lại được phải do người thật làm.** Token máy không làm được, kể cả token mang quyền owner.
+- **Token luôn có hạn, và không bao giờ mạnh hơn người tạo ra nó.**
 
 ## Vai trò
 
-| Vai trò | Dành cho | Tóm tắt |
+| Role | Dành cho | Tóm tắt |
 |---|---|---|
-| **Owner** | Chủ doanh nghiệp | Toàn quyền, gồm chọn gói, thanh toán và xoá workspace. Workspace luôn có ít nhất một owner. |
-| **Admin** | Người điều hành kỹ thuật phía khách | Duyệt production, quản lý thành viên, xoá environment, export. Không thanh toán, không xoá workspace. |
-| **Developer** (`dev`) | Lập trình viên, agency | Build, deploy staging, tạo plan production để chờ duyệt, quản lý secret, domain, database. Không duyệt production. |
-| **Viewer** | Người cần theo dõi | Chỉ xem trạng thái, hoạt động, log và metrics. Không thấy secret hay URL database. |
+| **Owner** | Chủ doanh nghiệp | Toàn quyền, gồm chọn gói, thanh toán, xoá workspace. Workspace luôn có ít nhất một owner |
+| **Admin** | Người phụ trách kỹ thuật phía khách | Approve production, quản lý thành viên, xoá environment, export. Không thanh toán, không xoá workspace |
+| **Developer** (`dev`) | Developer, agency | Build, deploy staging, tạo plan production chờ approve, quản lý secret, domain, database. Không approve production |
+| **Viewer** | Người cần theo dõi | Chỉ xem trạng thái, hoạt động, log, metrics. Không thấy secret hay URL database |
 
-Hai loại token máy:
-
-| Token | Dùng cho | Tóm tắt |
+| Token máy | Dùng cho | Tóm tắt |
 |---|---|---|
-| **Agent** (`agent`) | AI agent qua `embra mcp` | Đọc, build, deploy staging, tạo plan production. **Không bao giờ** duyệt, xoá, export hay đọc URL database. |
-| **CI** (`ci`) | Pipeline CI | Đọc và diễn tập migration. Không build, không deploy. |
+| **Agent** (`agent`) | AI agent qua `embra mcp` | Đọc, build, deploy staging, tạo plan production. **Không bao giờ** approve, xoá, export hay đọc URL database |
+| **CI** (`ci`) | Pipeline CI | Đọc và chạy thử migration. Không build, không deploy |
 
-Trong CLI và API, vai trò Developer có tên là `dev`.
+Trong CLI và API, role Developer tên là `dev`.
 
 ## Bảng quyền
 
-✓ = được làm. Cột **Người thật**: *Có* = phải làm trên web hoặc trong 12 giờ sau `embra login`; *Chỉ web* = chỉ làm được trên trình duyệt. Xem [Việc cần người thật](#việc-cần-người-thật).
+✓ = được làm. Cột **Người thật**: *Có* = phải làm trên web hoặc trong 12 giờ sau `embra login`; *Chỉ web* = chỉ làm được trên browser. Xem [Việc cần người thật](#việc-cần-người-thật).
 
 <div class="matrix">
 
@@ -72,90 +70,100 @@ Trong CLI và API, vai trò Developer có tên là `dev`.
 
 </div>
 
-1. Admin chỉ mời hoặc gán vai trò Developer và Viewer. Admin đổi vai trò hoặc gỡ được Developer, Viewer và các admin khác, nhưng không động được tới owner.
-2. Không tạo được token mạnh hơn vai trò của mình. Developer tạo được token `dev`, `viewer`, `agent`, `ci`.
+1. Admin chỉ mời hoặc gán role Developer và Viewer. Admin đổi role hoặc gỡ được Developer, Viewer và admin khác, nhưng không động được tới owner.
+2. Không tạo được token mạnh hơn role của mình. Developer tạo được token `dev`, `viewer`, `agent`, `ci`.
 3. Admin thấy và thu hồi được mọi token, trừ token của owner.
-4. Viewer duyệt `embra login` thì nhận token viewer. Viewer không cấp được token agent.
+4. Viewer approve `embra login` thì nhận token viewer. Viewer không cấp được token agent.
 
 ## Production luôn cần duyệt
 
-- **Mọi plan deploy lên production đều chờ Owner hoặc Admin duyệt, kể cả khi không có migration.** Plan chờ duyệt có hạn (mặc định 24 giờ). Quá hạn thì phải tạo plan mới.
-- Deploy lên staging và preview chạy ngay, trừ khi migration được xếp vào loại cần người xem. Khi đó plan cũng chờ duyệt.
-- Developer và AI agent **tạo** được plan production, nhưng không bao giờ **duyệt** được.
-- **Restore về một thời điểm** đi theo hai bước. Developer trở lên đề xuất. Embra khôi phục ra một database mới. Owner hoặc Admin xem rồi duyệt thì mới chuyển sang.
-- **Rollback code không cần duyệt**, vì nó chỉ chạy lại code đã từng được duyệt và chạy ở environment đó. Embra từ chối rollback nếu không an toàn, ví dụ migration đã đi tiếp hoặc secret đã bị thu hồi. Rollback mà phải quay về database cũ (sau một lần restore) thì sẽ mất dữ liệu ghi từ lúc chuyển, nên chỉ Owner và Admin làm được.
+| Việc | Quy tắc |
+|---|---|
+| Deploy production | **Mọi plan đều chờ Owner hoặc Admin approve, kể cả không có migration.** Plan chờ có hạn (mặc định 24 giờ), quá hạn phải tạo plan mới |
+| Deploy staging, preview | Chạy ngay, trừ khi migration thuộc loại cần người xem: khi đó plan cũng chờ approve |
+| Developer, AI agent | **Tạo** được plan production, không bao giờ **approve** được |
+| Restore về một thời điểm | Hai bước: Developer trở lên đề xuất → Embra restore ra database mới → Owner hoặc Admin xem rồi approve mới chuyển sang |
+| Rollback code | **Không cần approve**, vì chỉ chạy lại code đã được approve và từng chạy ở environment đó. Embra từ chối nếu không an toàn (migration đã đi tiếp, secret đã bị thu hồi) |
+| Rollback kèm quay về database cũ (sau một lần restore) | Mất data ghi từ lúc chuyển, nên chỉ Owner và Admin làm được |
 
 ## Việc cần người thật
 
-Các việc có ghi "Có" ở cột Người thật chỉ được chấp nhận khi có một người thật vừa đăng nhập:
+Việc ghi "Có" ở cột Người thật chỉ được chấp nhận khi có người thật vừa login:
 
-- **Phiên web** đăng nhập bằng GitHub hoặc Google **trong vòng 12 giờ**. Phiên web sống 7 ngày, nhưng nếu lần đăng nhập đã quá 12 giờ, Embra sẽ yêu cầu bạn đăng nhập lại rồi mới cho làm.
-- Hoặc **token CLI do `embra login` cấp**, dùng trong 12 giờ kể từ lúc bạn bấm duyệt trên trình duyệt. Sau 12 giờ, token đó vẫn dùng được cho các việc thường. Muốn làm việc quan trọng thì chạy `embra login` lại.
+- **Session web** login bằng GitHub hoặc Google **trong vòng 12 giờ**. Session web sống 7 ngày, nhưng lần login đã quá 12 giờ thì Embra bắt login lại rồi mới cho làm.
+- Hoặc **token CLI do `embra login` cấp**, trong 12 giờ kể từ lúc bạn approve trên browser. Sau 12 giờ token vẫn dùng được cho việc thường; muốn làm việc quan trọng thì chạy `embra login` lại.
 
-**Token máy không bao giờ làm được các việc này, dù scope là gì.** Token máy gồm token tạo bằng `embra token create`, token `embra login --agent`, và token cài đặt ban đầu. Nhờ vậy, một token bị lộ trong file, log CI hay máy của AI agent không thể duyệt production, xoá production hay export dữ liệu.
+**Token máy không bao giờ làm được các việc này, dù scope là gì.** Token máy gồm: token tạo bằng `embra token create`, token `embra login --agent`, token cài đặt ban đầu. Nhờ vậy token bị lộ trong file, log CI hay máy của AI agent không thể approve production, xoá production hay export data.
 
-Việc ghi "Chỉ web" (chọn gói, thanh toán, quản lý thành viên, duyệt đăng nhập CLI) chỉ làm được trên trình duyệt.
+Việc ghi "Chỉ web" (chọn gói, thanh toán, quản lý thành viên, duyệt đăng nhập CLI) chỉ làm được trên browser.
 
 ## Token
 
-| Cách tạo | Loại | Vai trò | Thời hạn |
+| Cách tạo | Loại | Role | Thời hạn |
 |---|---|---|---|
-| `embra login` | Token người | Đúng vai trò của bạn | Mặc định 30 ngày |
+| `embra login` | Token người | Đúng role của bạn | Mặc định 30 ngày |
 | `embra login --agent` | Token máy | `agent`, cho `embra mcp` | Mặc định 7 ngày |
 | `embra token create --scope … --name … --ttl …` | Token máy | `dev`, `viewer`, `agent` hoặc `ci` | **Bắt buộc ghi**, từ 1 phút tới 90 ngày |
 
 - **Mọi token đều có hạn.** Không tạo được token owner hay admin qua API hay CLI.
-- **Token không bao giờ mạnh hơn người tạo ra nó.** Mỗi lần dùng, Embra tính lại quyền theo vai trò *hiện tại* của người tạo:
-  - Hạ admin xuống developer: token của người đó chỉ còn quyền developer từ request tiếp theo.
-  - Hạ xuống viewer: token `agent` và `ci` người đó tạo **ngừng hoạt động**.
-  - Gỡ khỏi workspace: **mọi** phiên và token người đó tạo bị thu hồi ngay, kể cả token CI đang dùng trong pipeline.
-- Tạo token cũng là việc cần người thật. Pipeline CI không tự tạo thêm token được.
-- `embra token list` cho xem loại token, người tạo, lần dùng gần nhất và hạn. `embra token revoke <id>` để thu hồi.
+- **Token không bao giờ mạnh hơn người tạo.** Mỗi request, Embra tính lại quyền theo role *hiện tại* của người tạo:
+
+  | Người tạo bị | Token của họ |
+  |---|---|
+  | Hạ admin xuống developer | Chỉ còn quyền developer từ request tiếp theo |
+  | Hạ xuống viewer | Token `agent` và `ci` họ tạo **ngừng hoạt động** |
+  | Gỡ khỏi workspace | **Mọi** session và token họ tạo bị thu hồi ngay, kể cả token CI đang dùng trong pipeline |
+
+- Tạo token cũng cần người thật: pipeline CI không tự tạo thêm token được.
+- `embra token list`: xem loại token, người tạo, lần dùng gần nhất, hạn. `embra token revoke <id>`: thu hồi.
 
 ## Mời thành viên
 
-Mời người trên web, ở **Cài đặt → Thành viên**. `embra members list` chỉ để xem danh sách.
+Mời trên web ở **Cài đặt → Thành viên**. `embra members list` chỉ để xem danh sách.
 
-- Owner mời được Admin, Developer, Viewer. Admin mời được Developer, Viewer.
-- **Không mời thẳng làm owner.** Muốn có owner thứ hai thì mời làm Admin, rồi một owner nâng người đó lên.
-- Lời mời có hạn **14 ngày**. Mời lại cùng một email thì lời mời cũ được làm mới.
-- **Nhận lời mời bằng GitHub:** email **chính** đã xác minh của tài khoản GitHub phải trùng với email được mời. Email phụ không dùng được.
-- **Nhận lời mời bằng Google:** tài khoản Google phải có email đã xác minh, và email đó chưa gắn với một tài khoản Embra khác.
-- **Đã có workspace riêng vẫn nhận lời mời được** (ví dụ workspace dùng thử, hoặc người của agency làm cho nhiều khách). Lời mời được nhận ở **lần đăng nhập sau**, bằng đúng email được mời. Người đang đăng nhập thấy dòng "Lời mời vào …: đăng xuất rồi đăng nhập lại để nhận" trong menu **Workspace**. Sau khi nhận, đổi qua lại giữa các workspace ở menu đó.
-- Workspace luôn còn ít nhất một owner. Gỡ hoặc hạ owner cuối cùng bị từ chối (`LAST_OWNER`).
-- Người đã bị gỡ khỏi workspace thì không tự tạo được workspace dùng thử mới. Họ cần owner mời lại.
+| Quy tắc | Chi tiết |
+|---|---|
+| Ai mời ai | Owner mời được Admin, Developer, Viewer. Admin mời được Developer, Viewer |
+| Owner thứ hai | **Không mời thẳng làm owner.** Mời làm Admin, rồi một owner nâng lên |
+| Hạn lời mời | **14 ngày**. Mời lại cùng email thì lời mời cũ được làm mới |
+| Nhận bằng GitHub | Email **chính** đã verify của account GitHub phải trùng email được mời. Email phụ không dùng được |
+| Nhận bằng Google | Account Google phải có email đã verify, và email đó chưa gắn với account Embra khác |
+| Owner cuối cùng | Workspace luôn còn ít nhất một owner. Gỡ hoặc hạ owner cuối cùng bị từ chối (`LAST_OWNER`) |
+| Người đã bị gỡ | Không tự tạo được workspace dùng thử mới, cần owner mời lại |
+
+**Đã có workspace riêng vẫn nhận lời mời được** (ví dụ workspace dùng thử, hoặc người của agency làm cho nhiều khách). Lời mời được nhận ở **lần login sau**, bằng đúng email được mời. Người đang login thấy dòng "Lời mời vào …: đăng xuất rồi đăng nhập lại để nhận" trong menu **Workspace**. Nhận xong thì đổi qua lại giữa các workspace ở menu đó.
 
 ## Agency làm cho doanh nghiệp
 
-Cách chia vai trò nên dùng: **chủ doanh nghiệp là Owner, agency là Developer.** Agency deploy staging và chuẩn bị plan production. Chủ doanh nghiệp (hoặc Admin bên khách) duyệt production.
+Nên chia: **chủ doanh nghiệp là Owner, agency là Developer.** Agency deploy staging và chuẩn bị plan production; chủ doanh nghiệp (hoặc Admin bên khách) approve production.
 
-Nếu agency là người tạo workspace, bàn giao như sau:
+Agency là người tạo workspace thì bàn giao như sau:
 
 1. Agency mời chủ doanh nghiệp làm **Admin**.
-2. Chủ doanh nghiệp đăng nhập. Agency, đang là owner, nâng chủ doanh nghiệp lên **Owner**.
+2. Chủ doanh nghiệp login. Agency (đang là owner) nâng chủ doanh nghiệp lên **Owner**.
 3. Chủ doanh nghiệp hạ agency xuống **Developer**, hoặc gỡ hẳn khi hết hợp đồng.
 
-Trước bước 3, kiểm token CI và agent. Token gắn với người tạo: gỡ agency thì mọi token agency tạo ngừng hoạt động ngay. Hạ agency xuống Viewer thì token `agent` và `ci` của họ cũng ngừng. Nếu pipeline cần tiếp tục chạy, người ở lại tạo token mới trước.
+:::caution[Kiểm token CI và agent trước bước 3]
+Token gắn với người tạo: gỡ agency thì mọi token agency tạo ngừng hoạt động ngay; hạ agency xuống Viewer thì token `agent` và `ci` của họ cũng ngừng. Pipeline cần chạy tiếp thì người ở lại tạo token mới trước.
+:::
 
 ## Lịch sử hoạt động
 
-Mục Hoạt động hiện **tên người** và vai trò (ví dụ "lan (Developer)"), không chỉ hiện vai trò. Mời, nhận lời mời, thu hồi lời mời, đổi vai trò, gỡ thành viên, tạo và thu hồi token đều được ghi lại.
+Mục **Hoạt động** hiện **tên người** kèm role (ví dụ "lan (Developer)"). Được ghi lại: mời, nhận lời mời, thu hồi lời mời, đổi role, gỡ thành viên, tạo và thu hồi token.
 
 ## Đội Embra
 
 - Token do đội Embra tạo luôn có hạn và luôn kèm lý do. Bạn thấy dòng "Đội Embra đã tạo token để truy cập workspace. Lý do: …" trong Hoạt động.
-- Khi đội Embra xem log, metrics, log build, URL database hoặc bản export của bạn, Hoạt động ghi lại kèm lý do. Các lần xem liên tiếp được gộp làm một dòng.
-- Khi hỗ trợ theo yêu cầu của bạn, đội Embra có thể tạo một token người ngắn hạn để **duyệt thay bạn**, ví dụ duyệt một plan production. Token này cũng hiện trong Hoạt động kèm lý do.
+- Đội Embra xem log, metrics, build log, URL database hoặc bản export của bạn thì Hoạt động ghi lại kèm lý do. Các lần xem liên tiếp gộp làm một dòng.
+- Khi hỗ trợ theo yêu cầu của bạn, đội Embra có thể tạo token người ngắn hạn để **approve thay bạn** (ví dụ một plan production). Token này cũng hiện trong Hoạt động kèm lý do.
 - Owner thu hồi được token của đội Embra bất cứ lúc nào bằng `embra token revoke`. Token mang quyền owner gắn với owner, nên Admin không thu hồi được loại này.
 
 ## Chưa có
 
-Những điều Embra **chưa** làm được, để bạn biết trước:
-
-- **Chưa phân quyền theo environment.** Developer vẫn đặt secret và domain, xem URL database, tạm dừng và rollback code trên production. Chỉ có việc duyệt deploy là bị khoá.
+- **Chưa phân quyền theo environment.** Developer vẫn đặt secret và domain, xem URL database, tạm dừng và rollback code trên production. Chỉ có approve deploy là bị khoá.
 - **Chưa có token gắn riêng một project hay environment.** Token có hiệu lực trên cả workspace.
-- **Chưa có duyệt hai người.** Admin tự tạo plan production thì tự duyệt được.
-- **Chưa có vai trò "Khách: xem và duyệt".**
+- **Chưa có approve hai người.** Admin tự tạo plan production thì tự approve được.
+- **Chưa có role "Khách: xem và duyệt".**
 - **Chưa có trang quản lý token trên web.** Dùng `embra token list` và `embra token revoke`.
 - Chưa có SSO.
 
@@ -163,7 +171,7 @@ Những điều Embra **chưa** làm được, để bạn biết trước:
 
 | Mã | Nghĩa | Làm gì |
 |---|---|---|
-| `FORBIDDEN_SCOPE` | Vai trò hoặc token không có quyền làm việc này | Nhờ Owner hoặc Admin |
+| `FORBIDDEN_SCOPE` | Role hoặc token không có quyền làm việc này | Nhờ Owner hoặc Admin |
 | `HUMAN_REQUIRED` | Việc cần người thật, mà bạn đang dùng token máy | Làm trên web, hoặc `embra login` rồi thử lại |
-| `REAUTH_REQUIRED` | Lần đăng nhập đã quá 12 giờ | Đăng nhập lại trên web, hoặc chạy `embra login` lại |
-| `LAST_OWNER` | Thay đổi này sẽ làm workspace không còn owner | Nâng người khác lên owner trước |
+| `REAUTH_REQUIRED` | Lần login đã quá 12 giờ | Login lại trên web, hoặc chạy `embra login` lại |
+| `LAST_OWNER` | Thay đổi này làm workspace không còn owner | Nâng người khác lên owner trước |

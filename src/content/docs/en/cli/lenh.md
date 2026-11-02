@@ -40,7 +40,7 @@ Run `embra <command> --help` to see every flag. Add `--json` for machine-readabl
 | `embra deploy` | Create a deploy plan from `embra.json` and an image pinned by digest |
 | `embra approve <op_id> --binding <sha256:…>` | An Owner or Admin approves a plan they have reviewed |
 | `embra cancel <op_id>` | Cancel an operation that has not started running |
-| `embra rollback` | Put the code back to the previous release |
+| `embra rollback` | Roll code back to the previous release |
 | `embra plan` | Rehearse migrations on a copy of the data, without deploying |
 | `embra status [op_id]` / `embra wait <op_id>` | Status / wait until an operation reaches a final state |
 | `embra operation get <op_id>` | Show the status of one operation |
@@ -61,7 +61,7 @@ Run `embra <command> --help` to see every flag. Add `--json` for machine-readabl
 | `embra db import --env <project>/<env> <file>` | Import data from a `pg_dump --data-only` file (gzip allowed). Target tables must be empty; production waits for an Owner or Admin to approve. See [Move an existing app](/en/huong-dan/chuyen-app-co-san/) |
 | `embra db undo start` / `run` / `fix` … | Row-level undo: build a copy at a point in time, compare with production, generate SQL fix files (never applied automatically). See `embra db undo --help` |
 
-## Secrets, logs, metrics
+## Secrets, logs, metrics, app size
 
 | Command | What it does |
 |---|---|

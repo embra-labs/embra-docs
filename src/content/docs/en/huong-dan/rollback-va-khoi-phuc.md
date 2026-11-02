@@ -1,11 +1,9 @@
 ---
 title: Rollback and restoring backups
-description: Sending code back to the previous version when a release breaks, restoring the database to a point in time, and exporting data.
+description: Roll code back when a release breaks, restore the database to a point in time, export data.
 sidebar:
   order: 11
 ---
-
-This page is for when you just deployed a broken version, or wrote bad data and need it back. You will learn when to use a **rollback** (code), when to **restore a backup** (data), and what each one costs.
 
 ## Which one do you need?
 
@@ -13,24 +11,27 @@ This page is for when you just deployed a broken version, or wrote bad data and 
 |---|---|---|---|
 | A broken release, data is fine | Rollback | No | No |
 | Data deleted or written wrong | Restore a backup | Yes: data written after the chosen point is lost | Owner or Admin |
-| Moving the app and data elsewhere | Export | No | Only Owner or Admin can create one |
+| Moving the app + data elsewhere | Export | No | Only Owner or Admin can create one |
 
 ## Rolling back to the previous version
 
-A rollback reruns the deploy **right before** the one running now, through the full start, readiness check and traffic switch steps. Data in the database is not rewound.
+A rollback reruns the deploy **right before** the running one: start, health check, traffic switch. Data in the database is not rewound.
 
-Owners, Admins and Developers can roll back. No approval is needed, even in production, because that version was already approved and ran.
+- Owners, Admins and Developers can roll back.
+- No approval needed, even in production, because that version was already approved and ran.
 
-1. Open the environment. At the top of the page is the **"Lịch sử & khôi phục"** (history & restore) rail.
-2. Click **"Quay về bản trước"** (roll back). The button only shows once the environment has at least 2 successful deploys, and it is locked while another operation is running.
-3. In production, type the environment name to confirm, then click **"Quay về bản trước"** in the dialog.
+1. Open the environment and find the **"Lịch sử & khôi phục"** (history & restore) rail at the top.
+2. Click **"Quay về bản trước"** (roll back). The button only shows after at least 2 successful deploys, and is locked while another operation runs.
+3. Production: type the environment name, then click **"Quay về bản trước"** in the dialog.
 4. Embra opens the operation page. The old version has traffic when the state reads **"Deploy thành công"** (deployed).
 
-On the web you can only go back exactly one version; you cannot pick an older one.
+![The Lịch sử & khôi phục rail with the Quay về bản trước and Khôi phục dữ liệu… buttons](../../../../assets/screens/rollback-rail.png)
+
+The web only goes back exactly one version; you can't pick an older one.
 
 ### Rolling back a second time
 
-A rollback creates a new release, and that release's "previous version" is the one you just left. So clicking **"Quay về bản trước"** again **brings the broken version back**; it does not go one step further. To fix forward, push a new commit.
+A rollback creates a new release, and its "previous version" is the broken one you just left. Clicking **"Quay về bản trước"** again **brings the broken version back**; it doesn't go further. To fix forward, push a new commit.
 
 ### When Embra refuses a rollback
 
@@ -42,32 +43,34 @@ Embra checks before doing anything, so a refusal leaves the running app untouche
 | A secret that version used was revoked | [`SECRET_REVOKED`](/en/loi/#secret_revoked) | Deploy a new version with the current secrets |
 | Another operation has not finished | [`OPERATION_IN_PROGRESS`](/en/loi/#operation_in_progress) | Wait for it to finish |
 | The environment is blocked after an incident | [`ENVIRONMENT_BLOCKED`](/en/loi/#environment_blocked) | Contact the Embra team |
-| The running version is the first one, or the environment is paused | [`INVALID_INPUT`](/en/loi/#invalid_input) | There is nothing to go back to / resume the environment first |
+| The running version is the first one, or the environment is paused | [`INVALID_INPUT`](/en/loi/#invalid_input) | Nothing to go back to / resume the environment first |
 
-A rollback only restores code, not the schema. That is why Embra blocks it once migrations have moved on: old code may not run on the new schema.
+A rollback restores code, not the schema. Old code may not run on the new schema, so Embra blocks it once migrations have moved on.
 
 ## Database backups
 
-Every environment with Postgres is backed up automatically; there is nothing to turn on.
+Every environment with Postgres is backed up automatically; nothing to turn on.
 
-- **Continuous:** every change is recorded (WAL) and pushed to the backup at least once a minute.
-- **Full backups:** every 7 days. Embra keeps the 2 most recent full backups.
-- **Restorable range:** from the oldest full backup still kept up to about 1–2 minutes ago. For a new database it starts at the first full backup. Once a database has run for more than 2 weeks, the range is 7 to 14 days long, depending on when the latest full backup ran.
-- **Where:** on the server, on a separate disk from the one holding the database. Off-server copies are not on yet.
-- **Restore tests:** every 7 days Embra rebuilds the database from the backup to make sure it works. The result shows under **Backup** in the status band at the top of the environment page.
+| Item | Detail |
+|---|---|
+| Continuous | Every change is recorded (WAL) and pushed to the backup at least once a minute |
+| Full backups | Every 7 days; the 2 most recent are kept |
+| Restorable range | From the oldest full backup kept up to about 1–2 minutes ago. New database: starts at the first full backup. Database older than 2 weeks: 7 to 14 days long, depending on when the latest full backup ran |
+| Where | On the server, on a separate disk from the database. No off-server copies yet |
+| Restore tests | Every 7 days Embra rebuilds the database from the backup to make sure it works. The result shows under **Backup** in the status band at the top of the environment page |
 
 | Console shows | Meaning |
 |---|---|
 | **"Restore thử đạt"** (restore test passed) | The latest restore test succeeded |
 | **"Chưa restore thử"** (not restore-tested) | New database, first restore test not run yet |
 | **"Restore thử thiếu dữ liệu"** (restore test came up short) | The backup is missing a stretch ([`BACKUP_WAL_GAP`](/en/loi/#backup_wal_gap)) |
-| **"Restore thử thất bại"** (restore test failed) | The backup could not be rebuilt. Do not rely on the restore range; email hello@embra.cloud |
+| **"Restore thử thất bại"** (restore test failed) | The backup could not be rebuilt. Don't rely on the restore range; email hello@embra.cloud |
 
 Backups pause while the database is stopped or the environment is blocked after an incident.
 
 ## Restoring the database to a point in time
 
-A restore has two steps, so you can look before switching the app:
+A restore has two steps: look first, then switch the app.
 
 ```
 Bước 1: Tạo bản khôi phục        Bước 2: Chuyển sang bản này
@@ -80,21 +83,21 @@ app vẫn dùng database cũ         database cũ giữ 72 giờ, chỉ đọc
 
 **Step 1. Create the restored copy**
 
-1. On the **"Lịch sử & khôi phục"** rail, click **"Khôi phục dữ liệu…"** (restore data). Or on the overview page, click **"Xem mốc khôi phục"** (view restore points).
+1. On the **"Lịch sử & khôi phục"** rail, click **"Khôi phục dữ liệu…"** (restore data), or **"Xem mốc khôi phục"** (view restore points) on the overview page.
 2. Check the restorable range, from **"Mốc sớm nhất"** (earliest) to **"Mốc mới nhất"** (latest).
-3. Enter a **restore point** in that range, in your device's time zone.
-4. Click **"Tạo bản khôi phục"** (create restored copy). Embra builds a new database from that point. The running database is not touched.
+3. Enter a **Mốc khôi phục** (restore point) in that range, in your device's time zone.
+4. Click **"Tạo bản khôi phục"** (create restored copy). Embra builds a new database from that point; the running database is not touched.
 
-**Step 2. Switch to the restored copy**
+![The Khôi phục dữ liệu dialog: earliest point, latest point and the restore point field](../../../../assets/screens/rollback-restore.png)
 
-An Owner or Admin does this step.
+**Step 2. Switch to the restored copy** (Owner or Admin)
 
 1. When the copy is ready, the operation page shows **"Chuyển sang bản khôi phục"** (switch to the restored copy) with an estimated row count per table.
 2. Type the environment name to confirm.
-3. Click **"Chuyển sang bản này"** (switch to this copy). To drop it, click **"Huỷ bản khôi phục"** (cancel this restore).
-4. Embra moves the app to the new database without stopping the app.
+3. Click **"Chuyển sang bản này"** (switch to this copy), or **"Huỷ bản khôi phục"** (cancel this restore) to drop it.
+4. Embra moves the app to the new database without stopping it.
 
-The approver must have signed in on the web within the last 12 hours. If nobody approves within 2 hours, the copy is cancelled and cleaned up; start again from step 1.
+The approver must have signed in on the web within 12 hours. If nobody approves within 2 hours, the copy is cancelled and cleaned up; start again from step 1.
 
 :::caution[Data written after the chosen point is lost]
 After the switch, anything the app wrote after the restore point is not in the new database. During the switch the old database becomes read-only, so the app may report write errors for a few seconds.
@@ -104,7 +107,7 @@ After the switch, anything the app wrote after the restore point is not in the n
 
 The old database is kept for **72 hours** after the switch (trial: 24 hours). During that time, rolling back to the deploy that ran before the restore moves the app back to the old database.
 
-- Only an Owner or Admin can do it, and it must be a real person (a web session within 12 hours).
+- Owner or Admin only, and a real person (a web session within 12 hours).
 - After the retention period the old database is deleted: the rollback fails with [`ROLLBACK_DB_GONE`](/en/loi/#rollback_db_gone).
 - If a migration ran on the new database after the switch, the rollback is blocked with [`ROLLBACK_INCOMPATIBLE`](/en/loi/#rollback_incompatible).
 
@@ -119,22 +122,24 @@ Going back to the old database discards everything the app wrote to the new data
 | The point is outside the range, or there is no backup yet | [`RESTORE_POINT_UNAVAILABLE`](/en/loi/#restore_point_unavailable) | Pick a point between **"Mốc sớm nhất"** and **"Mốc mới nhất"** |
 | A migration ran after the chosen point | [`MIGRATION_AFTER_RESTORE_POINT`](/en/loi/#migration_after_restore_point) | Pick a point after that migration |
 | The backup cannot reach that exact point | [`RESTORE_SHORT`](/en/loi/#restore_short) | Email hello@embra.cloud |
-| The operation shows **"Cần đội Embra hỗ trợ"** (needs the Embra team) | [`RECOVERY_REQUIRED`](/en/loi/#recovery_required) | Do not delete the environment; email with the operation ID |
+| The operation shows **"Cần đội Embra hỗ trợ"** (needs the Embra team) | [`RECOVERY_REQUIRED`](/en/loi/#recovery_required) | Don't delete the environment; email with the operation ID |
 
-You cannot restore while the environment is paused or the database is stopped; start it first.
+You can't restore while the environment is paused or the database is stopped; start it first.
 
 ## Exporting data
 
 An export builds a bundle with the image, manifest, a `pg_dump` and the list of bucket objects. The bundle contains no secret values.
 
-1. Open **"Cài đặt"** (settings) → **"Dữ liệu"** (data) → **"Export dữ liệu"** (export data).
-2. Tick **"Kèm nội dung object của bucket"** (include bucket object contents) if you also need the files in the bucket.
+1. Open **"Cài đặt"** (settings) → **"Dữ liệu"** (data) → **"Export"**.
+2. To include the files in the bucket, tick **"Kèm nội dung object của bucket"** (include bucket object contents).
 3. Click **"Tạo export"** (create export).
-4. When the export finishes, click **"Tải bundle"** (download bundle).
+4. When it finishes, click **"Tải bundle"** (download bundle).
 
-- Owner or Admin only. Exporting production needs a web session signed in within 12 hours.
-- The bundle is deleted after 24 hours.
-- A bundle over the size limit fails with [`QUOTA_EXCEEDED`](/en/loi/#quota_exceeded).
+| Item | Detail |
+|---|---|
+| Who | Owner or Admin only. Exporting production needs a web session signed in within 12 hours |
+| Auto delete | After 24 hours |
+| Over the size limit | [`QUOTA_EXCEEDED`](/en/loi/#quota_exceeded) |
 
 ## Using the CLI
 

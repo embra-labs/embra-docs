@@ -5,8 +5,6 @@ sidebar:
   order: 12
 ---
 
-This page is for when you need to know how your app is doing, or why a build or deploy failed. You will learn where to find logs, how to read the status labels in the console, and how long data is kept.
-
 ## Where is everything?
 
 | To see | Where in the console |
@@ -22,7 +20,7 @@ Every role in the workspace, Viewer included, can read logs and metrics.
 
 ## Reading the app status
 
-The band at the top of the environment page sums things up in one label, then three separate items: **Health check**, **Traffic** and **Backup**. The console refreshes every 5 seconds and only says **"Mọi thứ ổn"** (all good) once all three are confirmed.
+The band at the top of the environment page sums things up in one label, plus three items: **Health check**, **Traffic**, **Backup**. The console refreshes every 5 seconds and only says **"Mọi thứ ổn"** (all good) once all three are confirmed.
 
 | Label | Meaning |
 |---|---|
@@ -33,7 +31,8 @@ The band at the top of the environment page sums things up in one label, then th
 | **"Chưa xác nhận"** (not confirmed) | Fresh status could not be read, or there is no health check result yet |
 | **"Chưa deploy"** (not deployed) | The environment has no deploy yet |
 
-The **"Những gì đang chạy"** (what's running) table on the overview page shows each service:
+<details>
+<summary>Per-service status in the "Những gì đang chạy" (what's running) table</summary>
 
 | Service shows | Meaning |
 |---|---|
@@ -42,6 +41,8 @@ The **"Những gì đang chạy"** (what's running) table on the overview page s
 | **"Chưa có kết quả health check"** (no health check result yet) | The server could not be asked |
 | **"Chưa kiểm tra được worker"** (worker not checked yet) | Workers have no health check of their own |
 | **"Chờ đội Embra kiểm tra"** (waiting for the Embra team) | The environment is blocked after an incident, see [`ENVIRONMENT_BLOCKED`](/en/loi/#environment_blocked) |
+
+</details>
 
 How to set `health_path` and what passes during a deploy: see [Prepare your app](/en/huong-dan/chuan-bi-app/#health-check).
 
@@ -60,28 +61,29 @@ If a build fails, look up the error code in [Error codes and fixes](/en/loi/). B
 3. Choose **"Trực tiếp"** (live). New lines appear as soon as the app prints them.
 
 - **APP** lines come from your app; **EMBRA** lines are platform messages.
-- Filter by text, source, log level or time. Click **"Tạm dừng cuộn"** (pause scrolling) to read, **"Theo dòng mới nhất"** (follow newest) to resume.
-- The browser keeps at most 5,000 lines. **"Sao chép"** (copy) and **"Tải .txt"** (download .txt) take the lines currently shown.
+- Filter by text, source, log level or time. **"Tạm dừng cuộn"** (pause scrolling) to read, **"Theo dòng mới nhất"** (follow newest) to resume.
 - Only the running version is shown. Logs of older versions are in **"Lịch sử"** (history) mode.
-- A workspace can have at most 5 log streams open at once. Opening more fails with [`QUOTA_EXCEEDED`](/en/loi/#quota_exceeded); close some tabs.
+- If the app isn't running yet, the tab shows **"Chưa có log của app"** (no app logs yet) → click **"Xem build log"** (view build logs) to see the preparation steps.
 
-If the app is not running yet, the tab shows **"Chưa có log của app"** (no app logs yet). Click **"Xem build log"** (view build logs) to see the preparation steps.
+| Limit | Value |
+|---|---|
+| Lines kept in the browser | At most 5,000. **"Sao chép"** (copy) and **"Tải .txt"** (download .txt) take the lines currently shown |
+| Log streams open at once | At most 5 per workspace. Opening more fails with [`QUOTA_EXCEEDED`](/en/loi/#quota_exceeded); close some tabs |
 
 ### Times in the log
 
-Containers run on UTC, so times your app prints itself are UTC. To print Vietnam time, set the secret `TZ` = `Asia/Ho_Chi_Minh`. The time the console shows next to each line is when Embra read that line, not when the app wrote it.
+Containers run on UTC; for Vietnam time set the secret `TZ` = `Asia/Ho_Chi_Minh`. The time the console shows next to each line is when Embra read that line, not when the app wrote it.
 
 ## Searching log history
 
 1. In **"Logs"** → **"Runtime"**, choose **"Lịch sử"** (history).
-2. Enter the text to find (an exact string, not a regex).
-3. Pick a time span, from **"30 phút qua"** (last 30 minutes) to **"30 ngày qua"** (last 30 days), and click **"Tìm"** (search).
+2. Enter the text to find (exact match, not a regex).
+3. Pick a time span, from **"30 phút qua"** (last 30 minutes) to **"30 ngày qua"** (last 30 days) → **"Tìm"** (search).
 
 - History includes logs of earlier versions, and request lines from the edge (choose the **"Request (edge)"** source).
 - Each search returns at most the 500 newest lines. If older lines remain, narrow the time span or add search text.
 - How many days are kept depends on your plan, up to 30 days; the console shows the number for your plan. Picking a longer span fails with [`QUOTA_EXCEEDED`](/en/loi/#quota_exceeded).
-
-If you see `Máy chủ này chưa bật lịch sử log` ([`TEMPORARILY_UNAVAILABLE`](/en/loi/#temporarily_unavailable)), log history is not turned on for your server. Use **"Trực tiếp"** (live) mode.
+- If you see `Máy chủ này chưa bật lịch sử log` ([`TEMPORARILY_UNAVAILABLE`](/en/loi/#temporarily_unavailable)), log history is not on for your server; use **"Trực tiếp"** (live) mode.
 
 ## Viewing metrics
 
@@ -95,11 +97,14 @@ If you see `Máy chủ này chưa bật lịch sử log` ([`TEMPORARILY_UNAVAILA
 | CPU (cores), memory | Per service, with the service's limit |
 | Postgres disk used | The environment's database |
 
-Charts mark deploys, rollbacks, restores and migrations, and count app restarts and out-of-memory kills (OOM). How many days of metrics are kept depends on your plan, up to 30 days.
+Charts mark deploys, rollbacks, restores and migrations, and count app restarts and out-of-memory kills (OOM). Metrics retention depends on your plan, up to 30 days.
 
 ## Viewing deploy history
 
-Open **"Lần deploy"** (deploys). The list shows builds, deploys, rollbacks and data restores, taken from the 100 most recent operations. Filter with **"Tất cả"** (all), **"Deploy"**, **"Lỗi"** (failed), **"Chờ duyệt"** (awaiting approval). Click a row for details.
+Open **"Lần deploy"** (deploys): builds, deploys, rollbacks and data restores from the 100 most recent operations. Filter with **"Tất cả"** (all), **"Deploy"**, **"Lỗi"** (failed), **"Chờ duyệt"** (awaiting approval). Click a row for details.
+
+<details>
+<summary>What each state means</summary>
 
 | State | Meaning |
 |---|---|
@@ -112,11 +117,13 @@ Open **"Lần deploy"** (deploys). The list shows builds, deploys, rollbacks and
 | **"Cần đội Embra hỗ trợ"** (needs the Embra team) | Outcome unknown, see [`RECOVERY_REQUIRED`](/en/loi/#recovery_required) |
 | **"Cần xác minh dữ liệu"** (data needs verification) | Unknown whether a migration ran, see [`MIGRATION_UNKNOWN`](/en/loi/#migration_unknown) |
 
+</details>
+
 The **"Lịch sử & khôi phục"** (history & restore) rail at the top of the page draws deploys from up to the last 48 hours, next to the range of data you can restore. See [Rollback and restoring backups](/en/huong-dan/rollback-va-khoi-phuc/).
 
 ## Notifications when the app fails
 
-Embra does not send email or messages yet when a build, deploy or the app fails. Watch the console, or use `embra wait` and `embra events` in scripts.
+Embra doesn't send email or messages yet when a build, deploy or the app fails. Watch the console, or use `embra wait` and `embra events` in scripts.
 
 ## Using the CLI
 

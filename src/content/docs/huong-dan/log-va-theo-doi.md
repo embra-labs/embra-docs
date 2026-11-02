@@ -1,57 +1,58 @@
 ---
 title: Xem log và theo dõi app
-description: Log build, log app trực tiếp và lịch sử, trạng thái app, health check, metrics và lịch sử deploy trên console.
+description: Build log, app log live và lịch sử, trạng thái app, health check, metrics và lịch sử deploy trên console.
 sidebar:
   order: 12
 ---
-
-Trang này dành cho người cần biết app đang chạy ra sao, hoặc vì sao build và deploy lỗi. Bạn sẽ biết tìm log ở đâu, đọc các nhãn trạng thái trên console thế nào, và dữ liệu được giữ bao lâu.
 
 ## Mọi thứ nằm ở đâu?
 
 | Cần xem | Chỗ trên console |
 |---|---|
 | App có đang ổn không | Dải trạng thái đầu trang environment |
-| Log build | **"Logs"** → **"Build"** |
-| Log app | **"Logs"** → **"Runtime"** |
+| Build log | **"Logs"** → **"Build"** |
+| App log | **"Logs"** → **"Runtime"** |
 | CPU, RAM, request, lỗi 5xx | **"Logs"** → **"Số liệu"** |
-| Các lần deploy, rollback, khôi phục | **"Lần deploy"** |
+| Các lần deploy, rollback, restore | **"Lần deploy"** |
 | Ai đã làm gì | Khung **"Hoạt động"** ở trang Tổng quan |
 
-Mọi vai trò trong workspace, kể cả Viewer, đều xem được log và metrics.
+Mọi role trong workspace, kể cả Viewer, đều xem được log và metrics.
 
 ## Đọc trạng thái app
 
-Dải đầu trang environment tóm tắt bằng một nhãn, rồi ba mục riêng: **Health check**, **Traffic** và **Backup**. Console tải lại mỗi 5 giây, và chỉ nói **"Mọi thứ ổn"** khi cả ba đều đã xác nhận.
+Dải đầu trang environment tóm tắt bằng một nhãn, kèm ba mục: **Health check**, **Traffic**, **Backup**. Console refresh mỗi 5 giây, chỉ báo **"Mọi thứ ổn"** khi cả ba đã xác nhận.
 
 | Nhãn | Nghĩa |
 |---|---|
-| **"Mọi thứ ổn"** | Health check đạt, bản mới nhất nhận toàn bộ traffic, backup đã khôi phục thử thành công (nếu có database) |
-| **"Đang chạy"** | Health check đạt, nhưng còn mục chưa xác nhận, ví dụ backup chưa khôi phục thử lần nào |
-| **"Cần bạn xem"** | Đang chuyển traffic sang bản mới, hoặc lần khôi phục thử backup gần nhất lỗi |
-| **"Có sự cố"** | App không qua health check, thao tác gần nhất lỗi, hoặc environment bị chặn |
+| **"Mọi thứ ổn"** | Health check đạt, bản mới nhất nhận toàn bộ traffic, backup đã restore thử thành công (nếu có database) |
+| **"Đang chạy"** | Health check đạt, nhưng còn mục chưa xác nhận, ví dụ backup chưa restore thử lần nào |
+| **"Cần bạn xem"** | Đang chuyển traffic sang bản mới, hoặc lần restore thử backup gần nhất fail |
+| **"Có sự cố"** | App không qua health check, thao tác gần nhất fail, hoặc environment bị chặn |
 | **"Chưa xác nhận"** | Chưa lấy được trạng thái mới, hoặc chưa có kết quả health check |
 | **"Chưa deploy"** | Environment chưa có bản deploy nào |
 
-Bảng **"Những gì đang chạy"** ở trang Tổng quan ghi trạng thái từng service:
+<details>
+<summary>Trạng thái từng service trong bảng "Những gì đang chạy"</summary>
 
 | Service hiện | Nghĩa |
 |---|---|
 | **"Khoẻ"** | `health_path` trả mã 2xx |
 | **"Không qua health check"** | `health_path` trả mã lỗi hoặc không nhận kết nối |
-| **"Chưa có kết quả health check"** | Chưa hỏi được máy chủ |
+| **"Chưa có kết quả health check"** | Chưa hỏi được server |
 | **"Chưa kiểm tra được worker"** | Worker chưa có health check riêng |
 | **"Chờ đội Embra kiểm tra"** | Environment bị chặn sau sự cố, xem [`ENVIRONMENT_BLOCKED`](/loi/#environment_blocked) |
+
+</details>
 
 Cách đặt `health_path` và điều kiện đạt khi deploy: xem [Chuẩn bị app](/huong-dan/chuan-bi-app/#health-check).
 
 ## Xem log build
 
 1. Mở **"Logs"** → **"Build"**.
-2. Chọn lần build ở ô **"Bản build"** (mặc định là lần mới nhất).
+2. Chọn build ở ô **"Bản build"** (mặc định là lần mới nhất).
 3. Đọc log. Build đang chạy thì log hiện dần.
 
-Build lỗi thì tra mã lỗi ở [Mã lỗi và cách sửa](/loi/). Log build được giữ 30 ngày sau khi build kết thúc.
+Build fail thì tra mã lỗi ở [Mã lỗi và cách sửa](/loi/). Build log giữ 30 ngày sau khi build kết thúc.
 
 ## Xem log app trực tiếp
 
@@ -59,29 +60,30 @@ Build lỗi thì tra mã lỗi ở [Mã lỗi và cách sửa](/loi/). Log build
 2. Chọn service ở ô **"Service"** (`web` hoặc tên worker).
 3. Chọn **"Trực tiếp"**. Dòng mới hiện ngay khi app in ra.
 
-- Dòng **APP** do app ghi, dòng **EMBRA** là thông báo của nền tảng.
-- Lọc theo chuỗi, nguồn, mức log hoặc thời gian. Bấm **"Tạm dừng cuộn"** để đọc, **"Theo dòng mới nhất"** để chạy tiếp.
-- Trình duyệt giữ tối đa 5.000 dòng. **"Sao chép"** và **"Tải .txt"** lấy các dòng đang hiển thị.
-- Chỉ xem được bản đang chạy. Log của bản cũ nằm ở chế độ **"Lịch sử"**.
-- Mỗi workspace mở tối đa 5 luồng log cùng lúc. Mở thêm thì báo [`QUOTA_EXCEEDED`](/loi/#quota_exceeded); đóng bớt tab.
+- Dòng **APP** do app ghi, dòng **EMBRA** là thông báo của platform.
+- Filter theo chuỗi, nguồn, log level hoặc thời gian. **"Tạm dừng cuộn"** để đọc, **"Theo dòng mới nhất"** để chạy tiếp.
+- Chỉ xem được bản đang chạy. Log bản cũ nằm ở chế độ **"Lịch sử"**.
+- App chưa chạy thì tab hiện **"Chưa có log của app"** → bấm **"Xem build log"** để xem bước chuẩn bị.
 
-App chưa chạy thì tab hiện **"Chưa có log của app"**. Bấm **"Xem build log"** để xem bước chuẩn bị.
+| Giới hạn | Mức |
+|---|---|
+| Dòng giữ trong browser | Tối đa 5.000. **"Sao chép"** và **"Tải .txt"** lấy các dòng đang hiển thị |
+| Log stream mở cùng lúc | Tối đa 5 mỗi workspace. Mở thêm thì báo [`QUOTA_EXCEEDED`](/loi/#quota_exceeded); đóng bớt tab |
 
 ### Giờ trong log
 
-Container chạy giờ UTC, nên giờ app tự in ra là giờ UTC. Muốn app in giờ Việt Nam, đặt secret `TZ` = `Asia/Ho_Chi_Minh`. Giờ console ghi cạnh mỗi dòng là lúc Embra đọc dòng đó, không phải lúc app ghi.
+Container chạy giờ UTC; muốn app in giờ Việt Nam thì đặt secret `TZ` = `Asia/Ho_Chi_Minh`. Giờ console ghi cạnh mỗi dòng là lúc Embra đọc dòng đó, không phải lúc app ghi.
 
 ## Tìm trong lịch sử log
 
 1. Ở **"Logs"** → **"Runtime"**, chọn **"Lịch sử"**.
-2. Nhập chuỗi cần tìm (tìm đúng chuỗi, không phải regex).
-3. Chọn khoảng thời gian, từ **"30 phút qua"** tới **"30 ngày qua"**, rồi bấm **"Tìm"**.
+2. Nhập chuỗi cần tìm (exact match, không phải regex).
+3. Chọn khoảng thời gian, từ **"30 phút qua"** tới **"30 ngày qua"** → **"Tìm"**.
 
-- Lịch sử gồm log của các bản đã chạy trước, và dòng request ở edge (chọn nguồn **"Request (edge)"**).
+- Lịch sử gồm log của các bản đã chạy trước, và request log ở edge (chọn nguồn **"Request (edge)"**).
 - Mỗi lần tìm trả tối đa 500 dòng mới nhất. Còn dòng cũ hơn thì thu hẹp khoảng thời gian hoặc thêm chuỗi tìm.
 - Số ngày giữ tuỳ gói, tối đa 30 ngày; console ghi số ngày của gói bạn. Chọn khoảng dài hơn thì báo [`QUOTA_EXCEEDED`](/loi/#quota_exceeded).
-
-Nếu thấy `Máy chủ này chưa bật lịch sử log` ([`TEMPORARILY_UNAVAILABLE`](/loi/#temporarily_unavailable)), lịch sử log chưa bật trên máy chủ của bạn. Dùng chế độ **"Trực tiếp"**.
+- Thấy `Máy chủ này chưa bật lịch sử log` ([`TEMPORARILY_UNAVAILABLE`](/loi/#temporarily_unavailable)): server của bạn chưa bật lịch sử log, dùng chế độ **"Trực tiếp"**.
 
 ## Xem metrics
 
@@ -91,20 +93,23 @@ Nếu thấy `Máy chủ này chưa bật lịch sử log` ([`TEMPORARILY_UNAVAI
 
 | Biểu đồ | Đo gì |
 |---|---|
-| Request mỗi giây, Tỉ lệ lỗi 5xx, Độ trễ p95 | Request đi qua edge, cho toàn environment |
+| Request mỗi giây, Tỉ lệ lỗi 5xx, Độ trễ p95 | Request qua edge, cho toàn environment |
 | CPU (core), Bộ nhớ | Từng service, kèm giới hạn của service |
 | Dung lượng Postgres đã dùng | Database của environment |
 
-Biểu đồ có mốc deploy, rollback, khôi phục, migration, và ghi số lần app khởi động lại hoặc hết bộ nhớ (OOM). Số ngày giữ metrics tuỳ gói, tối đa 30 ngày.
+Biểu đồ có mốc deploy, rollback, restore, migration, và đếm số lần app restart hoặc out-of-memory (OOM). Metrics giữ bao lâu tuỳ gói, tối đa 30 ngày.
 
 ## Xem lịch sử deploy
 
-Mở **"Lần deploy"**. Danh sách gồm build, deploy, rollback và khôi phục dữ liệu, lấy từ 100 thao tác gần nhất. Lọc bằng **"Tất cả"**, **"Deploy"**, **"Lỗi"**, **"Chờ duyệt"**. Bấm một dòng để xem chi tiết.
+Mở **"Lần deploy"**: build, deploy, rollback và restore data, lấy từ 100 thao tác gần nhất. Filter bằng **"Tất cả"**, **"Deploy"**, **"Lỗi"**, **"Chờ duyệt"**. Bấm một dòng để xem chi tiết.
+
+<details>
+<summary>Ý nghĩa từng trạng thái</summary>
 
 | Trạng thái | Nghĩa |
 |---|---|
-| **"Chờ duyệt"** | Plan chờ Owner hoặc Admin duyệt |
-| **"Đang chạy thử migration"**, **"Đang chạy migration"** | Đang diễn tập trên bản sao, hoặc đang chạy trên production |
+| **"Chờ duyệt"** | Plan chờ Owner hoặc Admin approve |
+| **"Đang chạy thử migration"**, **"Đang chạy migration"** | Đang rehearsal trên bản copy, hoặc đang chạy trên production |
 | **"Đang khởi động"**, **"Đang chuyển traffic"** | Bản mới đang lên |
 | **"Đã nhận traffic, đang theo dõi"** | Bản mới đã nhận traffic, Embra đang theo dõi thêm |
 | **"Deploy thành công"**, **"Hoàn tất"** | Xong |
@@ -112,7 +117,9 @@ Mở **"Lần deploy"**. Danh sách gồm build, deploy, rollback và khôi ph�
 | **"Cần đội Embra hỗ trợ"** | Không rõ kết quả, xem [`RECOVERY_REQUIRED`](/loi/#recovery_required) |
 | **"Cần xác minh dữ liệu"** | Không rõ migration đã chạy chưa, xem [`MIGRATION_UNKNOWN`](/loi/#migration_unknown) |
 
-Dải **"Lịch sử & khôi phục"** ở đầu trang vẽ các lần deploy trong tối đa 48 giờ gần nhất, cạnh khoảng dữ liệu khôi phục được. Xem [Rollback và khôi phục backup](/huong-dan/rollback-va-khoi-phuc/).
+</details>
+
+Dải **"Lịch sử & khôi phục"** ở đầu trang vẽ các lần deploy trong tối đa 48 giờ gần nhất, cạnh khoảng data restore được. Xem [Rollback và khôi phục backup](/huong-dan/rollback-va-khoi-phuc/).
 
 ## Thông báo khi app lỗi
 
@@ -120,7 +127,7 @@ Embra chưa gửi email hay tin nhắn khi build, deploy hoặc app lỗi. Theo 
 
 ## Dùng CLI
 
-Lệnh tương ứng (xem lưu ý về đăng nhập CLI ở [Danh sách lệnh](/cli/lenh/)):
+Lệnh tương ứng (xem lưu ý về CLI login ở [Danh sách lệnh](/cli/lenh/)):
 
 ```sh
 embra logs --env <project>/<env> --follow

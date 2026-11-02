@@ -7,7 +7,7 @@ head:
 description: Tài liệu Embra — hosting app kèm Postgres riêng cho Việt Nam.
 template: splash
 hero:
-  tagline: Nối repo GitHub, Embra build, deploy app kèm Postgres riêng, và mỗi lần deploy đều có đường lui.
+  tagline: Connect repo GitHub, Embra build và deploy app kèm Postgres riêng. Deploy nào cũng có đường lui.
   actions:
     - text: Bắt đầu nhanh
       link: /bat-dau/bat-dau-nhanh/
@@ -23,26 +23,26 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 <CardGrid>
 	<Card title="Bắt đầu nhanh" icon="rocket">
-		Chín bước từ đăng nhập tới app chạy kèm Postgres, secret và domain riêng. [Bắt đầu](/bat-dau/bat-dau-nhanh/)
+		9 bước từ login tới app chạy kèm Postgres, secret, domain riêng. [Bắt đầu](/bat-dau/bat-dau-nhanh/)
 	</Card>
 	<Card title="Chuyển app có sẵn" icon="right-arrow">
-		Đang chạy ở Vercel, Railway, Render hay VPS? Đổi gì trong app, nhập dữ liệu, chuyển domain. [Xem cách chuyển](/huong-dan/chuyen-app-co-san/)
+		Đang ở Vercel, Railway, Render hay VPS? Sửa gì trong app, import data, chuyển domain. [Xem cách chuyển](/huong-dan/chuyen-app-co-san/)
 	</Card>
 	<Card title="Gặp lỗi?" icon="warning">
-		Tra mã lỗi CLI hoặc console đang báo: nguyên nhân, cách sửa, dữ liệu có an toàn không. [Mã lỗi và cách sửa](/loi/)
+		Tra mã lỗi CLI hoặc console báo: nguyên nhân, cách sửa, data có an toàn không. [Mã lỗi và cách sửa](/loi/)
 	</Card>
 	<Card title="Cho AI agent" icon="puzzle">
-		Mẫu `AGENTS.md`, câu lệnh giao việc và [`/llms-full.txt`](/llms-full.txt) để agent đọc toàn bộ tài liệu. [Xem hướng dẫn](/huong-dan/ai-agent/)
+		Mẫu `AGENTS.md`, prompt giao việc và [`/llms-full.txt`](/llms-full.txt) để agent đọc toàn bộ docs. [Xem hướng dẫn](/huong-dan/ai-agent/)
 	</Card>
 </CardGrid>
 
 ## Việc hay làm
 
 <CardGrid>
-	<LinkCard title="Chuẩn bị app và embra.toml" description="Cổng, health check, thư mục ghi được, cấu hình build." href="/huong-dan/chuan-bi-app/" />
-	<LinkCard title="Database và migration" description="Bật Postgres, viết migration, migration được kiểm thế nào." href="/huong-dan/database-va-migration/" />
-	<LinkCard title="Staging, production và duyệt" description="Plan deploy, ai duyệt, duyệt ở đâu." href="/huong-dan/staging-production-va-duyet/" />
-	<LinkCard title="Rollback và khôi phục backup" description="Quay lại bản trước, khôi phục dữ liệu về một mốc." href="/huong-dan/rollback-va-khoi-phuc/" />
-	<LinkCard title="Biến môi trường và secret" description="Dán .env, biến Embra tự đặt, khi nào có hiệu lực." href="/huong-dan/bien-moi-truong/" />
+	<LinkCard title="Chuẩn bị app và embra.toml" description="Port, health check, thư mục ghi được, build config." href="/huong-dan/chuan-bi-app/" />
+	<LinkCard title="Database và migration" description="Bật Postgres, viết migration, Embra kiểm migration thế nào." href="/huong-dan/database-va-migration/" />
+	<LinkCard title="Staging, production và duyệt" description="Deploy plan, ai approve, approve ở đâu." href="/huong-dan/staging-production-va-duyet/" />
+	<LinkCard title="Rollback và khôi phục backup" description="Rollback về bản trước, restore data về một thời điểm." href="/huong-dan/rollback-va-khoi-phuc/" />
+	<LinkCard title="Biến môi trường và secret" description="Dán .env, env var Embra tự đặt, khi nào có hiệu lực." href="/huong-dan/bien-moi-truong/" />
 	<LinkCard title="Gói, giới hạn và hoá đơn" description="Giới hạn từng gói, vượt giới hạn thì sao, ví dụ hoá đơn." href="/huong-dan/goi-gioi-han-va-hoa-don/" />
 </CardGrid>
