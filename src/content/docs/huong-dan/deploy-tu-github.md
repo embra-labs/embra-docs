@@ -1,6 +1,6 @@
 ---
 title: Deploy từ GitHub
-description: Kết nối GitHub, tạo app, build tự động khi push, duyệt production và xem log.
+description: Connect GitHub, tạo app, auto build khi push, approve production, xem log.
 sidebar:
   order: 3
 ---
@@ -8,51 +8,68 @@ sidebar:
 ## Tạo app lần đầu
 
 1. Bấm **"＋ Tạo mới"** → **"Deploy từ GitHub"**.
-2. Bấm **"Kết nối GitHub ↗"** và cài Embra GitHub App cho tài khoản hoặc tổ chức chứa repo. Bạn chọn được repo nào cho Embra thấy. Không thấy repo thì bấm **"Không thấy repo? Cập nhật quyền GitHub ↗"**, rồi **"Tải lại"**.
-3. Chọn repo, bấm **"Tiếp tục"**.
-4. Đặt **Tên ứng dụng**: chữ thường, số và dấu gạch ngang, bắt đầu bằng chữ cái. Trong **"Cấu hình nâng cao"**, chọn **Nhánh Git** (mặc định là nhánh chính) và **Thư mục gốc** nếu là monorepo.
-5. Bấm **"Tạo và triển khai"**. Embra tạo environment `production`, nối repo với nhánh đã chọn rồi bắt đầu build.
+2. Bấm **"Kết nối GitHub ↗"**, cài Embra GitHub App cho account hoặc organization chứa repo. Bạn chọn repo nào Embra được thấy.
+3. Chọn repo → **"Tiếp tục"**.
+4. Đặt **Tên app**: chữ thường, số, dấu `-`, bắt đầu bằng chữ cái. Monorepo hoặc không dùng branch mặc định thì mở **"Advanced config"** để chọn **Git branch** và **Root directory**.
+5. Bấm **"Tạo và deploy"**. Embra tạo environment `production`, connect repo + branch rồi build.
 
-Chỉ người đăng nhập bằng GitHub mới kết nối được repo, và chỉ những repo mà tài khoản GitHub đó đọc được.
+![Hộp thoại Deploy từ GitHub, bước Config & deploy](../../../assets/screens/deploy-github-config.png)
+
+Không thấy repo? Bấm **"Không thấy repo? Cập nhật quyền GitHub ↗"** rồi **"Tải lại"**. Chỉ người login bằng GitHub mới connect được repo, và chỉ repo mà account GitHub đó đọc được.
 
 ## Duyệt production
 
-Build xong, Embra lập **plan**: bản tóm tắt thay đổi (image mới, secret thêm, bớt hoặc đổi version, migration chờ chạy).
+Build xong, Embra tạo **plan**: tóm tắt thay đổi (image mới, secret thêm/bớt/đổi, migration đang chờ).
 
-- **Production luôn chờ Owner hoặc Admin duyệt**, kể cả khi không có migration. Developer và AI agent không duyệt được.
-- Thanh plan hiện "… thay đổi chờ áp dụng". Bấm **"Xem và duyệt"** để xem thay đổi về code, config và dữ liệu. Gõ tên environment để xác nhận rồi bấm **"Duyệt và deploy"**. Nếu migration có thể làm mất dữ liệu, bạn phải gõ thêm `CONFIRM_MIGRATION`.
-- Plan chờ duyệt hết hạn sau 24 giờ. Có build mới thì plan cũ bị huỷ, để không bao giờ duyệt nhầm bản cũ.
-- Duyệt cần người thật: phiên web đăng nhập trong vòng 12 giờ. Xem [Thành viên và phân quyền](/workspace/phan-quyen/#việc-cần-người-thật).
+![Thanh plan "2 thay đổi chờ áp dụng" với nút Xem và duyệt](../../../assets/screens/deploy-github-plan.png)
 
-Sau khi duyệt, app có địa chỉ:
+1. Thanh plan hiện "… thay đổi chờ áp dụng" → bấm **"Xem và duyệt"**.
+2. Xem thay đổi code, config, data.
+3. Gõ tên environment → **"Duyệt và deploy"**. Migration có thể làm mất data thì gõ thêm `CONFIRM_MIGRATION`.
+
+| Quy tắc | Chi tiết |
+|---|---|
+| Ai approve được | Chỉ Owner, Admin. Production luôn chờ approve, kể cả không có migration. Developer và AI agent không approve được |
+| Cần người thật | Session web login trong vòng 12 giờ. Xem [Việc cần người thật](/workspace/phan-quyen/#việc-cần-người-thật) |
+| Hết hạn | Plan chờ quá 24 giờ thì hết hạn |
+| Có build mới | Plan cũ bị huỷ, nên không bao giờ approve nhầm bản cũ |
+
+Approve xong, app chạy ở:
 
 ```
 https://<tên-app>-production-<mã workspace>.onembra.com
 ```
 
-## Build tự động khi push
+## Auto build khi push
 
-- Mỗi lần **push lên nhánh đã nối**, Embra build commit đó. Push lên nhánh khác hay tạo tag thì không.
+- Push lên branch đã connect → Embra build commit đó. Push branch khác hoặc tạo tag thì không build.
 - Build mới huỷ build cũ đang chạy của cùng environment.
-- Muốn build lại commit mới nhất của nhánh mà không push, bấm **"Deploy"** ở trang Tổng quan (nút thành **"Build lại"** khi đang có plan chờ duyệt).
-- Production vẫn chờ duyệt sau mỗi build. Staging và preview tự deploy, trừ khi có migration đổi dữ liệu.
+- Muốn build lại commit mới nhất mà không push: bấm **"Deploy"** ở trang Tổng quan (nút thành **"Build lại"** khi đang có plan chờ duyệt).
+- Production chờ approve sau mỗi build. Staging và preview tự deploy, trừ khi migration đổi data.
 
 ## Preview theo pull request
 
-Ở gói có preview (xem [bảng giá](https://embra.cloud/bang-gia/)), mỗi pull request vào nhánh production có một environment `pr<số>` riêng:
+Gói có preview (xem [bảng giá](https://embra.cloud/bang-gia/)): mỗi PR vào branch production có environment `pr<số>` riêng.
 
-- Địa chỉ: `pr<số>-<địa chỉ production>`.
-- **Database mới, rỗng**: không chép dữ liệu production. Có thể nạp dữ liệu mẫu bằng `[preview] seed`.
-- Không mang theo secret, bucket hay domain của production.
-- Tự xoá khi đóng PR, hoặc sau 72 giờ không có push mới.
-- PR từ fork bị bỏ qua.
+| Mục | Preview |
+|---|---|
+| URL | `pr<số>-<địa chỉ production>` |
+| Database | Mới, rỗng, không copy data production. Nạp data mẫu bằng `[preview] seed` |
+| Secret, bucket, domain | Không mang từ production sang |
+| Tự xoá | Khi đóng PR, hoặc sau 72 giờ không có push mới |
+| PR từ fork | Bỏ qua |
 
 ## Xem log
 
-- **Log build:** **"Xem build logs"** ở trang Tổng quan. Tra mã lỗi ở [Mã lỗi và cách sửa](/loi/).
-- **Log app:** mục **"Logs"**. Container chạy giờ UTC, nên giờ app tự in ra trong log là giờ UTC. Muốn app in giờ Việt Nam, đặt secret `TZ` = `Asia/Ho_Chi_Minh`.
-- Thời gian giữ log và metrics tuỳ gói (gói dùng thử 1 ngày).
+- **Build log:** bấm **"Xem build logs"** ở trang Tổng quan. Tra mã lỗi ở [Mã lỗi và cách sửa](/loi/).
+- **App log:** mục **"Logs"**. Container chạy giờ UTC; muốn giờ Việt Nam thì đặt secret `TZ` = `Asia/Ho_Chi_Minh`.
+- Log và metrics giữ bao lâu tuỳ gói (dùng thử: 1 ngày).
 
 ## Rollback
 
-Embra giữ các bản đã chạy để trả code về bản trước. Rollback code không cần duyệt, vì nó chỉ chạy lại code đã được duyệt; Embra từ chối nếu migration đã đi tiếp sau bản đó. Trên web, bấm **Quay về bản trước** ở dải **Lịch sử & khôi phục** trên trang environment; web luôn trả về đúng một bản liền trước. Xem [Rollback và khôi phục backup](/huong-dan/rollback-va-khoi-phuc/). Cần hỗ trợ gấp thì gửi email hello@embra.cloud.
+Bấm **Quay về bản trước** ở dải **Lịch sử & khôi phục** trên trang environment. Web luôn lùi đúng một bản.
+
+- Không cần approve, vì rollback chỉ chạy lại code đã được approve.
+- Embra từ chối nếu migration đã chạy tiếp sau bản đó.
+
+Chi tiết: [Rollback và khôi phục backup](/huong-dan/rollback-va-khoi-phuc/). Cần hỗ trợ gấp: hello@embra.cloud.
