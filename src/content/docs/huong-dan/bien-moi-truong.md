@@ -58,7 +58,7 @@ Repo có `.env.example` (hoặc `.env.sample`) thì mỗi lần build Embra đ�
 | Biến | Khi nào | Giá trị |
 |---|---|---|
 | `PORT` | Luôn, trừ khi bạn tự đặt secret `PORT` | `[deploy] port` trong `embra.toml`, mặc định `3000` |
-| `DATABASE_URL` | Có `database = true` | Connection string Postgres của environment. Xem [Database và migration](/huong-dan/database-va-migration/) |
+| `DATABASE_URL` | Có `database = true` | Connection string Postgres của environment. Xem [Database](/huong-dan/database/) |
 | `S3_ENDPOINT`, `S3_PUBLIC_ENDPOINT`, `S3_BUCKET`, `S3_REGION`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_FORCE_PATH_STYLE` | Environment có bucket của Embra | Xem [Lưu file](/huong-dan/luu-file/) |
 | `EMBRA_GIT_SHA` | Build từ một commit GitHub | Commit SHA đầy đủ, 40 ký tự. Không có khi build từ thư mục upload (`embra up`) |
 

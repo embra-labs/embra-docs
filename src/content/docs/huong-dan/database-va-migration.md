@@ -1,37 +1,15 @@
 ---
 title: Database và migration
-description: Postgres riêng cho mỗi environment, viết migration để qua approval gate, backup và restore.
+description: Viết migration để qua migration gate - quy tắc file, Prisma, Embra phân loại câu lệnh thế nào, khi có sự cố.
 sidebar:
   order: 4
 ---
 
-## Bật Postgres
-
-Thêm vào `embra.toml`:
-
-```toml
-[deploy]
-database = true
-```
-
-Lần build đầu có dòng này, Embra dựng Postgres riêng cho environment rồi mới deploy app. Bật từ đầu hay thêm sau lần deploy đầu đều được.
-
-| Mục | Chi tiết |
-|---|---|
-| Version | **PostgreSQL 18** |
-| Connection string | Env var **`DATABASE_URL`**. Đừng tự đặt biến này |
-| Network | Chỉ app trong cùng environment kết nối được, không mở ra internet |
-| Quyền của app | Chỉ **đọc/ghi data** (SELECT, INSERT, UPDATE, DELETE), không tạo hay sửa bảng. Schema chỉ đổi qua migration |
-| Dung lượng, RAM | Theo gói |
-| Extension | Chưa hỗ trợ (`CREATE EXTENSION`) |
-
-:::note
-Bỏ `database = true` khỏi `embra.toml` sau này **không** gỡ hay xoá database đang có.
-:::
+Bật Postgres, quyền của app, backup: xem [Database](/huong-dan/database/). Quy trình một migration production từ đầu tới cuối: [Chạy migration an toàn](/huong-dan/migration-an-toan/).
 
 ## Viết migration
 
-Mỗi thay đổi schema là một file SQL trong thư mục `migrations/` (đổi bằng `[deploy] migrations`):
+Mỗi thay đổi schema là một file SQL trong thư mục `migrations/` (đổi bằng `[deploy] migrations` trong `embra.toml`; `embra plan` đọc `migrations_dir` trong `embra.json`):
 
 ```
 migrations/
@@ -93,16 +71,9 @@ Production **luôn** cần Owner hoặc Admin approve, kể cả không có migr
 |---|---|
 | Rehearsal fail (`MIGRATION_REHEARSAL_FAILED`) | Sửa file migration, push lại |
 | Migration đã chạy nhưng app mới lỗi | Code cũ tiếp tục chạy trên schema mới. Sửa code cho tương thích rồi deploy lại |
+| Cần đổi tên hoặc xoá cột | Tách làm nhiều lần deploy: [Đổi tên hoặc xoá cột không downtime](/huong-dan/expand-contract/) |
 | Environment hiện **"Cần xác minh dữ liệu"** ([`MIGRATION_UNKNOWN`](/loi/#migration_unknown)) | Embra không chắc migration chạy xong chưa nên dừng mọi thay đổi, không tự retry. Gửi email hello@embra.cloud |
 
 ## Backup và khôi phục
 
-- WAL ghi liên tục mọi thay đổi, cộng một full backup mỗi 7 ngày. Backup nằm trên server, ở ổ đĩa riêng, tách khỏi ổ chứa database. **Bản copy bên ngoài server chưa bật.**
-- Sau mỗi full backup, Embra **tự restore thử** để chắc backup dùng được. Trang Tổng quan hiện kết quả lần thử gần nhất.
-- Không restore được về mốc trước một migration đã chạy: schema hiện tại sẽ không khớp.
-
-**Restore về một thời điểm (point-in-time):** chọn **Khôi phục dữ liệu…** và một mốc trong khoảng hiển thị.
-
-1. Embra dựng database mới từ mốc đó, chạy song song, chưa đụng database đang chạy.
-2. Owner hoặc Admin xem rồi approve trong vòng 2 giờ để chuyển app sang database mới.
-3. Database cũ được giữ 72 giờ (gói dùng thử 24 giờ) phòng khi cần quay lại.
+Đã chuyển sang [Database](/huong-dan/database/#backup) và [Rollback và khôi phục backup](/huong-dan/rollback-va-khoi-phuc/#backup-của-database).

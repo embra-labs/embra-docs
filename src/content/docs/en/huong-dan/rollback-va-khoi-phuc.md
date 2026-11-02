@@ -10,7 +10,8 @@ sidebar:
 | You have | Use | Touches data? | Needs approval? |
 |---|---|---|---|
 | A broken release, data is fine | Rollback | No | No |
-| Data deleted or written wrong | Restore a backup | Yes: data written after the chosen point is lost | Owner or Admin |
+| One bad `UPDATE`, and data written after it must stay | [Row-level undo](/en/huong-dan/undo-tung-dong/) | Only the wrongly changed rows, through the migration gate | Owner or Admin |
+| Data deleted or written wrong at large | Restore a backup | Yes: data written after the chosen point is lost | Owner or Admin |
 | Moving the app + data elsewhere | Export | No | Only Owner or Admin can create one |
 
 ## Rolling back to the previous version
@@ -27,7 +28,14 @@ A rollback reruns the deploy **right before** the running one: start, health che
 
 ![The Lịch sử & khôi phục rail with the Quay về bản trước and Khôi phục dữ liệu… buttons](../../../../assets/screens/rollback-rail.png)
 
-The web only goes back exactly one version; you can't pick an older one.
+The web only goes back exactly one version. To go further back, use the CLI:
+
+```sh
+embra rollback --env <project>/<env> --to <release_id>
+```
+
+- `release_id` (`rel_…`): the running one is on the `release đang chạy:` line of `embra status --env <project>/<env>`; older ones are in `data.release_id` of `deploy.healthy` events in `embra events --env <project>/<env> --json`.
+- Only a release that **has run** in this environment and was replaced (`retired`). The same checks as a normal rollback apply: migrations run after it, revoked secrets.
 
 ### Rolling back a second time
 
@@ -146,7 +154,7 @@ An export builds a bundle with the image, manifest, a `pg_dump` and the list of 
 The matching commands (see the CLI sign-in note in the [command list](/en/cli/lenh/)):
 
 ```sh
-embra rollback --env <project>/<env>
+embra rollback --env <project>/<env> [--to <release_id>]
 embra db restore-points --env <project>/<env>
 embra db restore --env <project>/<env> --to 2026-11-01T08:30:00+07:00
 embra export --env <project>/<env>
@@ -156,6 +164,8 @@ embra export --env <project>/<env>
 
 ## See also
 
+- [Row-level undo](/en/huong-dan/undo-tung-dong/)
+- [Incident runbook](/en/huong-dan/runbook-su-co/)
 - [Database and migrations](/en/huong-dan/database-va-migration/)
 - [Logs and monitoring](/en/huong-dan/log-va-theo-doi/)
 - [Rollback and restore: error codes](/en/loi/#rollback-and-restore)

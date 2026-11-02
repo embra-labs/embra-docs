@@ -40,7 +40,7 @@ Chạy `embra <lệnh> --help` để xem đủ flag. Thêm `--json` để lấy 
 | `embra deploy` | Tạo plan deploy từ `embra.json` và image pin theo digest |
 | `embra approve <op_id> --binding <sha256:…>` | Owner hoặc Admin approve plan đã xem |
 | `embra cancel <op_id>` | Huỷ operation chưa chạy |
-| `embra rollback` | Trả code về release trước |
+| `embra rollback [--to <release_id>]` | Trả code về release trước, hoặc một release cũ hơn. Xem [Rollback](/huong-dan/rollback-va-khoi-phuc/) |
 | `embra plan` | Chạy thử migration trên bản copy của data, không deploy |
 | `embra status [op_id]` / `embra wait <op_id>` | Xem status / chờ operation tới trạng thái cuối |
 | `embra operation get <op_id>` | Xem status một operation |
@@ -59,7 +59,7 @@ Chạy `embra <lệnh> --help` để xem đủ flag. Thêm `--json` để lấy 
 | `embra db restore-points` | Khoảng thời gian restore được (PITR) |
 | `embra db restore` | Restore về một mốc thời gian; chờ Owner hoặc Admin approve rồi mới chuyển |
 | `embra db import --env <project>/<env> <file>` | Import data từ file `pg_dump --data-only` (gzip được). Bảng đích phải trống; production chờ Owner hoặc Admin approve. Xem [Chuyển app có sẵn](/huong-dan/chuyen-app-co-san/) |
-| `embra db undo start` / `run` / `fix` … | Undo từng dòng: dựng bản copy về một mốc, so với production, sinh file SQL sửa (không tự apply). Xem `embra db undo --help` |
+| `embra db undo start` / `run` / `fix` … | Undo từng dòng: dựng bản copy về một mốc, so với production, sinh file SQL sửa (không tự apply). Xem [Undo từng dòng](/huong-dan/undo-tung-dong/) |
 
 ## Secret, log, metrics, size app
 

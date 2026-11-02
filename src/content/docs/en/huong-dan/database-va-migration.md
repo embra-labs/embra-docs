@@ -1,37 +1,15 @@
 ---
 title: Database and migrations
-description: A dedicated Postgres per environment, writing migrations that pass the approval gate, backups and restore.
+description: Writing migrations that pass the migration gate - file rules, Prisma, how Embra classifies statements, when things go wrong.
 sidebar:
   order: 4
 ---
 
-## Turning on Postgres
-
-Add to `embra.toml`:
-
-```toml
-[deploy]
-database = true
-```
-
-On the first build with this line, Embra sets up a dedicated Postgres for the environment, then deploys the app. Turning it on from the start or after the first deploy both work.
-
-| Item | Detail |
-|---|---|
-| Version | **PostgreSQL 18** |
-| Connection string | Env var **`DATABASE_URL`**. Don't set it yourself |
-| Network | Only the app in the same environment can connect; not exposed to the internet |
-| App permissions | Only **read/write data** (SELECT, INSERT, UPDATE, DELETE), no creating or altering tables. The schema only changes through migrations |
-| Size, RAM | Follow your plan |
-| Extensions | Not supported yet (`CREATE EXTENSION`) |
-
-:::note
-Removing `database = true` from `embra.toml` later does **not** detach or delete the existing database.
-:::
+Turning on Postgres, app permissions, backups: see [Database](/en/huong-dan/database/). A production migration end to end: [Running migrations safely](/en/huong-dan/migration-an-toan/).
 
 ## Writing migrations
 
-Each schema change is a SQL file in the `migrations/` folder (change it with `[deploy] migrations`):
+Each schema change is a SQL file in the `migrations/` folder (change it with `[deploy] migrations` in `embra.toml`; `embra plan` reads `migrations_dir` in `embra.json`):
 
 ```
 migrations/
@@ -93,16 +71,9 @@ Production **always** needs an Owner or Admin to approve, even with no migration
 |---|---|
 | Rehearsal failed (`MIGRATION_REHEARSAL_FAILED`) | Fix the migration file and push again |
 | The migration ran but the new app failed | The old code keeps running on the new schema. Make the code compatible and deploy again |
+| You need to rename or drop a column | Split it across several deploys: [Rename or drop a column without downtime](/en/huong-dan/expand-contract/) |
 | The environment shows **"Cần xác minh dữ liệu"** (data needs checking, [`MIGRATION_UNKNOWN`](/en/loi/#migration_unknown)) | Embra isn't sure the migration finished, so it stops all changes and doesn't retry. Email hello@embra.cloud |
 
 ## Backups and restore
 
-- WAL records every change continuously, plus a full backup every 7 days. Backups live on the server, on a separate disk from the database. **A copy outside the server is not on yet.**
-- After each full backup, Embra **test-restores** it to make sure it works. The overview page shows the latest result.
-- You can't restore to a moment before a migration that has already run: the current schema wouldn't match.
-
-**Point-in-time restore:** choose **Khôi phục dữ liệu…** (restore data…) and a moment within the range shown.
-
-1. Embra builds a new database from that moment and runs it in parallel, without touching the running one.
-2. An Owner or Admin reviews and approves within 2 hours to switch the app to the new database.
-3. The old database is kept for 72 hours (24 hours on the trial) in case you need to go back.
+Moved to [Database](/en/huong-dan/database/#backups) and [Rollback and restoring backups](/en/huong-dan/rollback-va-khoi-phuc/#database-backups).

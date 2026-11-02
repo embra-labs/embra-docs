@@ -10,7 +10,8 @@ sidebar:
 | Bạn gặp | Dùng | Đụng tới data? | Cần approve? |
 |---|---|---|---|
 | Bản mới lỗi, data vẫn đúng | Rollback | Không | Không |
-| Data bị xoá hoặc ghi sai | Restore backup | Có: data ghi sau mốc chọn bị mất | Owner hoặc Admin |
+| Một lệnh `UPDATE` ghi sai, data ghi sau đó cần giữ | [Undo từng dòng](/huong-dan/undo-tung-dong/) | Chỉ các dòng bị sửa sai, qua migration gate | Owner hoặc Admin |
+| Data bị xoá hoặc ghi sai diện rộng | Restore backup | Có: data ghi sau mốc chọn bị mất | Owner hoặc Admin |
 | Mang app + data đi nơi khác | Export | Không | Chỉ Owner, Admin tạo được |
 
 ## Rollback về bản trước
@@ -27,7 +28,14 @@ Rollback chạy lại bản deploy **ngay trước** bản đang chạy: khởi 
 
 ![Dải Lịch sử & khôi phục với nút Quay về bản trước và Khôi phục dữ liệu…](../../../assets/screens/rollback-rail.png)
 
-Web chỉ lùi đúng một bản, không chọn được bản cũ hơn.
+Web chỉ lùi đúng một bản. Muốn về bản cũ hơn thì dùng CLI:
+
+```sh
+embra rollback --env <project>/<env> --to <release_id>
+```
+
+- `release_id` (dạng `rel_…`): bản đang chạy in ở dòng `release đang chạy:` của `embra status --env <project>/<env>`; bản cũ hơn nằm ở `data.release_id` của event `deploy.healthy` trong `embra events --env <project>/<env> --json`.
+- Chỉ về được release **đã từng chạy** trong environment này và đã bị thay (`retired`). Các kiểm tra như rollback thường: migration chạy sau bản đó, secret đã revoke.
 
 ### Bấm rollback lần thứ hai
 
@@ -144,7 +152,7 @@ Export tạo một bundle gồm image, manifest, file `pg_dump` và danh sách o
 Lệnh tương ứng (xem lưu ý về CLI login ở [Danh sách lệnh](/cli/lenh/)):
 
 ```sh
-embra rollback --env <project>/<env>
+embra rollback --env <project>/<env> [--to <release_id>]
 embra db restore-points --env <project>/<env>
 embra db restore --env <project>/<env> --to 2026-11-01T08:30:00+07:00
 embra export --env <project>/<env>
@@ -154,6 +162,8 @@ embra export --env <project>/<env>
 
 ## Xem thêm
 
+- [Undo từng dòng](/huong-dan/undo-tung-dong/)
+- [Runbook sự cố](/huong-dan/runbook-su-co/)
 - [Database và migration](/huong-dan/database-va-migration/)
 - [Xem log và theo dõi app](/huong-dan/log-va-theo-doi/)
 - [Rollback và khôi phục: mã lỗi](/loi/#rollback-và-khôi-phục)

@@ -1,0 +1,404 @@
+{
+	"source": "embra f84ca5a api/reasons.go",
+	"reasons": [
+		{
+			"key": "OK",
+			"http": 200,
+			"retryable": false,
+			"next_action": "none",
+			"exit": 0
+		},
+		{
+			"key": "ACCEPTED",
+			"http": 202,
+			"retryable": false,
+			"next_action": "wait",
+			"exit": 0
+		},
+		{
+			"key": "APPROVALREQUIRED",
+			"http": 202,
+			"retryable": false,
+			"next_action": "owner_review",
+			"exit": 20
+		},
+		{
+			"key": "MIGRATIONDATALOSS",
+			"http": 202,
+			"retryable": false,
+			"next_action": "owner_review",
+			"exit": 20
+		},
+		{
+			"key": "INVALIDINPUT",
+			"http": 400,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 2
+		},
+		{
+			"key": "IMAGEDIGESTREQUIRED",
+			"http": 400,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "UNAUTHENTICATED",
+			"http": 401,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 1
+		},
+		{
+			"key": "FORBIDDENSCOPE",
+			"http": 403,
+			"retryable": false,
+			"next_action": "owner_review",
+			"exit": 10
+		},
+		{
+			"key": "NOTFOUND",
+			"http": 404,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 1
+		},
+		{
+			"key": "IDEMPOTENCYCONFLICT",
+			"http": 409,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "OPERATIONINPROGRESS",
+			"http": 409,
+			"retryable": false,
+			"next_action": "wait",
+			"exit": 10
+		},
+		{
+			"key": "GENERATIONCONFLICT",
+			"http": 409,
+			"retryable": false,
+			"next_action": "rerun_plan",
+			"exit": 10
+		},
+		{
+			"key": "BINDINGMISMATCH",
+			"http": 409,
+			"retryable": false,
+			"next_action": "rerun_plan",
+			"exit": 10
+		},
+		{
+			"key": "APPROVALEXPIRED",
+			"http": 409,
+			"retryable": false,
+			"next_action": "rerun_plan",
+			"exit": 10
+		},
+		{
+			"key": "SCHEMADRIFT",
+			"http": 409,
+			"retryable": false,
+			"next_action": "rerun_plan",
+			"exit": 10
+		},
+		{
+			"key": "SECRETREVOKED",
+			"http": 409,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "MIGRATIONHISTORYCHANGED",
+			"http": 409,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "ROLLBACKINCOMPATIBLE",
+			"http": 409,
+			"retryable": false,
+			"next_action": "owner_review",
+			"exit": 10
+		},
+		{
+			"key": "ROLLBACKDBGONE",
+			"http": 409,
+			"retryable": false,
+			"next_action": "owner_review",
+			"exit": 10
+		},
+		{
+			"key": "ENVIRONMENTBLOCKED",
+			"http": 409,
+			"retryable": false,
+			"next_action": "contact_operator",
+			"exit": 30
+		},
+		{
+			"key": "WORKSPACESUSPENDED",
+			"http": 403,
+			"retryable": false,
+			"next_action": "contact_operator",
+			"exit": 30
+		},
+		{
+			"key": "ENVIRONMENTSUSPENDED",
+			"http": 403,
+			"retryable": false,
+			"next_action": "contact_operator",
+			"exit": 30
+		},
+		{
+			"key": "QUOTAEXCEEDED",
+			"http": 422,
+			"retryable": false,
+			"next_action": "owner_review",
+			"exit": 10
+		},
+		{
+			"key": "POOLIOPSBUDGETEXCEEDED",
+			"http": 422,
+			"retryable": false,
+			"next_action": "contact_operator",
+			"exit": 10
+		},
+		{
+			"key": "MIGRATIONUNSUPPORTED",
+			"http": 422,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "MIGRATIONREHEARSALFAILED",
+			"http": 200,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "MIGRATIONLOCKTIMEOUT",
+			"http": 200,
+			"retryable": false,
+			"next_action": "rerun_plan",
+			"exit": 10
+		},
+		{
+			"key": "HEALTHCHECKFAILED",
+			"http": 200,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "ATTESTATIONMISMATCH",
+			"http": 200,
+			"retryable": false,
+			"next_action": "contact_operator",
+			"exit": 10
+		},
+		{
+			"key": "RECOVERYREQUIRED",
+			"http": 200,
+			"retryable": false,
+			"next_action": "contact_operator",
+			"exit": 30
+		},
+		{
+			"key": "MIGRATIONUNKNOWN",
+			"http": 200,
+			"retryable": false,
+			"next_action": "contact_operator",
+			"exit": 30
+		},
+		{
+			"key": "SOURCENOTCONNECTED",
+			"http": 409,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "REPOCONFIGINVALID",
+			"http": 400,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 2
+		},
+		{
+			"key": "BUILDFAILED",
+			"http": 200,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "BUILDTIMEOUT",
+			"http": 200,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "DOMAINNOTVERIFIED",
+			"http": 200,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "DOMAINTAKEN",
+			"http": 409,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "SIGNUPCLOSED",
+			"http": 403,
+			"retryable": false,
+			"next_action": "contact_operator",
+			"exit": 10
+		},
+		{
+			"key": "TRIALEXPIRED",
+			"http": 403,
+			"retryable": false,
+			"next_action": "owner_review",
+			"exit": 10
+		},
+		{
+			"key": "CSRFFAILED",
+			"http": 403,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 1
+		},
+		{
+			"key": "HUMANREQUIRED",
+			"http": 403,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "REAUTHREQUIRED",
+			"http": 403,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "LASTOWNER",
+			"http": 409,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "FORKSECRETISPROD",
+			"http": 409,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "RESTOREPOINTUNAVAILABLE",
+			"http": 422,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "MIGRATIONAFTERRESTOREPOINT",
+			"http": 409,
+			"retryable": false,
+			"next_action": "owner_review",
+			"exit": 10
+		},
+		{
+			"key": "RESTORESHORT",
+			"http": 200,
+			"retryable": false,
+			"next_action": "contact_operator",
+			"exit": 10
+		},
+		{
+			"key": "BACKUPWALGAP",
+			"http": 200,
+			"retryable": false,
+			"next_action": "contact_operator",
+			"exit": 10
+		},
+		{
+			"key": "SOURCEARCHIVEINVALID",
+			"http": 400,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 2
+		},
+		{
+			"key": "SOURCETOOLARGE",
+			"http": 422,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 10
+		},
+		{
+			"key": "RATELIMITED",
+			"http": 429,
+			"retryable": true,
+			"next_action": "wait",
+			"exit": 75
+		},
+		{
+			"key": "TEMPORARILYUNAVAILABLE",
+			"http": 503,
+			"retryable": true,
+			"next_action": "wait",
+			"exit": 75
+		},
+		{
+			"key": "INTERNAL",
+			"http": 500,
+			"retryable": false,
+			"next_action": "contact_operator",
+			"exit": 1
+		},
+		{
+			"key": "DEVICEAUTHORIZATIONPENDING",
+			"http": 400,
+			"retryable": true,
+			"next_action": "wait",
+			"exit": 75
+		},
+		{
+			"key": "DEVICESLOWDOWN",
+			"http": 429,
+			"retryable": true,
+			"next_action": "wait",
+			"exit": 75
+		},
+		{
+			"key": "DEVICEACCESSDENIED",
+			"http": 403,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 1
+		},
+		{
+			"key": "DEVICECODEEXPIRED",
+			"http": 400,
+			"retryable": false,
+			"next_action": "fix_input",
+			"exit": 1
+		}
+	]
+}

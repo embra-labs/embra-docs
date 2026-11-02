@@ -58,7 +58,7 @@ If the repo has a `.env.example` (or `.env.sample`), Embra reads the variable **
 | Variable | When | Value |
 |---|---|---|
 | `PORT` | Always, unless you set a `PORT` secret yourself | `[deploy] port` in `embra.toml`, default `3000` |
-| `DATABASE_URL` | With `database = true` | The environment's Postgres connection string. See [Database and migrations](/en/huong-dan/database-va-migration/) |
+| `DATABASE_URL` | With `database = true` | The environment's Postgres connection string. See [Database](/en/huong-dan/database/) |
 | `S3_ENDPOINT`, `S3_PUBLIC_ENDPOINT`, `S3_BUCKET`, `S3_REGION`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_FORCE_PATH_STYLE` | The environment has an Embra bucket | See [File storage](/en/huong-dan/luu-file/) |
 | `EMBRA_GIT_SHA` | Builds from a GitHub commit | The full 40-character commit SHA. Not set for builds from an uploaded folder (`embra up`) |
 

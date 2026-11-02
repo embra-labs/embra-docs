@@ -47,6 +47,15 @@ export default defineConfig({
 					items: [{ autogenerate: { directory: 'bat-dau' } }],
 				},
 				{
+					label: 'Kiến trúc',
+					translations: { en: 'Architecture' },
+					items: [
+						'kien-truc/cach-embra-chay-app',
+						'kien-truc/operation-va-trang-thai',
+						'kien-truc/gioi-han-he-thong',
+					],
+				},
+				{
 					label: 'Đưa app lên',
 					translations: { en: 'Ship your app' },
 					items: [
@@ -62,9 +71,18 @@ export default defineConfig({
 					items: [
 						'huong-dan/bien-moi-truong',
 						'huong-dan/secret',
-						'huong-dan/database-va-migration',
+						'huong-dan/database',
 						'huong-dan/luu-file',
 						'huong-dan/domain-rieng',
+					],
+				},
+				{
+					label: 'Database và migration gate',
+					translations: { en: 'Database and migration gate' },
+					items: [
+						'huong-dan/database-va-migration',
+						'huong-dan/migration-an-toan',
+						'huong-dan/expand-contract',
 					],
 				},
 				{
@@ -73,7 +91,15 @@ export default defineConfig({
 					items: [
 						'huong-dan/staging-production-va-duyet',
 						'huong-dan/log-va-theo-doi',
+					],
+				},
+				{
+					label: 'Khôi phục sự cố',
+					translations: { en: 'Incident recovery' },
+					items: [
+						'huong-dan/runbook-su-co',
 						'huong-dan/rollback-va-khoi-phuc',
+						'huong-dan/undo-tung-dong',
 					],
 				},
 				{
