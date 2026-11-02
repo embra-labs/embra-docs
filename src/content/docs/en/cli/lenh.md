@@ -17,6 +17,7 @@ Run `embra <command> --help` to see every flag. Add `--json` for machine-readabl
 | `embra login --agent` | Request an `agent` token for `embra mcp` |
 | `embra logout` | Remove the token from the config |
 | `embra workspace show` | Show the workspace and the token's permissions |
+| `embra workspace rename <new name>` | Rename the workspace (owner only). The ID, app addresses and tokens stay the same |
 | `embra token create --scope <dev\|viewer\|agent\|ci> --name <name> --ttl <ttl>` | Create a token (printed once). `--ttl` is required, at most `90d` |
 | `embra token list` / `revoke <token_id>` | List or revoke tokens |
 | `embra members list` | List members and invitations (Owner, Admin). Inviting, changing roles and removing: on the web |

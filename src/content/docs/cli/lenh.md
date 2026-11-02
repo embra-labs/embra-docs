@@ -17,6 +17,7 @@ Chạy `embra <lệnh> --help` để xem đủ cờ. Thêm `--json` để lấy 
 | `embra login --agent` | Xin token `agent` cho `embra mcp` |
 | `embra logout` | Xoá token khỏi cấu hình |
 | `embra workspace show` | Xem workspace và quyền của token |
+| `embra workspace rename <tên mới>` | Đổi tên workspace (chỉ owner). ID, địa chỉ app và token giữ nguyên |
 | `embra token create --scope <dev\|viewer\|agent\|ci> --name <name> --ttl <ttl>` | Tạo token (in một lần). `--ttl` bắt buộc, tối đa `90d` |
 | `embra token list` / `revoke <token_id>` | Liệt kê, thu hồi token |
 | `embra members list` | Liệt kê thành viên và lời mời (Owner, Admin). Mời, đổi vai trò, gỡ: làm trên web |
