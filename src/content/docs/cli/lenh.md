@@ -41,7 +41,7 @@ Bỏ `--env` được khi thư mục (hoặc thư mục cha trong cùng repo) c�
 
 | Lệnh | Việc |
 |---|---|
-| `embra up [directory]` | Upload thư mục, build và deploy |
+| `embra up [directory]` | Upload thư mục, build và deploy (`--detach`: thoát ngay khi build đã tạo) |
 | `embra build` | Build từ repo đã connect; build xong tự tạo plan deploy |
 | `embra deploy` | Tạo plan deploy từ `embra.json` và image pin theo digest |
 | `embra approve <op_id> --binding <sha256:…>` | Owner hoặc Admin approve plan đã xem |

@@ -68,6 +68,10 @@ Lỗi xảy ra **trong lúc chạy** operation (`BUILD_FAILED`, `HEALTHCHECK_FAI
 
 </details>
 
+Envelope lỗi có `request_id` (cũng ở header `X-Request-Id`). Gửi kèm mã này khi liên hệ hỗ trợ.
+
+CLI không gửi token tới API `http://` trên máy khác (chỉ `https://`, hoặc `127.0.0.1`/`localhost`). Máy dev trong mạng riêng: đặt `EMBRA_INSECURE_HTTP=1`.
+
 ## Retry an toàn
 
 - Lệnh thay đổi (build, deploy, rollback, approve…) gửi kèm `Idempotency-Key`. Chạy lại **đúng lệnh đó** trong 24 giờ dùng lại key cũ: Embra không tạo operation thứ hai.

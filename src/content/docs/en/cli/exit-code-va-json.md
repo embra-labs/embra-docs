@@ -68,6 +68,11 @@ Errors that happen **while an operation runs** (`BUILD_FAILED`, `HEALTHCHECK_FAI
 
 </details>
 
+
+Error envelopes carry `request_id` (also in the `X-Request-Id` header). Quote it when contacting support.
+
+The CLI never sends a token to an `http://` API on another machine (only `https://`, or `127.0.0.1`/`localhost`). For a dev machine on a private network set `EMBRA_INSECURE_HTTP=1`.
+
 ## Retrying safely
 
 - Mutating commands (build, deploy, rollback, approve…) send an `Idempotency-Key`. Rerunning **the exact same command** within 24 hours reuses the key: Embra does not create a second operation.

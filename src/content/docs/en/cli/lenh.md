@@ -41,7 +41,7 @@ You can omit `--env` when the directory (or a parent inside the same repo) has `
 
 | Command | What it does |
 |---|---|
-| `embra up [directory]` | Upload a directory, build and deploy |
+| `embra up [directory]` (`--detach`: exit once the build exists) | Upload a directory, build and deploy |
 | `embra build` | Build from the linked repo; when the build finishes, a deploy plan is created |
 | `embra deploy` | Create a deploy plan from `embra.json` and an image pinned by digest |
 | `embra approve <op_id> --binding <sha256:…>` | An Owner or Admin approves a plan they have reviewed |
