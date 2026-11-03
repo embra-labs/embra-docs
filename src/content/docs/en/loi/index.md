@@ -688,12 +688,13 @@ The 7-day trial has ended. The console shows **"Dùng thử đã hết hạn"** 
 
 Sentence: `Gói dùng thử đã hết hạn: mọi request tới workspace này bị từ chối và dữ liệu sắp bị xoá. Dữ liệu cần lấy phải export trước hạn.`
 
-- Every action is refused, including viewing.
+- Every action is refused, including viewing. Only the Owner can still see payment details and switch to another workspace.
 - After that the whole workspace is deleted: apps, databases and backups.
+- Chose a plan **before** the trial ended: Embra keeps the workspace **72 more hours** waiting for the transfer. The screen shows the transfer code, QR, amount and deletion time. Pay before then and the workspace reopens.
 
 **What to do:**
 
-1. Need to keep the app or data? Email hello@embra.cloud **right away** with the workspace name. This screen has a **"Liên hệ hỗ trợ"** (contact support) button.
+1. No plan chosen but need to keep the app or data? Email hello@embra.cloud **right away** with the workspace name. This screen has a **"Liên hệ hỗ trợ"** (contact support) button.
 2. Other trial workspaces: choose a plan and pay before the trial ends. See [The trial](/en/huong-dan/tai-khoan-va-goi/#the-trial).
 
 **Retry?** No. Every request to this workspace is refused.
@@ -1021,7 +1022,7 @@ The three codes below share one rule: when Embra is **not sure** a step finished
 
 <!-- /reason-meta -->
 
-An operation on the environment (deploy, rollback, restore, app on/off, writing a backup marker…) ended without Embra knowing the outcome, for example because the connection to the server dropped midway. The console shows **"Cần đội Embra hỗ trợ"** (needs Embra team support), and the overview shows **"Đội Embra cần kiểm tra trước khi bạn deploy tiếp"** (the Embra team needs to check before you deploy again).
+An operation on the environment (deploy, rollback, restore, app on/off…) ended without Embra knowing the outcome, for example because the connection to the server dropped midway. The console shows **"Cần đội Embra hỗ trợ"** (needs Embra team support), and the overview shows **"Đội Embra cần kiểm tra trước khi bạn deploy tiếp"** (the Embra team needs to check before you deploy again).
 
 **State right now:**
 
@@ -1078,7 +1079,7 @@ Embra lost contact while running a migration on production, so it does not know 
 
 <!-- /reason-meta -->
 
-The environment is blocked after an incident with an unknown outcome ([`RECOVERY_REQUIRED`](#recovery_required) or [`MIGRATION_UNKNOWN`](#migration_unknown)). Every change is refused until the Embra team has checked. The overview shows **"Đội Embra cần kiểm tra trước khi bạn deploy tiếp"**, and the service shows **"Chờ đội Embra kiểm tra"** (waiting for the Embra team to check).
+The environment is blocked after an incident with an unknown outcome ([`RECOVERY_REQUIRED`](#recovery_required) or [`MIGRATION_UNKNOWN`](#migration_unknown)). Every change is refused until the Embra team has checked, including approving a pending deploy or import plan. The plan stays awaiting approval: once unblocked you can approve it again (if it has not expired). **"Từ chối"** (reject) still works. The overview shows **"Đội Embra cần kiểm tra trước khi bạn deploy tiếp"**, and the service shows **"Chờ đội Embra kiểm tra"** (waiting for the Embra team to check).
 
 Sentence: `Environment đang bị chặn sau một sự cố chưa rõ kết quả. Liên hệ đội Embra (hello@embra.cloud).`
 

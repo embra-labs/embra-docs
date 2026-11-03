@@ -688,12 +688,13 @@ Hết 7 ngày dùng thử. Console hiện **"Dùng thử đã hết hạn"**.
 
 Câu lỗi: `Gói dùng thử đã hết hạn: mọi request tới workspace này bị từ chối và dữ liệu sắp bị xoá. Dữ liệu cần lấy phải export trước hạn.`
 
-- Mọi thao tác bị từ chối, kể cả xem.
+- Mọi thao tác bị từ chối, kể cả xem. Riêng Owner vẫn xem được thông tin thanh toán và chuyển sang workspace khác.
 - Sau đó cả workspace bị xoá: app, database và backup.
+- Đã chọn gói **trước** khi hết hạn: Embra giữ workspace thêm **72 giờ** chờ tiền về. Màn hình hiện mã chuyển khoản, QR, số tiền và giờ xoá. Chuyển khoản trước giờ đó thì workspace mở lại.
 
 **Cách xử lý:**
 
-1. Cần giữ app hoặc data thì email **ngay** hello@embra.cloud kèm tên workspace. Màn hình này có nút **"Liên hệ hỗ trợ"**.
+1. Chưa chọn gói mà cần giữ app hoặc data: email **ngay** hello@embra.cloud kèm tên workspace. Màn hình này có nút **"Liên hệ hỗ trợ"**.
 2. Workspace dùng thử khác: chọn gói và chuyển khoản trước khi hết hạn. Xem [Gói dùng thử](/huong-dan/tai-khoan-va-goi/#gói-dùng-thử).
 
 **Retry?** Không. Mọi request tới workspace này đều bị từ chối.
@@ -1021,7 +1022,7 @@ Ba mã dưới đây chung một nguyên tắc: khi **không chắc** một bư�
 
 <!-- /reason-meta -->
 
-Một thao tác trên environment (deploy, rollback, restore, bật/tắt app, ghi mốc backup…) kết thúc mà Embra không xác định được kết quả, ví dụ mất kết nối với server giữa chừng. Console hiện **"Cần đội Embra hỗ trợ"**, trang Tổng quan hiện **"Đội Embra cần kiểm tra trước khi bạn deploy tiếp"**.
+Một thao tác trên environment (deploy, rollback, restore, bật/tắt app…) kết thúc mà Embra không xác định được kết quả, ví dụ mất kết nối với server giữa chừng. Console hiện **"Cần đội Embra hỗ trợ"**, trang Tổng quan hiện **"Đội Embra cần kiểm tra trước khi bạn deploy tiếp"**.
 
 **Trạng thái lúc này:**
 
@@ -1078,7 +1079,7 @@ Embra mất liên lạc lúc đang chạy migration trên production, nên khôn
 
 <!-- /reason-meta -->
 
-Environment bị chặn sau một sự cố chưa rõ kết quả ([`RECOVERY_REQUIRED`](#recovery_required) hoặc [`MIGRATION_UNKNOWN`](#migration_unknown)). Mọi thao tác thay đổi bị từ chối tới khi đội Embra kiểm tra xong. Trang Tổng quan hiện **"Đội Embra cần kiểm tra trước khi bạn deploy tiếp"**, service hiện **"Chờ đội Embra kiểm tra"**.
+Environment bị chặn sau một sự cố chưa rõ kết quả ([`RECOVERY_REQUIRED`](#recovery_required) hoặc [`MIGRATION_UNKNOWN`](#migration_unknown)). Mọi thao tác thay đổi bị từ chối tới khi đội Embra kiểm tra xong, kể cả approve plan deploy hay import đang chờ. Plan vẫn giữ trạng thái chờ approve: gỡ chặn xong approve lại được (nếu chưa quá hạn). **"Từ chối"** plan thì vẫn làm được. Trang Tổng quan hiện **"Đội Embra cần kiểm tra trước khi bạn deploy tiếp"**, service hiện **"Chờ đội Embra kiểm tra"**.
 
 Câu lỗi: `Environment đang bị chặn sau một sự cố chưa rõ kết quả. Liên hệ đội Embra (hello@embra.cloud).`
 

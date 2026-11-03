@@ -36,7 +36,7 @@ For help, email hello@embra.cloud.
 The **"Dùng thử · xoá sau N ngày"** banner (trial, deleted in N days) shows the time remaining.
 
 :::caution[After 7 days everything is deleted]
-When the trial expires, every action is refused, including viewing. Then **the whole workspace is deleted**: app, database and backups. There is no grace period, and an expired workspace can no longer be paid for.
+When the trial expires, every action is refused, including viewing. Then **the whole workspace is deleted**: app, database and backups. Without a chosen plan there is no grace period. If you chose a plan before the trial ended, Embra keeps the workspace **72 more hours** waiting for the transfer; the Owner still sees the transfer code and QR on the expired screen.
 
 To keep your app, **choose a plan and pay before the trial ends**. Embra warns you 24 hours before. If you only want your data, export it under **Cài đặt → Dữ liệu → Export** (settings, data, export) before the deadline.
 :::

@@ -36,7 +36,7 @@ Cần giúp: email hello@embra.cloud.
 Banner **"Dùng thử · xoá sau N ngày"** cho biết thời gian còn lại.
 
 :::caution[Hết 7 ngày là xoá]
-Hết hạn thì mọi thao tác bị chặn, kể cả xem. Sau đó **toàn bộ workspace bị xoá**: app, database và backup. Không có thời gian ân hạn, và workspace đã hết hạn thì không trả tiền được nữa.
+Hết hạn thì mọi thao tác bị chặn, kể cả xem. Sau đó **toàn bộ workspace bị xoá**: app, database và backup. Chưa chọn gói thì không có thời gian ân hạn. Đã chọn gói trước khi hết hạn thì Embra giữ workspace thêm **72 giờ** chờ tiền về; Owner vẫn thấy mã chuyển khoản và QR trên màn hình hết hạn.
 
 Muốn giữ app thì **chọn gói và chuyển khoản trước khi hết hạn**. Embra gửi cảnh báo 24 giờ trước. Chỉ cần lấy data thì export ở **Cài đặt → Dữ liệu → Export** trước thời hạn.
 :::
