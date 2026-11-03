@@ -15,6 +15,8 @@ Chạy `embra <lệnh> --help` để xem đủ flag. Thêm `--json` để lấy 
 |---|---|
 | `embra login` | Login qua browser, nhận token mang role của bạn |
 | `embra login --agent` | Xin token `agent` cho `embra mcp` |
+| `embra login --profile <tên>` | Login vào một profile riêng (mỗi workspace một token, ví dụ workspace của từng khách). Chuyển workspace trên web trước khi approve |
+| `embra profile list` / `use <tên>` / `remove <tên>` | Xem, chuyển, xoá profile trên máy. Một lệnh với profile khác: `embra --profile <tên> …` hoặc `EMBRA_PROFILE` |
 | `embra login --with-token < token.txt` | Login bằng token có sẵn (CI, không có terminal). Không có terminal mà thiếu cờ này thì CLI báo lỗi ngay |
 | `embra logout` | Xoá token khỏi config |
 | `embra workspace show` | Xem workspace và permission của token |
@@ -70,6 +72,7 @@ Bỏ `--env` được khi thư mục (hoặc thư mục cha trong cùng repo) c�
 | Lệnh | Việc |
 |---|---|
 | `embra secret set KEY` | Đặt secret, giá trị đọc từ stdin |
+| `embra secret import --file .env` | Đặt nhiều secret từ file `.env` một lần (tất cả hoặc không cái nào; `--dry-run` chỉ in tên) |
 | `embra secret list` | Liệt kê secret (không hiện giá trị) |
 | `embra secret unset KEY --version N` | Revoke một version của secret |
 | `embra logs` | Log của app (`--env`) hoặc của một build (`--build <op_id>`) |

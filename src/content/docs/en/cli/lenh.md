@@ -15,6 +15,8 @@ Run `embra <command> --help` to see every flag. Add `--json` for machine-readabl
 |---|---|
 | `embra login` | Sign in through the browser and get a token carrying your role |
 | `embra login --agent` | Request an `agent` token for `embra mcp` |
+| `embra login --profile <name>` | Sign in into a separate profile (one token per workspace, e.g. each client's workspace). Switch workspace on the web before approving |
+| `embra profile list` / `use <name>` / `remove <name>` | List, switch, remove profiles on this machine. One command with another profile: `embra --profile <name> …` or `EMBRA_PROFILE` |
 | `embra login --with-token < token.txt` | Sign in with an existing token (CI, no terminal). Without a terminal and without this flag, the CLI fails at once |
 | `embra logout` | Remove the token from the config |
 | `embra workspace show` | Show the workspace and the token's permissions |
@@ -70,6 +72,7 @@ You can omit `--env` when the directory (or a parent inside the same repo) has `
 | Command | What it does |
 |---|---|
 | `embra secret set KEY` | Set a secret, value read from stdin |
+| `embra secret import --file .env` | Set many secrets from a `.env` file at once (all or nothing; `--dry-run` lists the names only) |
 | `embra secret list` | List secrets (without values) |
 | `embra secret unset KEY --version N` | Revoke one version of a secret |
 | `embra logs` | Logs of the app (`--env`) or of a build (`--build <op_id>`) |
