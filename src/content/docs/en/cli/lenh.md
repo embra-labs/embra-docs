@@ -81,8 +81,10 @@ You can omit `--env` when the directory (or a parent inside the same repo) has `
 | Command | What it does |
 |---|---|
 | `embra export --env <project>/<env>` | Export an app + data bundle to run elsewhere (Owner, Admin) |
-| `embra env delete <project>/<env> --confirm <env-slug>` | Delete an environment, cannot be undone (Owner, Admin) |
+| `embra env delete <project>/<env> --confirm <env-slug>` (add `--dry-run` to preview) | Delete an environment, cannot be undone (Owner, Admin) |
 | `embra workspace delete --confirm <workspace-name>` | Delete the whole workspace, cannot be undone (Owner only) |
+
+`embra rollback`, `embra db restore` and `embra env delete` accept `--dry-run`: the CLI only reads and prints what it would do (`dry_run: true`) and sends nothing. Permissions and migrations are still checked by the server on the real run.
 
 Exports and deleting production need a real person: do it on the web, or within 12 hours of `embra login`. See [Members and permissions](/en/workspace/phan-quyen/#actions-that-need-a-real-person).
 

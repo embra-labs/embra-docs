@@ -81,8 +81,10 @@ Bỏ `--env` được khi thư mục (hoặc thư mục cha trong cùng repo) c�
 | Lệnh | Việc |
 |---|---|
 | `embra export --env <project>/<env>` | Export bundle app + data để chạy ở nơi khác (Owner, Admin) |
-| `embra env delete <project>/<env> --confirm <env-slug>` | Xoá environment, không quay lại được (Owner, Admin) |
+| `embra env delete <project>/<env> --confirm <env-slug>` (thêm `--dry-run` để xem trước) | Xoá environment, không quay lại được (Owner, Admin) |
 | `embra workspace delete --confirm <workspace-name>` | Xoá cả workspace, không quay lại được (chỉ Owner) |
+
+`embra rollback`, `embra db restore` và `embra env delete` nhận `--dry-run`: CLI chỉ đọc và in việc sẽ làm (`dry_run: true`), không gửi gì. Quyền và migration vẫn do máy chủ kiểm khi chạy thật.
 
 Export và xoá production cần người thật: làm trên web, hoặc trong 12 giờ sau `embra login`. Xem [Thành viên và phân quyền](/workspace/phan-quyen/#việc-cần-người-thật).
 
