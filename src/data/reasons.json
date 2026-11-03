@@ -1,404 +1,836 @@
 {
-	"source": "embra f84ca5a api/reasons.go",
+	"source": "embra a20faee api/reasons.go",
 	"reasons": [
 		{
-			"key": "OK",
+			"code": "OK",
 			"http": 200,
 			"retryable": false,
 			"next_action": "none",
-			"exit": 0
+			"exit": 0,
+			"docs": null,
+			"next_step": null
 		},
 		{
-			"key": "ACCEPTED",
+			"code": "ACCEPTED",
 			"http": 202,
 			"retryable": false,
 			"next_action": "wait",
-			"exit": 0
+			"exit": 0,
+			"docs": null,
+			"next_step": null
 		},
 		{
-			"key": "APPROVALREQUIRED",
+			"code": "APPROVAL_REQUIRED",
 			"http": 202,
 			"retryable": false,
 			"next_action": "owner_review",
-			"exit": 20
+			"exit": 20,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#approval_required",
+				"en": "https://docs.embra.cloud/en/loi/#approval_required"
+			},
+			"next_step": {
+				"vi": "Owner hoặc Admin xem trên web",
+				"en": "Owner or Admin reviews on the web"
+			}
 		},
 		{
-			"key": "MIGRATIONDATALOSS",
+			"code": "MIGRATION_DATA_LOSS",
 			"http": 202,
 			"retryable": false,
 			"next_action": "owner_review",
-			"exit": 20
+			"exit": 20,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#migration_data_loss",
+				"en": "https://docs.embra.cloud/en/loi/#migration_data_loss"
+			},
+			"next_step": {
+				"vi": "Approve trên web, gõ `CONFIRM_MIGRATION`",
+				"en": "Approve on the web, type `CONFIRM_MIGRATION`"
+			}
 		},
 		{
-			"key": "INVALIDINPUT",
+			"code": "INVALID_INPUT",
 			"http": 400,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 2
+			"exit": 2,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#invalid_input",
+				"en": "https://docs.embra.cloud/en/loi/#invalid_input"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "IMAGEDIGESTREQUIRED",
+			"code": "IMAGE_DIGEST_REQUIRED",
 			"http": 400,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#image_digest_required",
+				"en": "https://docs.embra.cloud/en/loi/#image_digest_required"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "UNAUTHENTICATED",
+			"code": "UNAUTHENTICATED",
 			"http": 401,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 1
+			"exit": 1,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#unauthenticated",
+				"en": "https://docs.embra.cloud/en/loi/#unauthenticated"
+			},
+			"next_step": {
+				"vi": "`embra login` hoặc token mới",
+				"en": "`embra login` or a new token"
+			}
 		},
 		{
-			"key": "FORBIDDENSCOPE",
+			"code": "FORBIDDEN_SCOPE",
 			"http": 403,
 			"retryable": false,
 			"next_action": "owner_review",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#forbidden_scope",
+				"en": "https://docs.embra.cloud/en/loi/#forbidden_scope"
+			},
+			"next_step": {
+				"vi": "Owner hoặc Admin xem trên web",
+				"en": "Owner or Admin reviews on the web"
+			}
 		},
 		{
-			"key": "NOTFOUND",
+			"code": "NOT_FOUND",
 			"http": 404,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 1
+			"exit": 1,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#not_found",
+				"en": "https://docs.embra.cloud/en/loi/#not_found"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "IDEMPOTENCYCONFLICT",
+			"code": "IDEMPOTENCY_CONFLICT",
 			"http": 409,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#idempotency_conflict",
+				"en": "https://docs.embra.cloud/en/loi/#idempotency_conflict"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "OPERATIONINPROGRESS",
+			"code": "OPERATION_IN_PROGRESS",
 			"http": 409,
 			"retryable": false,
 			"next_action": "wait",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#operation_in_progress",
+				"en": "https://docs.embra.cloud/en/loi/#operation_in_progress"
+			},
+			"next_step": {
+				"vi": "`embra wait <op_id>`",
+				"en": "`embra wait <op_id>`"
+			}
 		},
 		{
-			"key": "GENERATIONCONFLICT",
+			"code": "GENERATION_CONFLICT",
 			"http": 409,
 			"retryable": false,
 			"next_action": "rerun_plan",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#generation_conflict",
+				"en": "https://docs.embra.cloud/en/loi/#generation_conflict"
+			},
+			"next_step": {
+				"vi": "Tạo plan mới: \"Build lại\" hoặc `embra build`",
+				"en": "New plan: \"Build lại\" (rebuild) or `embra build`"
+			}
 		},
 		{
-			"key": "BINDINGMISMATCH",
+			"code": "BINDING_MISMATCH",
 			"http": 409,
 			"retryable": false,
 			"next_action": "rerun_plan",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#binding_mismatch",
+				"en": "https://docs.embra.cloud/en/loi/#binding_mismatch"
+			},
+			"next_step": {
+				"vi": "Tạo plan mới: \"Build lại\" hoặc `embra build`",
+				"en": "New plan: \"Build lại\" (rebuild) or `embra build`"
+			}
 		},
 		{
-			"key": "APPROVALEXPIRED",
+			"code": "APPROVAL_EXPIRED",
 			"http": 409,
 			"retryable": false,
 			"next_action": "rerun_plan",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#approval_expired",
+				"en": "https://docs.embra.cloud/en/loi/#approval_expired"
+			},
+			"next_step": {
+				"vi": "Tạo plan mới: \"Build lại\" hoặc `embra build`",
+				"en": "New plan: \"Build lại\" (rebuild) or `embra build`"
+			}
 		},
 		{
-			"key": "SCHEMADRIFT",
+			"code": "SCHEMA_DRIFT",
 			"http": 409,
 			"retryable": false,
 			"next_action": "rerun_plan",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#schema_drift",
+				"en": "https://docs.embra.cloud/en/loi/#schema_drift"
+			},
+			"next_step": {
+				"vi": "Tạo plan mới: \"Build lại\" hoặc `embra build`",
+				"en": "New plan: \"Build lại\" (rebuild) or `embra build`"
+			}
 		},
 		{
-			"key": "SECRETREVOKED",
+			"code": "SECRET_REVOKED",
 			"http": 409,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#secret_revoked",
+				"en": "https://docs.embra.cloud/en/loi/#secret_revoked"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "MIGRATIONHISTORYCHANGED",
+			"code": "MIGRATION_HISTORY_CHANGED",
 			"http": 409,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#migration_history_changed",
+				"en": "https://docs.embra.cloud/en/loi/#migration_history_changed"
+			},
+			"next_step": {
+				"vi": "`git checkout <commit> -- migrations/<file>`",
+				"en": "`git checkout <commit> -- migrations/<file>`"
+			}
 		},
 		{
-			"key": "ROLLBACKINCOMPATIBLE",
+			"code": "ROLLBACK_INCOMPATIBLE",
 			"http": 409,
 			"retryable": false,
 			"next_action": "owner_review",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#rollback_incompatible",
+				"en": "https://docs.embra.cloud/en/loi/#rollback_incompatible"
+			},
+			"next_step": {
+				"vi": "Sửa bằng commit mới",
+				"en": "Fix forward with a new commit"
+			}
 		},
 		{
-			"key": "ROLLBACKDBGONE",
+			"code": "ROLLBACK_DB_GONE",
 			"http": 409,
 			"retryable": false,
 			"next_action": "owner_review",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#rollback_db_gone",
+				"en": "https://docs.embra.cloud/en/loi/#rollback_db_gone"
+			},
+			"next_step": {
+				"vi": "Owner hoặc Admin xem trên web",
+				"en": "Owner or Admin reviews on the web"
+			}
 		},
 		{
-			"key": "ENVIRONMENTBLOCKED",
+			"code": "ENVIRONMENT_BLOCKED",
 			"http": 409,
 			"retryable": false,
 			"next_action": "contact_operator",
-			"exit": 30
+			"exit": 30,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#environment_blocked",
+				"en": "https://docs.embra.cloud/en/loi/#environment_blocked"
+			},
+			"next_step": {
+				"vi": "Không có, cố ý. Email hello@embra.cloud kèm `operation_id`",
+				"en": "None, on purpose. Email hello@embra.cloud with the `operation_id`"
+			}
 		},
 		{
-			"key": "WORKSPACESUSPENDED",
+			"code": "WORKSPACE_SUSPENDED",
 			"http": 403,
 			"retryable": false,
 			"next_action": "contact_operator",
-			"exit": 30
+			"exit": 30,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#workspace_suspended",
+				"en": "https://docs.embra.cloud/en/loi/#workspace_suspended"
+			},
+			"next_step": {
+				"vi": "Không có, cố ý. Email hello@embra.cloud kèm `operation_id`",
+				"en": "None, on purpose. Email hello@embra.cloud with the `operation_id`"
+			}
 		},
 		{
-			"key": "ENVIRONMENTSUSPENDED",
+			"code": "ENVIRONMENT_SUSPENDED",
 			"http": 403,
 			"retryable": false,
 			"next_action": "contact_operator",
-			"exit": 30
+			"exit": 30,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#environment_suspended",
+				"en": "https://docs.embra.cloud/en/loi/#environment_suspended"
+			},
+			"next_step": {
+				"vi": "Không có, cố ý. Email hello@embra.cloud kèm `operation_id`",
+				"en": "None, on purpose. Email hello@embra.cloud with the `operation_id`"
+			}
 		},
 		{
-			"key": "QUOTAEXCEEDED",
+			"code": "QUOTA_EXCEEDED",
 			"http": 422,
 			"retryable": false,
 			"next_action": "owner_review",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#quota_exceeded",
+				"en": "https://docs.embra.cloud/en/loi/#quota_exceeded"
+			},
+			"next_step": {
+				"vi": "Owner hoặc Admin xem trên web",
+				"en": "Owner or Admin reviews on the web"
+			}
 		},
 		{
-			"key": "POOLIOPSBUDGETEXCEEDED",
+			"code": "POOL_IOPS_BUDGET_EXCEEDED",
 			"http": 422,
 			"retryable": false,
 			"next_action": "contact_operator",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#pool_iops_budget_exceeded",
+				"en": "https://docs.embra.cloud/en/loi/#pool_iops_budget_exceeded"
+			},
+			"next_step": {
+				"vi": "Không có, cố ý. Email hello@embra.cloud kèm `operation_id`",
+				"en": "None, on purpose. Email hello@embra.cloud with the `operation_id`"
+			}
 		},
 		{
-			"key": "MIGRATIONUNSUPPORTED",
+			"code": "MIGRATION_UNSUPPORTED",
 			"http": 422,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#migration_unsupported",
+				"en": "https://docs.embra.cloud/en/loi/#migration_unsupported"
+			},
+			"next_step": {
+				"vi": "Bỏ câu lệnh lớp E/F, push lại",
+				"en": "Remove the class E/F statement, push again"
+			}
 		},
 		{
-			"key": "MIGRATIONREHEARSALFAILED",
+			"code": "MIGRATION_REHEARSAL_FAILED",
 			"http": 200,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#migration_rehearsal_failed",
+				"en": "https://docs.embra.cloud/en/loi/#migration_rehearsal_failed"
+			},
+			"next_step": {
+				"vi": "Sửa SQL, kiểm bằng `embra plan` rồi push",
+				"en": "Fix the SQL, check with `embra plan`, then push"
+			}
 		},
 		{
-			"key": "MIGRATIONLOCKTIMEOUT",
+			"code": "MIGRATION_LOCK_TIMEOUT",
 			"http": 200,
 			"retryable": false,
 			"next_action": "rerun_plan",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#migration_lock_timeout",
+				"en": "https://docs.embra.cloud/en/loi/#migration_lock_timeout"
+			},
+			"next_step": {
+				"vi": "Tạo plan mới: \"Build lại\" hoặc `embra build`",
+				"en": "New plan: \"Build lại\" (rebuild) or `embra build`"
+			}
 		},
 		{
-			"key": "HEALTHCHECKFAILED",
+			"code": "HEALTHCHECK_FAILED",
 			"http": 200,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#healthcheck_failed",
+				"en": "https://docs.embra.cloud/en/loi/#healthcheck_failed"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "ATTESTATIONMISMATCH",
+			"code": "ATTESTATION_MISMATCH",
 			"http": 200,
 			"retryable": false,
 			"next_action": "contact_operator",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#attestation_mismatch",
+				"en": "https://docs.embra.cloud/en/loi/#attestation_mismatch"
+			},
+			"next_step": {
+				"vi": "Không có, cố ý. Email hello@embra.cloud kèm `operation_id`",
+				"en": "None, on purpose. Email hello@embra.cloud with the `operation_id`"
+			}
 		},
 		{
-			"key": "RECOVERYREQUIRED",
+			"code": "RECOVERY_REQUIRED",
 			"http": 200,
 			"retryable": false,
 			"next_action": "contact_operator",
-			"exit": 30
+			"exit": 30,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#recovery_required",
+				"en": "https://docs.embra.cloud/en/loi/#recovery_required"
+			},
+			"next_step": {
+				"vi": "Không có, cố ý. Email hello@embra.cloud kèm `operation_id`",
+				"en": "None, on purpose. Email hello@embra.cloud with the `operation_id`"
+			}
 		},
 		{
-			"key": "MIGRATIONUNKNOWN",
+			"code": "MIGRATION_UNKNOWN",
 			"http": 200,
 			"retryable": false,
 			"next_action": "contact_operator",
-			"exit": 30
+			"exit": 30,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#migration_unknown",
+				"en": "https://docs.embra.cloud/en/loi/#migration_unknown"
+			},
+			"next_step": {
+				"vi": "Không có, cố ý. Email hello@embra.cloud kèm `operation_id`",
+				"en": "None, on purpose. Email hello@embra.cloud with the `operation_id`"
+			}
 		},
 		{
-			"key": "SOURCENOTCONNECTED",
+			"code": "SOURCE_NOT_CONNECTED",
 			"http": 409,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#source_not_connected",
+				"en": "https://docs.embra.cloud/en/loi/#source_not_connected"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "REPOCONFIGINVALID",
+			"code": "REPO_CONFIG_INVALID",
 			"http": 400,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 2
+			"exit": 2,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#repo_config_invalid",
+				"en": "https://docs.embra.cloud/en/loi/#repo_config_invalid"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "BUILDFAILED",
+			"code": "BUILD_FAILED",
 			"http": 200,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#build_failed",
+				"en": "https://docs.embra.cloud/en/loi/#build_failed"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "BUILDTIMEOUT",
+			"code": "BUILD_TIMEOUT",
 			"http": 200,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#build_timeout",
+				"en": "https://docs.embra.cloud/en/loi/#build_timeout"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "DOMAINNOTVERIFIED",
+			"code": "DOMAIN_NOT_VERIFIED",
 			"http": 200,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#domain_not_verified",
+				"en": "https://docs.embra.cloud/en/loi/#domain_not_verified"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "DOMAINTAKEN",
+			"code": "DOMAIN_TAKEN",
 			"http": 409,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#domain_taken",
+				"en": "https://docs.embra.cloud/en/loi/#domain_taken"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "SIGNUPCLOSED",
+			"code": "SIGNUP_CLOSED",
 			"http": 403,
 			"retryable": false,
 			"next_action": "contact_operator",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#signup_closed",
+				"en": "https://docs.embra.cloud/en/loi/#signup_closed"
+			},
+			"next_step": {
+				"vi": "Không có, cố ý. Email hello@embra.cloud kèm `operation_id`",
+				"en": "None, on purpose. Email hello@embra.cloud with the `operation_id`"
+			}
 		},
 		{
-			"key": "TRIALEXPIRED",
+			"code": "TRIAL_EXPIRED",
 			"http": 403,
 			"retryable": false,
 			"next_action": "owner_review",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#trial_expired",
+				"en": "https://docs.embra.cloud/en/loi/#trial_expired"
+			},
+			"next_step": {
+				"vi": "Owner hoặc Admin xem trên web",
+				"en": "Owner or Admin reviews on the web"
+			}
 		},
 		{
-			"key": "CSRFFAILED",
+			"code": "CSRF_FAILED",
 			"http": 403,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 1
+			"exit": 1,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#csrf_failed",
+				"en": "https://docs.embra.cloud/en/loi/#csrf_failed"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "HUMANREQUIRED",
+			"code": "HUMAN_REQUIRED",
 			"http": 403,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#human_required",
+				"en": "https://docs.embra.cloud/en/loi/#human_required"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "REAUTHREQUIRED",
+			"code": "REAUTH_REQUIRED",
 			"http": 403,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#reauth_required",
+				"en": "https://docs.embra.cloud/en/loi/#reauth_required"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "LASTOWNER",
+			"code": "LAST_OWNER",
 			"http": 409,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#last_owner",
+				"en": "https://docs.embra.cloud/en/loi/#last_owner"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "FORKSECRETISPROD",
+			"code": "FORK_SECRET_IS_PROD",
 			"http": 409,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#fork_secret_is_prod",
+				"en": "https://docs.embra.cloud/en/loi/#fork_secret_is_prod"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "RESTOREPOINTUNAVAILABLE",
+			"code": "RESTORE_POINT_UNAVAILABLE",
 			"http": 422,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#restore_point_unavailable",
+				"en": "https://docs.embra.cloud/en/loi/#restore_point_unavailable"
+			},
+			"next_step": {
+				"vi": "`embra db restore-points`",
+				"en": "`embra db restore-points`"
+			}
 		},
 		{
-			"key": "MIGRATIONAFTERRESTOREPOINT",
+			"code": "MIGRATION_AFTER_RESTORE_POINT",
 			"http": 409,
 			"retryable": false,
 			"next_action": "owner_review",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#migration_after_restore_point",
+				"en": "https://docs.embra.cloud/en/loi/#migration_after_restore_point"
+			},
+			"next_step": {
+				"vi": "Chọn mốc sau migration",
+				"en": "Pick a point after the migration"
+			}
 		},
 		{
-			"key": "RESTORESHORT",
+			"code": "RESTORE_SHORT",
 			"http": 200,
 			"retryable": false,
 			"next_action": "contact_operator",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#restore_short",
+				"en": "https://docs.embra.cloud/en/loi/#restore_short"
+			},
+			"next_step": {
+				"vi": "Không có, cố ý. Email hello@embra.cloud kèm `operation_id`",
+				"en": "None, on purpose. Email hello@embra.cloud with the `operation_id`"
+			}
 		},
 		{
-			"key": "BACKUPWALGAP",
+			"code": "BACKUP_WAL_GAP",
 			"http": 200,
 			"retryable": false,
 			"next_action": "contact_operator",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#backup_wal_gap",
+				"en": "https://docs.embra.cloud/en/loi/#backup_wal_gap"
+			},
+			"next_step": {
+				"vi": "Không có, cố ý. Email hello@embra.cloud kèm `operation_id`",
+				"en": "None, on purpose. Email hello@embra.cloud with the `operation_id`"
+			}
 		},
 		{
-			"key": "SOURCEARCHIVEINVALID",
+			"code": "SOURCE_ARCHIVE_INVALID",
 			"http": 400,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 2
+			"exit": 2,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#source_archive_invalid",
+				"en": "https://docs.embra.cloud/en/loi/#source_archive_invalid"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "SOURCETOOLARGE",
+			"code": "SOURCE_TOO_LARGE",
 			"http": 422,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 10
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#source_too_large",
+				"en": "https://docs.embra.cloud/en/loi/#source_too_large"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "RATELIMITED",
+			"code": "RATE_LIMITED",
 			"http": 429,
 			"retryable": true,
 			"next_action": "wait",
-			"exit": 75
+			"exit": 75,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#rate_limited",
+				"en": "https://docs.embra.cloud/en/loi/#rate_limited"
+			},
+			"next_step": {
+				"vi": "`embra wait <op_id>`, hoặc chờ rồi thử lại",
+				"en": "`embra wait <op_id>`, or wait and retry"
+			}
 		},
 		{
-			"key": "TEMPORARILYUNAVAILABLE",
+			"code": "TEMPORARILY_UNAVAILABLE",
 			"http": 503,
 			"retryable": true,
 			"next_action": "wait",
-			"exit": 75
+			"exit": 75,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#temporarily_unavailable",
+				"en": "https://docs.embra.cloud/en/loi/#temporarily_unavailable"
+			},
+			"next_step": {
+				"vi": "`embra wait <op_id>`, hoặc chờ rồi thử lại",
+				"en": "`embra wait <op_id>`, or wait and retry"
+			}
 		},
 		{
-			"key": "INTERNAL",
+			"code": "INTERNAL",
 			"http": 500,
 			"retryable": false,
 			"next_action": "contact_operator",
-			"exit": 1
+			"exit": 1,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#internal",
+				"en": "https://docs.embra.cloud/en/loi/#internal"
+			},
+			"next_step": {
+				"vi": "Không có, cố ý. Email hello@embra.cloud kèm `operation_id`",
+				"en": "None, on purpose. Email hello@embra.cloud with the `operation_id`"
+			}
 		},
 		{
-			"key": "DEVICEAUTHORIZATIONPENDING",
+			"code": "DEVICE_AUTHORIZATION_PENDING",
 			"http": 400,
 			"retryable": true,
 			"next_action": "wait",
-			"exit": 75
+			"exit": 75,
+			"docs": null,
+			"next_step": null
 		},
 		{
-			"key": "DEVICESLOWDOWN",
+			"code": "DEVICE_SLOW_DOWN",
 			"http": 429,
 			"retryable": true,
 			"next_action": "wait",
-			"exit": 75
+			"exit": 75,
+			"docs": null,
+			"next_step": null
 		},
 		{
-			"key": "DEVICEACCESSDENIED",
+			"code": "DEVICE_ACCESS_DENIED",
 			"http": 403,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 1
+			"exit": 1,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#device_access_denied",
+				"en": "https://docs.embra.cloud/en/loi/#device_access_denied"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		},
 		{
-			"key": "DEVICECODEEXPIRED",
+			"code": "DEVICE_CODE_EXPIRED",
 			"http": 400,
 			"retryable": false,
 			"next_action": "fix_input",
-			"exit": 1
+			"exit": 1,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#device_code_expired",
+				"en": "https://docs.embra.cloud/en/loi/#device_code_expired"
+			},
+			"next_step": {
+				"vi": "Sửa theo mục này rồi làm lại",
+				"en": "Fix as described here, then retry"
+			}
 		}
 	]
 }

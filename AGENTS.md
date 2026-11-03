@@ -6,6 +6,7 @@ Public docs for Embra, built with Astro Starlight. See `README.md` for commands 
 - The API reference is hidden for now. Don't publish `openapi.yaml` or endpoint lists without founder approval.
 - Only document behaviour that exists on the product repo's `main`. Check the code before writing.
 - `npm run build` must pass with no new warnings before reporting done.
+- Agent outputs (`/llms.txt`, `/<slug>.md`, bundles, `/reasons.json`) are built from page Markdown by `src/lib/agent-docs.ts`. A new page needs a good `description` (it is the agent's index line) and, if outside `bat-dau`/`loi`/`cli`, an entry in `src/sidebar.mjs`; add it to a topic set in `agent-docs.ts` if it fits one.
 - Dev server: `astro dev --background`; manage with `astro dev stop|status|logs`.
 - Style follows the console (`embra-dashboard` BRAND_GUIDE.md, tokens.css): light only, color only for status. Keep `src/styles/theme.css` in sync with the dashboard tokens.
 

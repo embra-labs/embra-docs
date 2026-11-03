@@ -25,6 +25,15 @@ const rows = [...src.matchAll(/apigen\.(ReasonCode\w+):\s*\{(\d+),\s*(true|false
 	next_action: actionName[m[4]] ?? m[4],
 	exit: Number(m[5]),
 }));
+// Real code strings (SCHEMA_DRIFT) come from the ReasonCode enum in api/openapi.yaml.
+const spec = execFileSync('git', ['-C', repo, 'show', `${ref}:api/openapi.yaml`], { encoding: 'utf8' });
+const enumBlock = spec.match(/\n    ReasonCode:\n[\s\S]*?enum:\n((?:\s+- [A-Z0-9_]+\n)+)/);
+if (!enumBlock) throw new Error('ReasonCode enum not found in api/openapi.yaml');
+const codeByKey = new Map([...enumBlock[1].matchAll(/- ([A-Z0-9_]+)/g)].map((m) => [m[1].replaceAll('_', ''), m[1]]));
+for (const r of rows) {
+	r.code = codeByKey.get(r.key);
+	if (!r.code) throw new Error(`${r.key} is in reasons.go but not in the openapi ReasonCode enum`);
+}
 if (rows.length < 40) throw new Error(`parsed only ${rows.length} reasons; reasons.go format changed?`);
 
 // The Go enum name drops underscores (SCHEMADRIFT); the /loi/ heading has them (SCHEMA_DRIFT). Match by
@@ -93,6 +102,10 @@ for (const [lang, path] of [['vi', 'src/content/docs/loi/index.md'], ['en', 'src
 			return line;
 		}
 		seen.add(r.key);
+		r.docs ??= {};
+		r.docs[lang] = `https://docs.embra.cloud${lang === 'en' ? '/en' : ''}/loi/#${code.toLowerCase()}`;
+		r.next_step ??= {};
+		r.next_step[lang] = (override[code]?.[lang] ?? next[lang][r.next_action]).replace(/\*\*/g, '');
 		return `${line}\n${table(lang, code, r)}\n`;
 	});
 	for (const r of rows) {
@@ -107,7 +120,9 @@ for (const [lang, path] of [['vi', 'src/content/docs/loi/index.md'], ['en', 'src
 	}
 }
 
-const json = JSON.stringify({ source: `embra ${commit} api/reasons.go`, reasons: rows }, null, '\t') + '\n';
+const out = rows.map(({ code, http, retryable, next_action, exit, docs, next_step }) =>
+	({ code, http, retryable, next_action, exit, docs: docs ?? null, next_step: next_step ?? null }));
+const json = JSON.stringify({ source: `embra ${commit} api/reasons.go`, reasons: out }, null, '\t') + '\n';
 const jsonFile = new URL('../src/data/reasons.json', import.meta.url);
 let oldJson = '';
 try { oldJson = readFileSync(jsonFile, 'utf8'); } catch {}

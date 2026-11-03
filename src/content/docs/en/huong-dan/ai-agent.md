@@ -9,15 +9,18 @@ AI agents (Claude Code, Cursor, GitHub Copilot, ChatGPT…) do best at **prepari
 
 ## Let the agent read the docs
 
-The Embra docs have plain-text versions for AI:
+Give the agent `https://docs.embra.cloud/en/llms.txt` first: an index with a line per page and rules for agents. The agent picks what to read.
 
-| File | Contents |
+| URL | Contents |
 |---|---|
-| `https://docs.embra.cloud/llms-full.txt` | All docs in one file (Vietnamese) |
-| `https://docs.embra.cloud/llms-small.txt` | Short version |
-| `https://docs.embra.cloud/llms.txt` | Index |
+| `/en/llms.txt` | Index, one line per page, linking the `.md` version |
+| `/en/<page>.md` | Markdown of one page, e.g. `/en/huong-dan/deploy-tu-github.md` |
+| `/en/llms/deploy.txt`, `migration`, `recovery`, `errors`, `account` | Bundles by topic, lighter than the full set |
+| `/en/llms-full.txt` | All docs in one file |
+| `/en/llms-small.txt` | All docs without edge cases, notes and the error catalogue |
+| `/reasons.json` | Every `reason_code`: HTTP, retryable, `next_action`, exit code, docs links |
 
-These files are in Vietnamese; current models read Vietnamese well, so use them as they are. If the agent can't fetch URLs, open the file in a browser and paste the part you need into the chat.
+Vietnamese versions: drop the `/en` prefix (`/llms.txt`, `/llms-full.txt`). If the agent can't fetch URLs, open the file in a browser and paste the part you need into the chat.
 
 ## Add AGENTS.md to the repo
 
@@ -26,7 +29,7 @@ Create `AGENTS.md` at the repo root: Claude Code, Cursor, Copilot and Codex all 
 ```markdown
 # AGENTS.md
 
-This app deploys to Embra. Docs: https://docs.embra.cloud/llms-full.txt
+This app deploys to Embra. Docs: https://docs.embra.cloud/en/llms.txt
 
 ## Embra requirements
 - Deploy config lives in `embra.toml` at the repo root. Unknown fields or wrong types are rejected.
@@ -58,7 +61,7 @@ With Claude Code, also create `CLAUDE.md` at the repo root with one line:
 Paste this into the agent once `AGENTS.md` is in place:
 
 ```text
-Read https://docs.embra.cloud/llms-full.txt and AGENTS.md. Check whether this repo is ready to run on Embra:
+Read https://docs.embra.cloud/en/llms.txt (then the pages you need) and AGENTS.md. Check whether this repo is ready to run on Embra:
 port and 0.0.0.0, a health check that returns 2xx, no file writes outside /tmp, no migrations on startup,
 a valid embra.toml. Fix what is missing. List the secrets the app needs (names only, no values).
 Don't change the app's behaviour beyond these points.
