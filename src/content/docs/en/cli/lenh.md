@@ -31,6 +31,9 @@ Run `embra <command> --help` to see every flag. Add `--json` for machine-readabl
 | `embra env create <project> <slug>` / `list <project>` | Create / list environments |
 | `embra github connect` | Connect GitHub |
 | `embra source set` | Link an environment to a repo + branch through the installed GitHub App |
+| `embra link <project>/<env>` / `embra unlink` | Tie the directory to an environment (writes `.embra/link.json`; `embra up` writes it too) / remove it |
+
+You can omit `--env` when the directory (or a parent inside the same repo) has `.embra/link.json`, or when `EMBRA_ENV=<project>/<env>` is set. Order: `--env` > `EMBRA_ENV` > `link.json`. Commands that delete or overwrite data (`rollback`, `db restore`, `db import`, `db start`/`stop`, `env pause`/`resume`, `export`, `secret unset`, `env delete`) always need an explicit `--env`.
 
 ## Build and deploy
 
@@ -45,7 +48,7 @@ Run `embra <command> --help` to see every flag. Add `--json` for machine-readabl
 | `embra plan` | Rehearse migrations on a copy of the data, without deploying |
 | `embra status [op_id]` / `embra wait <op_id>` | Status / wait until an operation reaches a final state |
 | `embra operation get <op_id>` | Show the status of one operation |
-| `embra events` | The workspace's event stream |
+| `embra events` | The workspace's 20 latest events (`--limit`, `--since <seq>`, `--follow` to keep watching) |
 | `embra schema` | Print the JSON Schema of `embra.json` |
 
 `embra.json` is only used by `embra deploy`, when you already have a built image. Deploys from GitHub and `embra build` read `embra.toml` in the repo (see [Prepare your app](/en/huong-dan/chuan-bi-app/)).
@@ -88,4 +91,5 @@ Exports and deleting production need a real person: do it on the web, or within 
 | Command | What it does |
 |---|---|
 | `embra version` (or `embra --version`) | Print the embra version |
+| `embra commands` | Print every command, flag and exit code as JSON (for AI agents) |
 | `--field <path>` (global flag) | Print only one value of the JSON result, e.g. `--field url`. See [Exit codes and JSON](/en/cli/exit-code-va-json/) |

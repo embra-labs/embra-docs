@@ -31,6 +31,9 @@ Chạy `embra <lệnh> --help` để xem đủ flag. Thêm `--json` để lấy 
 | `embra env create <project> <slug>` / `list <project>` | Tạo / liệt kê environment |
 | `embra github connect` | Connect GitHub |
 | `embra source set` | Connect environment với repo + branch qua GitHub App đã cài |
+| `embra link <project>/<env>` / `embra unlink` | Gắn thư mục với một environment (ghi `.embra/link.json`, `embra up` cũng ghi) / gỡ |
+
+Bỏ `--env` được khi thư mục (hoặc thư mục cha trong cùng repo) có `.embra/link.json`, hoặc khi đặt `EMBRA_ENV=<project>/<env>`. Thứ tự: `--env` > `EMBRA_ENV` > `link.json`. Lệnh xoá hoặc ghi đè data (`rollback`, `db restore`, `db import`, `db start`/`stop`, `env pause`/`resume`, `export`, `secret unset`, `env delete`) luôn cần `--env` ghi rõ.
 
 ## Build và deploy
 
@@ -45,7 +48,7 @@ Chạy `embra <lệnh> --help` để xem đủ flag. Thêm `--json` để lấy 
 | `embra plan` | Chạy thử migration trên bản copy của data, không deploy |
 | `embra status [op_id]` / `embra wait <op_id>` | Xem status / chờ operation tới trạng thái cuối |
 | `embra operation get <op_id>` | Xem status một operation |
-| `embra events` | Event stream của workspace |
+| `embra events` | 20 event mới nhất của workspace (`--limit`, `--since <seq>`, `--follow` để theo dõi tiếp) |
 | `embra schema` | In JSON Schema của `embra.json` |
 
 `embra.json` chỉ dùng cho `embra deploy`, khi bạn đã có image build sẵn. Deploy từ GitHub và `embra build` đọc `embra.toml` trong repo (xem [Chuẩn bị app](/huong-dan/chuan-bi-app/)).
@@ -88,4 +91,5 @@ Export và xoá production cần người thật: làm trên web, hoặc trong 1
 | Lệnh | Việc |
 |---|---|
 | `embra version` (hoặc `embra --version`) | In version của embra |
+| `embra commands` | In mọi lệnh, flag và exit code dạng JSON (cho AI agent) |
 | `--field <đường dẫn>` (cờ chung) | Chỉ in một giá trị trong JSON kết quả, ví dụ `--field url`. Xem [Exit code và JSON](/cli/exit-code-va-json/) |
