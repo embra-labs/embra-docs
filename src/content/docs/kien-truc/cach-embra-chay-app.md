@@ -34,7 +34,7 @@ Từ code tới app đang chạy:
 | Build | Mỗi build chạy trong một microVM (Firecracker) riêng, dùng xong bỏ. Railpack tự nhận diện app, hoặc dùng Dockerfile của bạn | Build log, operation `build` |
 | Image | Kết quả build, gắn với một digest `sha256:…`. Deploy chỉ nhận image pin theo digest, không nhận tag | `embra.json` khi deploy bằng CLI |
 | Plan | Bản mô tả deploy: image, env var, migration. Approve là approve đúng bản này (binding digest) | **"Xem và duyệt"** |
-| App container | Chạy bằng containerd, mặc định trong sandbox gVisor: app không gọi thẳng kernel của server | Log, metrics |
+| App container | Chạy bằng containerd trong sandbox gVisor, kể cả worker và cron: code của bạn không gọi thẳng kernel của server | Log, metrics |
 | Edge | Caddy nhận HTTPS, cấp certificate, route tới app | Domain của app |
 | Postgres | Mỗi environment một Postgres riêng (PostgreSQL 18), volume ZFS riêng. Chỉ app cùng environment kết nối được | [Database và migration](/huong-dan/database-va-migration/) |
 

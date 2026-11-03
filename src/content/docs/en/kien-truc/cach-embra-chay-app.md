@@ -36,7 +36,7 @@ From code to a running app:
 | Build | Each build runs in its own single-use microVM (Firecracker). Railpack detects your app, or your Dockerfile is used | Build log, `build` operation |
 | Image | The build result, identified by a `sha256:…` digest. Deploys only accept images pinned by digest, never tags | `embra.json` when deploying with the CLI |
 | Plan | What a deploy will do: image, env vars, migrations. Approving approves exactly this plan (binding digest) | **"Xem và duyệt"** (review and approve) |
-| App container | Run by containerd, by default inside a gVisor sandbox: the app does not call the server kernel directly | Logs, metrics |
+| App container | Run by containerd inside a gVisor sandbox, workers and cron included: your code does not call the server kernel directly | Logs, metrics |
 | Edge | Caddy terminates HTTPS, issues certificates, routes to your app | Your app's domain |
 | Postgres | One Postgres per environment (PostgreSQL 18) on its own ZFS volume. Only apps in the same environment can connect | [Database and migrations](/en/huong-dan/database-va-migration/) |
 
