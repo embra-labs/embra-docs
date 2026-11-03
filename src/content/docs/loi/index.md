@@ -690,7 +690,7 @@ Câu lỗi: `Gói dùng thử đã hết hạn: mọi request tới workspace n�
 
 - Mọi thao tác bị từ chối, kể cả xem. Riêng Owner vẫn xem được thông tin thanh toán và chuyển sang workspace khác.
 - Sau đó cả workspace bị xoá: app, database và backup.
-- Đã chọn gói **trước** khi hết hạn: Embra giữ workspace thêm **72 giờ** chờ tiền về. Màn hình hiện mã chuyển khoản, QR, số tiền và giờ xoá. Chuyển khoản trước giờ đó thì workspace mở lại.
+- Đã chọn gói **trước** khi hết hạn: Embra giữ workspace thêm **72 giờ** chờ tiền về. Màn hình hiện mã chuyển khoản, QR, số tiền và giờ xoá. Chuyển khoản trước giờ đó thì workspace mở lại. Chuyển thiếu thì workspace không bị xoá nhưng vẫn khoá: email hello@embra.cloud.
 
 **Cách xử lý:**
 

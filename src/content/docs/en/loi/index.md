@@ -690,7 +690,7 @@ Sentence: `Gói dùng thử đã hết hạn: mọi request tới workspace này
 
 - Every action is refused, including viewing. Only the Owner can still see payment details and switch to another workspace.
 - After that the whole workspace is deleted: apps, databases and backups.
-- Chose a plan **before** the trial ended: Embra keeps the workspace **72 more hours** waiting for the transfer. The screen shows the transfer code, QR, amount and deletion time. Pay before then and the workspace reopens.
+- Chose a plan **before** the trial ended: Embra keeps the workspace **72 more hours** waiting for the transfer. The screen shows the transfer code, QR, amount and deletion time. Pay before then and the workspace reopens. Paid less than the amount? The workspace is not deleted but stays locked: email hello@embra.cloud.
 
 **What to do:**
 
