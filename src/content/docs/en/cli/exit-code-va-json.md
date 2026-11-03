@@ -10,18 +10,27 @@ For CI scripts and AI agents. What each error code means: [Error codes and fixes
 | Exit | Meaning | Your script should |
 |---|---|---|
 | `0` | Done (`healthy`, `succeeded`) | Continue |
-| `1` | Not logged in, not found, request never sent, Embra-side error (`UNAUTHENTICATED`, `NOT_FOUND`, `INTERNAL`) | Stop, read `summary_vi` |
-| `2` | Bad input (`INVALID_INPUT`, `REPO_CONFIG_INVALID`, `SOURCE_ARCHIVE_INVALID`) | Stop, fix the input |
+| `1` | Not logged in, not found, request never sent, Embra-side error (`UNAUTHENTICATED`, `NOT_FOUND`, `API_UNREACHABLE`, `INTERNAL`) | Stop, read `summary_vi` |
+| `2` | Bad input, including a wrong flag or command (`INVALID_INPUT`, `REPO_CONFIG_INVALID`, `SOURCE_ARCHIVE_INVALID`) | Stop, fix the input |
 | `10` | Refused or failed (`failed`, `rejected`, `cancelled`, most error codes) | Stop, read `reason_code` |
 | `20` | Waiting for approval (`awaiting_approval`, `MIGRATION_DATA_LOSS`) | Stop, ask an Owner/Admin to approve on the web |
 | `30` | Needs the Embra team (`recovery_required`, `migration_unknown`, `ENVIRONMENT_BLOCKED`, suspended) | Stop. **Do not retry** |
-| `75` | Temporary: rate limit, lost connection, `--timeout` reached while waiting | Rerun the same command, or `embra wait <op_id>` |
+| `75` | Temporary: rate limit, lost connection (`TEMPORARILY_UNAVAILABLE`), `--timeout` reached while waiting (`WAIT_TIMEOUT`) | Rerun the same command, or `embra wait <op_id>` |
 
 How the CLI picks the exit code: the operation's `state` first, then `reason_code`, otherwise `1`.
 
 ## JSON output
 
-JSON is on with `--json`, when stdout is not a terminal (pipes, CI), or when `EMBRA_AGENT=1`. Stdout carries only JSON; progress lines go to stderr. Usually one object; `embra build --wait` prints two (the build, then its child deploy).
+JSON is on with `--json`, when stdout is not a terminal (pipes, CI), or when `EMBRA_AGENT=1` or `CLAUDECODE=1`. Stdout carries only JSON, errors included (a wrong flag or command is also one `INVALID_INPUT` object); progress lines go to stderr. Usually one object; `embra build --wait` prints two (the build, then its child deploy).
+
+Without JSON (a terminal): results go to stdout, errors to stderr.
+
+Need exactly one value, e.g. inside `$(…)`: add `--field <path>`. The CLI prints only that field's value (from the last object); errors go to stderr with a non-zero exit:
+
+```bash
+DATABASE_URL=$(embra db url --env shop/prod --role runtime --field url)
+PROJECT_ID=$(embra project list --field items.0.id)
+```
 
 ```json
 {

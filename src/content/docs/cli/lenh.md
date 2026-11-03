@@ -15,6 +15,7 @@ Chạy `embra <lệnh> --help` để xem đủ flag. Thêm `--json` để lấy 
 |---|---|
 | `embra login` | Login qua browser, nhận token mang role của bạn |
 | `embra login --agent` | Xin token `agent` cho `embra mcp` |
+| `embra login --with-token < token.txt` | Login bằng token có sẵn (CI, không có terminal). Không có terminal mà thiếu cờ này thì CLI báo lỗi ngay |
 | `embra logout` | Xoá token khỏi config |
 | `embra workspace show` | Xem workspace và permission của token |
 | `embra workspace rename <tên mới>` | Đổi tên workspace (chỉ owner). ID, địa chỉ app và token giữ nguyên |
@@ -70,15 +71,15 @@ Chạy `embra <lệnh> --help` để xem đủ flag. Thêm `--json` để lấy 
 | `embra secret unset KEY --version N` | Revoke một version của secret |
 | `embra logs` | Log của app (`--env`) hoặc của một build (`--build <op_id>`) |
 | `embra metrics` | CPU, RAM, HTTP, Postgres kèm mốc deploy/migration |
-| `embra size <project>/<env> [<size>]` | Xem size app và tài nguyên; thêm size (ví dụ `256MiB`) để đặt size app production, áp dụng ở lần deploy sau |
+| `embra env size <project>/<env> [<size>]` | Xem size app và tài nguyên; thêm size (ví dụ `256MiB`) để đặt size app production, áp dụng ở lần deploy sau |
 
 ## Xoá và export
 
 | Lệnh | Việc |
 |---|---|
 | `embra export --env <project>/<env>` | Export bundle app + data để chạy ở nơi khác (Owner, Admin) |
-| `embra delete <project>/<env> --confirm <env-slug>` | Xoá environment, không quay lại được (Owner, Admin) |
-| `embra delete --confirm <workspace-name>` | Xoá cả workspace, không quay lại được (chỉ Owner) |
+| `embra env delete <project>/<env> --confirm <env-slug>` | Xoá environment, không quay lại được (Owner, Admin) |
+| `embra workspace delete --confirm <workspace-name>` | Xoá cả workspace, không quay lại được (chỉ Owner) |
 
 Export và xoá production cần người thật: làm trên web, hoặc trong 12 giờ sau `embra login`. Xem [Thành viên và phân quyền](/workspace/phan-quyen/#việc-cần-người-thật).
 
@@ -86,4 +87,5 @@ Export và xoá production cần người thật: làm trên web, hoặc trong 1
 
 | Lệnh | Việc |
 |---|---|
-| `embra version` | In version của embra |
+| `embra version` (hoặc `embra --version`) | In version của embra |
+| `--field <đường dẫn>` (cờ chung) | Chỉ in một giá trị trong JSON kết quả, ví dụ `--field url`. Xem [Exit code và JSON](/cli/exit-code-va-json/) |

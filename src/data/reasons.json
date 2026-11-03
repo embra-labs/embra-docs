@@ -1,5 +1,5 @@
 {
-	"source": "embra a20faee api/reasons.go",
+	"source": "embra 5da9210 api/reasons.go",
 	"reasons": [
 		{
 			"code": "OK",
@@ -830,6 +830,36 @@
 			"next_step": {
 				"vi": "Sửa theo mục này rồi làm lại",
 				"en": "Fix as described here, then retry"
+			}
+		},
+		{
+			"code": "API_UNREACHABLE",
+			"http": 0,
+			"retryable": true,
+			"next_action": "fix_input",
+			"exit": 1,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#api_unreachable",
+				"en": "https://docs.embra.cloud/en/loi/#api_unreachable"
+			},
+			"next_step": {
+				"vi": "Kiểm `--api`/`EMBRA_API` và mạng, chạy lại",
+				"en": "Check `--api`/`EMBRA_API` and the network, rerun"
+			}
+		},
+		{
+			"code": "WAIT_TIMEOUT",
+			"http": 0,
+			"retryable": true,
+			"next_action": "wait",
+			"exit": 75,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#wait_timeout",
+				"en": "https://docs.embra.cloud/en/loi/#wait_timeout"
+			},
+			"next_step": {
+				"vi": "`embra wait <op_id>`, hoặc chờ rồi thử lại",
+				"en": "`embra wait <op_id>`, or wait and retry"
 			}
 		}
 	]

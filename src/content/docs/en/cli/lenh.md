@@ -15,6 +15,7 @@ Run `embra <command> --help` to see every flag. Add `--json` for machine-readabl
 |---|---|
 | `embra login` | Sign in through the browser and get a token carrying your role |
 | `embra login --agent` | Request an `agent` token for `embra mcp` |
+| `embra login --with-token < token.txt` | Sign in with an existing token (CI, no terminal). Without a terminal and without this flag, the CLI fails at once |
 | `embra logout` | Remove the token from the config |
 | `embra workspace show` | Show the workspace and the token's permissions |
 | `embra workspace rename <new name>` | Rename the workspace (owner only). The ID, app addresses and tokens stay the same |
@@ -70,15 +71,15 @@ Run `embra <command> --help` to see every flag. Add `--json` for machine-readabl
 | `embra secret unset KEY --version N` | Revoke one version of a secret |
 | `embra logs` | Logs of the app (`--env`) or of a build (`--build <op_id>`) |
 | `embra metrics` | CPU, RAM, HTTP, Postgres with deploy/migration markers |
-| `embra size <project>/<env> [<size>]` | Show app size and resources; add a size (e.g. `256MiB`) to set the production app size, applied on the next deploy |
+| `embra env size <project>/<env> [<size>]` | Show app size and resources; add a size (e.g. `256MiB`) to set the production app size, applied on the next deploy |
 
 ## Delete and export
 
 | Command | What it does |
 |---|---|
 | `embra export --env <project>/<env>` | Export an app + data bundle to run elsewhere (Owner, Admin) |
-| `embra delete <project>/<env> --confirm <env-slug>` | Delete an environment, cannot be undone (Owner, Admin) |
-| `embra delete --confirm <workspace-name>` | Delete the whole workspace, cannot be undone (Owner only) |
+| `embra env delete <project>/<env> --confirm <env-slug>` | Delete an environment, cannot be undone (Owner, Admin) |
+| `embra workspace delete --confirm <workspace-name>` | Delete the whole workspace, cannot be undone (Owner only) |
 
 Exports and deleting production need a real person: do it on the web, or within 12 hours of `embra login`. See [Members and permissions](/en/workspace/phan-quyen/#actions-that-need-a-real-person).
 
@@ -86,4 +87,5 @@ Exports and deleting production need a real person: do it on the web, or within 
 
 | Command | What it does |
 |---|---|
-| `embra version` | Print the embra version |
+| `embra version` (or `embra --version`) | Print the embra version |
+| `--field <path>` (global flag) | Print only one value of the JSON result, e.g. `--field url`. See [Exit codes and JSON](/en/cli/exit-code-va-json/) |
