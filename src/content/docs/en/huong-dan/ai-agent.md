@@ -85,3 +85,5 @@ If a deploy fails, paste the exact error code and the build log to the agent, wi
 `embra mcp` lets an agent call Embra directly with an `agent` token. That token can read, build, deploy staging and create production plans, but **never** approve, delete, export or read the database URL. See [Permissions](/en/workspace/phan-quyen/).
 
 The `agent` token: you (a person) run `embra login --agent` once and approve in the browser. The token is stored in `config.agent.json`, separate from your own. No CLI yet: [Install the CLI](/en/cli/cai-dat/).
+
+Set up MCP in Claude Code, Codex or Cursor: [MCP for AI agents](/en/huong-dan/mcp/).

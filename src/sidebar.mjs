@@ -23,6 +23,7 @@ export const sidebar = [
 			'huong-dan/deploy-tu-github',
 			'huong-dan/chuyen-app-co-san',
 			'huong-dan/ai-agent',
+			'huong-dan/mcp',
 		],
 	},
 	{
