@@ -48,11 +48,13 @@ What an `agent` token may do in detail: [Permissions](/en/workspace/phan-quyen/)
 | Diagnose | `embra_get_build_log`, `embra_search_logs`, `embra_get_metrics` |
 | Prepare safely | `embra_plan`, `embra_rehearse` (runs migrations on a copy of the database), `embra_estimate` |
 | Read state | `embra_workspace`, `embra_projects`, `embra_environments`, `embra_environment`, `embra_operation`, `embra_wait` |
+| Look up | `embra_explain_reason` (explains a `reason_code`: can a retry help, `next_action`, how to fix), `embra_docs_search`, `embra_docs_read` (read docs.embra.cloud only). From CLI 0.1.2 |
 | Production fork | `embra_fork` (waits for an Owner or Admin to approve), `embra_fork_status`, `embra_fork_access` (the fork's access key; every read is recorded) |
 
 - `environment_id` takes an ID (`env_…`) or `<project>/<env>`, such as `shop/dev`.
 - Tools that create an operation take `idempotency_key`. Without one, an identical call within 10 minutes returns the earlier operation instead of creating a duplicate.
 - A production plan returns `approval_url`: the console link where you approve it.
+- Error results carry `docs_url`: a link to [Error codes and fixes](/en/loi/), the same link the CLI prints.
 
 ## Common errors
 

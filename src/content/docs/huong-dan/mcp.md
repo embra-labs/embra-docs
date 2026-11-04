@@ -48,11 +48,13 @@ Quyền chi tiết của token `agent`: [Phân quyền](/workspace/phan-quyen/).
 | Tìm lỗi | `embra_get_build_log`, `embra_search_logs`, `embra_get_metrics` |
 | Chuẩn bị an toàn | `embra_plan`, `embra_rehearse` (chạy migration trên bản copy database), `embra_estimate` |
 | Đọc trạng thái | `embra_workspace`, `embra_projects`, `embra_environments`, `embra_environment`, `embra_operation`, `embra_wait` |
+| Tra cứu | `embra_explain_reason` (giải thích `reason_code`: retry được không, `next_action`, cách sửa), `embra_docs_search`, `embra_docs_read` (chỉ đọc docs.embra.cloud). Từ CLI 0.1.2 |
 | Fork production | `embra_fork` (chờ Owner hoặc Admin approve), `embra_fork_status`, `embra_fork_access` (khoá truy cập fork, mỗi lần đọc đều được ghi lại) |
 
 - `environment_id` nhận ID (`env_…`) hoặc `<project>/<env>`, ví dụ `shop/dev`.
 - Tool tạo thao tác nhận `idempotency_key`. Không truyền thì gọi lại y hệt trong 10 phút trả về thao tác cũ, không tạo trùng.
 - Plan production trả `approval_url`: link để bạn approve trên console.
+- Kết quả lỗi có `docs_url`: link tới [Mã lỗi và cách sửa](/loi/), cùng link CLI in ra.
 
 ## Lỗi thường gặp
 
