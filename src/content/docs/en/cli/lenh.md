@@ -29,6 +29,7 @@ Run `embra <command> --help` to see every flag. Add `--json` for machine-readabl
 |---|---|
 | `embra project create <slug>` / `list` | Create / list projects |
 | `embra env create <project> <slug>` / `list <project>` | Create / list environments |
+| `embra env pause <project>/<env>` / `resume <project>/<env>` | Pause the app (data kept, backups kept) / run the active release again, starting the database too if it is stopped |
 | `embra github connect` | Connect GitHub |
 | `embra source set` | Link an environment to a repo + branch through the installed GitHub App |
 | `embra link <project>/<env>` / `embra unlink` | Tie the directory to an environment (writes `.embra/link.json`; `embra up` writes it too) / remove it |
@@ -60,6 +61,7 @@ You can omit `--env` when the directory (or a parent inside the same repo) has `
 | `embra db create` | Set up a dedicated Postgres for the environment |
 | `embra db url` | Print the runtime role's connection string (contains the password) |
 | `embra db verify` | Check that backups can be restored |
+| `embra db stop` / `db start` | Stop the database (the app must be paused; data and backups kept) / start it again; the app stays paused until `embra env resume` |
 | `embra db restore-points` | The time range you can restore to (PITR) |
 | `embra db restore` | Restore to a point in time; switches only after an Owner or Admin approves |
 | `embra db import --env <project>/<env> <file>` | Import data from a `pg_dump --data-only` file (gzip allowed). Target tables must be empty; production waits for an Owner or Admin to approve. See [Move an existing app](/en/huong-dan/chuyen-app-co-san/) |
