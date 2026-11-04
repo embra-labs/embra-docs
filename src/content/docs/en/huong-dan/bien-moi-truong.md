@@ -123,9 +123,10 @@ Saving several secrets at once is all-or-nothing: if one line is rejected, none 
 ## From the CLI
 
 - `embra secret set <TEN>`: reads the value from stdin. `embra secret list`: names only.
+- `embra secret import --env <project>/<env> --file .env`: set many secrets at once (all-or-nothing; `--dry-run` lists names only).
 - `embra deploy` (prebuilt image) reads the `env` field of `embra.json`: at most 4 KiB per value, 64 KiB total. These are kept on later builds from GitHub; a secret with the same name wins.
 
-CLI sign-in for customers is **not switched on yet**; use the console for now. See [CLI commands](/en/cli/lenh/).
+Install: [Install the CLI](/en/cli/cai-dat/). See [CLI commands](/en/cli/lenh/).
 
 ## See also
 

@@ -19,7 +19,7 @@ Every schema change goes through the migration gate: rehearsal on a copy of your
 
 ## You need
 
-- An **Owner** or **Admin** to approve: on the web (session signed in within 12 hours), or the CLI within 12 hours of `embra login` (CLI login isn't open to customers yet, see [Commands](/en/cli/lenh/)). A Developer can create plans, not approve them.
+- An **Owner** or **Admin** to approve: on the web (session signed in within 12 hours), or the CLI within 12 hours of `embra login`. A Developer can create plans, not approve them.
 - The migrations folder declared in the right place:
 
 | How you deploy | Declared in |

@@ -149,7 +149,7 @@ Export tạo một bundle gồm image, manifest, file `pg_dump` và danh sách o
 
 ## Dùng CLI
 
-Lệnh tương ứng (xem lưu ý về CLI login ở [Danh sách lệnh](/cli/lenh/)):
+Lệnh tương ứng ([cài CLI](/cli/cai-dat/)):
 
 ```sh
 embra rollback --env <project>/<env> [--to <release_id>]

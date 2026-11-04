@@ -10,18 +10,27 @@ Dùng cho script CI và AI agent. Tra nghĩa từng mã lỗi ở [Mã lỗi và
 | Exit | Nghĩa | Script nên |
 |---|---|---|
 | `0` | Xong (`healthy`, `succeeded`) | Đi tiếp |
-| `1` | Chưa login, không tìm thấy, chưa gửi được request, lỗi phía Embra (`UNAUTHENTICATED`, `NOT_FOUND`, `INTERNAL`) | Dừng, xem `summary_vi` |
-| `2` | Input sai (`INVALID_INPUT`, `REPO_CONFIG_INVALID`, `SOURCE_ARCHIVE_INVALID`) | Dừng, sửa input |
+| `1` | Chưa login, không tìm thấy, chưa gửi được request, lỗi phía Embra (`UNAUTHENTICATED`, `NOT_FOUND`, `API_UNREACHABLE`, `INTERNAL`) | Dừng, xem `summary_vi` |
+| `2` | Input sai, kể cả sai cờ hoặc sai lệnh (`INVALID_INPUT`, `REPO_CONFIG_INVALID`, `SOURCE_ARCHIVE_INVALID`) | Dừng, sửa input |
 | `10` | Bị từ chối hoặc fail (`failed`, `rejected`, `cancelled`, phần lớn mã lỗi) | Dừng, xem `reason_code` |
 | `20` | Chờ approve (`awaiting_approval`, `MIGRATION_DATA_LOSS`) | Dừng, báo Owner/Admin approve trên web |
 | `30` | Cần đội Embra (`recovery_required`, `migration_unknown`, `ENVIRONMENT_BLOCKED`, tạm ngưng) | Dừng. **Không retry** |
-| `75` | Tạm thời: rate limit, mất kết nối, hết `--timeout` khi chờ | Retry đúng lệnh đó, hoặc `embra wait <op_id>` |
+| `75` | Tạm thời: rate limit, mất kết nối (`TEMPORARILY_UNAVAILABLE`), hết `--timeout` khi chờ (`WAIT_TIMEOUT`) | Retry đúng lệnh đó, hoặc `embra wait <op_id>` |
 
 Thứ tự CLI chọn exit code: theo `state` của operation trước, rồi theo `reason_code`, không khớp gì thì `1`.
 
 ## Output JSON
 
-JSON bật khi có `--json`, khi stdout không phải terminal (pipe, CI), hoặc khi `EMBRA_AGENT=1`. Stdout chỉ có JSON, dòng tiến độ đi ra stderr. Thường là một object; riêng `embra build --wait` in hai object (build, rồi deploy con).
+JSON bật khi có `--json`, khi stdout không phải terminal (pipe, CI), hoặc khi `EMBRA_AGENT=1` hay `CLAUDECODE=1`. Stdout chỉ có JSON, kể cả khi lỗi (sai cờ, sai lệnh cũng ra một object `INVALID_INPUT`); dòng tiến độ đi ra stderr. Thường là một object; riêng `embra build --wait` in hai object (build, rồi deploy con).
+
+Không dùng JSON (terminal): kết quả ra stdout, lỗi ra stderr.
+
+Cần đúng một giá trị, ví dụ trong `$(…)`: thêm `--field <đường dẫn>`. CLI chỉ in giá trị của trường đó (lấy ở object cuối), lỗi ra stderr với exit khác 0:
+
+```bash
+DATABASE_URL=$(embra db url --env shop/prod --role runtime --field url)
+PROJECT_ID=$(embra project list --field items.0.id)
+```
 
 ```json
 {
@@ -58,6 +67,10 @@ JSON bật khi có `--json`, khi stdout không phải terminal (pipe, CI), hoặ
 Lỗi xảy ra **trong lúc chạy** operation (`BUILD_FAILED`, `HEALTHCHECK_FAILED`, `MIGRATION_REHEARSAL_FAILED`, `RECOVERY_REQUIRED`…) trả HTTP `200`: request đọc operation thành công, lỗi nằm trong kết quả. Kiểm `state` và `reason_code`, đừng chỉ kiểm HTTP status. Lỗi của chính request (input sai, thiếu quyền, xung đột) mới trả 4xx/5xx.
 
 </details>
+
+Envelope lỗi có `request_id` (cũng ở header `X-Request-Id`). Gửi kèm mã này khi liên hệ hỗ trợ.
+
+CLI không gửi token tới API `http://` trên máy khác (chỉ `https://`, hoặc `127.0.0.1`/`localhost`). Máy dev trong mạng riêng: đặt `EMBRA_INSECURE_HTTP=1`.
 
 ## Retry an toàn
 

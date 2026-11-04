@@ -20,7 +20,7 @@ Lệnh `UPDATE` sai ghi đè data, nhưng sau đó app vẫn ghi tiếp data đ�
 
 | Mục | Giới hạn |
 |---|---|
-| Ai làm được | Owner hoặc Admin, người thật: `embra login` trong 12 giờ (xem lưu ý về CLI login ở [Danh sách lệnh](/cli/lenh/)). Token `dev`/`viewer`/`agent`/`ci` không dùng được |
+| Ai làm được | Owner hoặc Admin, người thật: `embra login` trong 12 giờ ([cài CLI](/cli/cai-dat/)). Token `dev`/`viewer`/`agent`/`ci` không dùng được |
 | Bảng mỗi phiên | 1–10 bảng (`schema.bảng`, không ghi schema là `public`) |
 | Bảng không có primary key | Bị từ chối: không ghép được dòng giữa hai thời điểm |
 | Filter `--where` | Tối đa 20; op `=` `<>` `<` `<=` `>` `>=` `is_null` `not_null` |

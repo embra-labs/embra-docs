@@ -127,7 +127,7 @@ Embra chưa gửi email hay tin nhắn khi build, deploy hoặc app lỗi. Theo 
 
 ## Dùng CLI
 
-Lệnh tương ứng (xem lưu ý về CLI login ở [Danh sách lệnh](/cli/lenh/)):
+Lệnh tương ứng ([cài CLI](/cli/cai-dat/)):
 
 ```sh
 embra logs --env <project>/<env> --follow

@@ -123,9 +123,10 @@ Lưu nhiều secret một lần là all-or-nothing: một dòng lỗi thì khôn
 ## Bằng CLI
 
 - `embra secret set <TEN>`: đọc giá trị từ stdin. `embra secret list`: chỉ hiện tên.
+- `embra secret import --env <project>/<env> --file .env`: đặt nhiều secret một lần (all-or-nothing, `--dry-run` chỉ in tên).
 - `embra deploy` (image có sẵn) đọc field `env` trong `embra.json`: mỗi giá trị tối đa 4 KiB, tổng 64 KiB. Các biến này được giữ ở các lần build sau từ GitHub; secret cùng tên thắng.
 
-CLI login cho khách **chưa bật**, hiện dùng console. Xem [Lệnh CLI](/cli/lenh/).
+Cài CLI: [Cài đặt CLI](/cli/cai-dat/). Xem [Lệnh CLI](/cli/lenh/).
 
 ## Xem thêm
 

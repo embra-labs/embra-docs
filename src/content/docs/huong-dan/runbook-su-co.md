@@ -50,7 +50,7 @@ Chọn cách theo việc đã xảy ra:
 
 | Đã xảy ra | Data ghi sau đó cần giữ? | Dùng |
 |---|---|---|
-| Một lệnh `UPDATE` ghi sai nhiều dòng | Có | [Undo từng dòng](/huong-dan/undo-tung-dong/) (CLI, cần `embra login`: [chưa bật cho khách](/cli/lenh/)) |
+| Một lệnh `UPDATE` ghi sai nhiều dòng | Có | [Undo từng dòng](/huong-dan/undo-tung-dong/) (CLI, cần [`embra login`](/cli/cai-dat/)) |
 | `DELETE`, `DROP TABLE`, hoặc hỏng diện rộng | Không | [Restore về một mốc](/huong-dan/rollback-va-khoi-phuc/#khôi-phục-database-về-một-mốc-thời-gian) |
 | `DELETE` | Có | Chưa tự làm được: undo chỉ đếm dòng bị xoá. Email hello@embra.cloud |
 | Có migration chạy sau mốc cần về | | Restore bị chặn ([`MIGRATION_AFTER_RESTORE_POINT`](/loi/#migration_after_restore_point)); undo vẫn chạy |
