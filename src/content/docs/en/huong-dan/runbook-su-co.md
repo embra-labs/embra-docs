@@ -50,7 +50,7 @@ Pick by what happened:
 
 | What happened | Must data written afterwards stay? | Use |
 |---|---|---|
-| One `UPDATE` wrote many rows wrong | Yes | [Row-level undo](/en/huong-dan/undo-tung-dong/) (CLI, needs `embra login`: [not open to customers yet](/en/cli/lenh/)) |
+| One `UPDATE` wrote many rows wrong | Yes | [Row-level undo](/en/huong-dan/undo-tung-dong/) (CLI, needs [`embra login`](/en/cli/cai-dat/)) |
 | `DELETE`, `DROP TABLE`, or widespread damage | No | [Restore to a point in time](/en/huong-dan/rollback-va-khoi-phuc/#restoring-the-database-to-a-point-in-time) |
 | `DELETE` | Yes | Not self-service yet: undo only counts deleted rows. Email hello@embra.cloud |
 | A migration ran after the point you need | | Restore is refused ([`MIGRATION_AFTER_RESTORE_POINT`](/en/loi/#migration_after_restore_point)); undo still works |

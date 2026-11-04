@@ -26,7 +26,7 @@ Mỗi bước có trang hướng dẫn riêng (link ở cuối bước).
 
 ## Dùng CLI?
 
-CLI `embra` đã đủ lệnh ([danh sách lệnh](/cli/lenh/)), nhưng **CLI login cho khách chưa bật**: trang approve login trên browser chưa mở. Trong lúc chờ, mọi bước ở trên làm được hết trên web.
+Mọi bước ở trên làm được bằng CLI `embra`: [cài đặt](/cli/cai-dat/) bằng một lệnh, `embra login`, rồi `embra up` trong thư mục app. Xem [danh sách lệnh](/cli/lenh/).
 
 ## Gặp lỗi
 

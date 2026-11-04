@@ -3,9 +3,7 @@ title: Command list
 description: The commands of the embra CLI.
 ---
 
-:::note[CLI sign-in is not available yet]
-`embra login` needs an approval page in the browser, and that page is not enabled for customers yet. Meanwhile, everything can be done on the web: see [Quick start](/en/bat-dau/bat-dau-nhanh/).
-:::
+Not installed yet? See [Install the CLI](/en/cli/cai-dat/). Then `embra login`: the CLI prints a code and a URL; open the URL, enter the code, approve.
 
 Run `embra <command> --help` to see every flag. Add `--json` for machine-readable output.
 

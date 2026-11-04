@@ -28,7 +28,7 @@ Each step has its own guide (linked at the end of the step).
 
 ## Using the CLI?
 
-The `embra` CLI has the full command set ([command list](/en/cli/lenh/)), but **CLI sign-in for customers is not on yet**: the browser page that approves a CLI login is not switched on. Meanwhile, every step above works on the web.
+Every step above also works with the `embra` CLI: [install](/en/cli/cai-dat/) with one command, `embra login`, then `embra up` in the app directory. See the [command list](/en/cli/lenh/).
 
 ## If something goes wrong
 

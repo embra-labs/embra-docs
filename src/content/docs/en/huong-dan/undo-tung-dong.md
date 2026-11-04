@@ -20,7 +20,7 @@ A bad `UPDATE` overwrote data, but the app kept writing good data afterwards? `e
 
 | Item | Limit |
 |---|---|
-| Who | Owner or Admin, in person: `embra login` within 12 hours (see the CLI sign-in note in the [command list](/en/cli/lenh/)). `dev`/`viewer`/`agent`/`ci` tokens can't |
+| Who | Owner or Admin, in person: `embra login` within 12 hours ([install the CLI](/en/cli/cai-dat/)). `dev`/`viewer`/`agent`/`ci` tokens can't |
 | Tables per session | 1–10 (`schema.table`, no schema means `public`) |
 | Table without a primary key | Refused: rows can't be matched across two points in time |
 | `--where` filters | Up to 20; ops `=` `<>` `<` `<=` `>` `>=` `is_null` `not_null` |

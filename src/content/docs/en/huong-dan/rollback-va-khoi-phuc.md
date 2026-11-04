@@ -151,7 +151,7 @@ An export builds a bundle with the image, manifest, a `pg_dump` and the list of 
 
 ## Using the CLI
 
-The matching commands (see the CLI sign-in note in the [command list](/en/cli/lenh/)):
+The matching commands ([install the CLI](/en/cli/cai-dat/)):
 
 ```sh
 embra rollback --env <project>/<env> [--to <release_id>]

@@ -19,7 +19,7 @@ Mọi thay đổi schema đi qua migration gate: rehearsal trên bản copy data
 
 ## Cần có
 
-- **Owner** hoặc **Admin** để approve: trên web (session login trong 12 giờ), hoặc CLI trong 12 giờ sau `embra login` (CLI login chưa bật cho khách, xem [Danh sách lệnh](/cli/lenh/)). Developer tạo plan được, không approve được.
+- **Owner** hoặc **Admin** để approve: trên web (session login trong 12 giờ), hoặc CLI trong 12 giờ sau `embra login`. Developer tạo plan được, không approve được.
 - Thư mục migration khai đúng chỗ:
 
 | Cách deploy | Khai ở |

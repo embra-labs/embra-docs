@@ -127,7 +127,7 @@ Embra doesn't send email or messages yet when a build, deploy or the app fails. 
 
 ## Using the CLI
 
-The matching commands (see the CLI sign-in note in the [command list](/en/cli/lenh/)):
+The matching commands ([install the CLI](/en/cli/cai-dat/)):
 
 ```sh
 embra logs --env <project>/<env> --follow

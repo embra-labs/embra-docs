@@ -3,9 +3,7 @@ title: Danh sách lệnh
 description: Các lệnh của CLI embra.
 ---
 
-:::note[CLI login sắp có]
-`embra login` cần một trang approve trên browser, trang này chưa bật cho khách. Trong lúc chờ, mọi việc làm được trên web: xem [Bắt đầu nhanh](/bat-dau/bat-dau-nhanh/).
-:::
+Chưa cài? Xem [Cài đặt CLI](/cli/cai-dat/). Rồi `embra login`: CLI in một mã và URL, mở URL, nhập mã, bấm approve.
 
 Chạy `embra <lệnh> --help` để xem đủ flag. Thêm `--json` để lấy output dạng JSON.
 
