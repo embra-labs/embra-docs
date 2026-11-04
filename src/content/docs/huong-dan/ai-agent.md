@@ -85,3 +85,5 @@ Deploy fail thì dán nguyên văn mã lỗi + build log cho agent, kèm link [M
 `embra mcp` cho agent gọi Embra trực tiếp bằng token `agent`. Token này đọc, build, deploy staging, tạo plan production, nhưng **không bao giờ** approve, xoá, export hay đọc URL database. Xem [Phân quyền](/workspace/phan-quyen/).
 
 Token `agent`: bạn (người thật) chạy `embra login --agent` một lần và approve trên browser. Token lưu ở `config.agent.json`, tách khỏi token của bạn. Chưa có CLI: [Cài đặt CLI](/cli/cai-dat/).
+
+Cài và dùng MCP với Claude Code, Codex, Cursor: [MCP cho AI agent](/huong-dan/mcp/).

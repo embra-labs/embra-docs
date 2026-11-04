@@ -109,7 +109,7 @@ export const sets: { slug: string; label: Record<Lang, string>; about: Record<La
 		slug: 'deploy',
 		label: { vi: 'Đưa app lên', en: 'Ship an app' },
 		about: { vi: 'chuẩn bị app, embra.toml, deploy từ GitHub, env var, secret, domain', en: 'app prep, embra.toml, deploy from GitHub, env vars, secrets, domains' },
-		match: (s) => /^bat-dau\/|^huong-dan\/(chuan-bi-app|deploy-tu-github|chuyen-app-co-san|bien-moi-truong|secret|domain-rieng|luu-file|staging-production-va-duyet|ai-agent)$/.test(s),
+		match: (s) => /^bat-dau\/|^huong-dan\/(chuan-bi-app|deploy-tu-github|chuyen-app-co-san|bien-moi-truong|secret|domain-rieng|luu-file|staging-production-va-duyet|ai-agent|mcp)$/.test(s),
 	},
 	{
 		slug: 'migration',
