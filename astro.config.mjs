@@ -26,7 +26,10 @@ export default defineConfig({
 				root: { label: 'Tiếng Việt', lang: 'vi' },
 				en: { label: 'English', lang: 'en' },
 			},
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/embra-labs' }],
+			social: [
+				{ icon: 'external', label: 'embra.cloud', href: 'https://embra.cloud/' },
+				{ icon: 'github', label: 'GitHub', href: 'https://github.com/embra-labs' },
+			],
 			customCss: ['./src/styles/fonts.css', './src/styles/theme.css'],
 			components: {
 				SiteTitle: './src/components/SiteTitle.astro',

@@ -1,6 +1,6 @@
 # embra-docs
 
-Tài liệu công khai của Embra tại `docs.embra.cloud`, dựng bằng [Astro Starlight](https://starlight.astro.build).
+Tài liệu công khai của [Embra](https://embra.cloud/) — hosting app và PostgreSQL tại Việt Nam — tại [docs.embra.cloud](https://docs.embra.cloud/), dựng bằng [Astro Starlight](https://starlight.astro.build).
 
 | Lệnh | Việc |
 |---|---|
