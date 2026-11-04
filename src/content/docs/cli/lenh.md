@@ -29,6 +29,7 @@ Chạy `embra <lệnh> --help` để xem đủ flag. Thêm `--json` để lấy 
 |---|---|
 | `embra project create <slug>` / `list` | Tạo / liệt kê project |
 | `embra env create <project> <slug>` / `list <project>` | Tạo / liệt kê environment |
+| `embra env pause <project>/<env>` / `resume <project>/<env>` | Tạm dừng app (không xoá data, backup giữ nguyên) / chạy lại đúng release đang active, bật cả database nếu đang dừng |
 | `embra github connect` | Connect GitHub |
 | `embra source set` | Connect environment với repo + branch qua GitHub App đã cài |
 | `embra link <project>/<env>` / `embra unlink` | Gắn thư mục với một environment (ghi `.embra/link.json`, `embra up` cũng ghi) / gỡ |
@@ -60,6 +61,7 @@ Bỏ `--env` được khi thư mục (hoặc thư mục cha trong cùng repo) c�
 | `embra db create` | Dựng Postgres riêng cho environment |
 | `embra db url` | In connection string role runtime (chứa mật khẩu) |
 | `embra db verify` | Kiểm tra backup restore được |
+| `embra db stop` / `db start` | Dừng database (app phải đang tạm dừng; data và backup giữ nguyên) / bật lại; app vẫn dừng tới `embra env resume` |
 | `embra db restore-points` | Khoảng thời gian restore được (PITR) |
 | `embra db restore` | Restore về một mốc thời gian; chờ Owner hoặc Admin approve rồi mới chuyển |
 | `embra db import --env <project>/<env> <file>` | Import data từ file `pg_dump --data-only` (gzip được). Bảng đích phải trống; production chờ Owner hoặc Admin approve. Xem [Chuyển app có sẵn](/huong-dan/chuyen-app-co-san/) |
