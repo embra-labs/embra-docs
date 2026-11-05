@@ -64,7 +64,7 @@ Every environment with Postgres is backed up automatically; nothing to turn on.
 | Continuous | Every change is recorded (WAL) and pushed to the backup at least once a minute |
 | Full backups | Every 7 days; the 2 most recent are kept |
 | Restorable range | From the oldest full backup kept up to about 1–2 minutes ago. New database: starts at the first full backup. Database older than 2 weeks: 7 to 14 days long, depending on when the latest full backup ran |
-| Where | On the server, on a separate disk from the database. No off-server copies yet |
+| Where | On the server, on a separate disk from the database, plus a copy on Cloudfly object storage in Hanoi (synced about every minute) |
 | Restore tests | Every 7 days Embra rebuilds the database from the backup to make sure it works. The result shows under **Backup** in the status band at the top of the environment page |
 
 | Console shows | Meaning |
