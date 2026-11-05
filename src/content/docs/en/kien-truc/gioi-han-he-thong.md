@@ -1,6 +1,6 @@
 ---
 title: System limits
-description: Embra runs on one server, has no HA yet, and backups have no off-server copy. RPO, restore window, and what you should do yourself.
+description: Embra runs on one server, has no HA yet, and bucket files have no off-server copy. RPO, restore window, and what you should do yourself.
 sidebar:
   order: 3
 ---
@@ -11,7 +11,7 @@ What Embra does **not** do yet, written down so you can decide what you need on 
 
 | Item | Today |
 |---|---|
-| Servers | An environment's app, Postgres and backups are on the **same server** |
+| Servers | An environment's app, Postgres, bucket and backups are on the **same server**; Postgres backups also have an off-server copy |
 | HA / failover | None. If the server fails, the app is down until it is back |
 | Postgres replica | None. One Postgres per environment |
 | During a deploy | The new release starts and passes its health check before taking traffic; the old one serves meanwhile |
@@ -23,8 +23,8 @@ What Embra does **not** do yet, written down so you can decide what you need on 
 | RPO (data you can lose) | WAL is pushed to backup at least every minute: up to about the last 1–2 minutes of data |
 | Full backup | Every 7 days, last 2 kept |
 | Restore window | From the oldest kept full backup to about 1–2 minutes ago. A database running more than 2 weeks: 7 to 14 days |
-| Location | Same server, a separate disk from the database. **No copy outside the server yet** |
-| Whole server lost | Database and backups are lost together |
+| Location | Same server, a separate disk from the database, plus a copy on Cloudfly object storage in Hanoi (synced about every minute) |
+| Whole server lost | The database on the server is lost; the backup copy in Hanoi remains. Rebuilding on another server is done by hand by the Embra team, with no committed time. Bucket files are lost |
 | Test restore | Every 7 days, automatic. Result under **Backup** at the top of the environment |
 | Restore to before an applied migration | Not possible ([`MIGRATION_AFTER_RESTORE_POINT`](/en/loi/#migration_after_restore_point)) |
 

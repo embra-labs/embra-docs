@@ -64,7 +64,7 @@ Environment nào có Postgres cũng được backup tự động, không cần b
 | Liên tục | Mọi thay đổi được ghi lại (WAL), đẩy vào backup ít nhất mỗi phút |
 | Bản đầy đủ | Mỗi 7 ngày, giữ 2 bản gần nhất |
 | Khoảng restore được | Từ bản đầy đủ cũ nhất còn giữ tới khoảng 1–2 phút trước. Database mới tạo: tính từ bản đầy đủ đầu tiên. Database chạy hơn 2 tuần: dài 7 tới 14 ngày, tuỳ lúc bản đầy đủ mới nhất chạy |
-| Nơi lưu | Trên server, ổ đĩa riêng tách khỏi ổ chứa database. Chưa có bản copy ra ngoài server |
+| Nơi lưu | Trên server, ổ đĩa riêng tách khỏi ổ chứa database, và bản copy trên object storage của Cloudfly tại Hà Nội (sync khoảng mỗi phút) |
 | Restore thử | Mỗi 7 ngày Embra tự dựng lại database từ backup để chắc backup dùng được. Kết quả hiện ở mục **Backup** trong dải trạng thái đầu trang environment |
 
 | Console hiện | Nghĩa |

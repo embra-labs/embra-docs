@@ -37,7 +37,7 @@ Every environment with Postgres is backed up automatically; nothing to turn on.
 |---|---|
 | Continuous | WAL records every change, pushed to backup at least every minute |
 | Full backup | Every 7 days, the 2 latest kept. After each one, Embra test-restores it |
-| Location | On the server, on a separate disk from the database. **No copy outside the server yet** |
+| Location | On the server, on a separate disk from the database, plus a copy on Cloudfly object storage in Hanoi (synced about every minute) |
 | Restore | To a point in time, previewed first, then approved by an Owner or Admin. Not to a moment before a migration that has already run |
 
 Restore and export details: [Rollback and restoring backups](/en/huong-dan/rollback-va-khoi-phuc/#database-backups).
