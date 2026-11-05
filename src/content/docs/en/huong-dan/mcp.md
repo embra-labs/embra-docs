@@ -25,7 +25,7 @@ sidebar:
    | Codex | `codex mcp add embra -- embra mcp` | Not yet |
    | Cursor | `.cursor/mcp.json`: `{"mcpServers": {"embra": {"command": "embra", "args": ["mcp", "--root", "${workspaceFolder}"]}}}` | Not yet |
 
-4. Check: ask the agent to "call the embra_workspace tool". The result has `token_scope` set to `agent`.
+4. Check: ask the agent to "call the embra_workspace tool". The result has `token_scope` set to `agent` (or `viewer` with [read-only](#read-only-and-fewer-tools)).
 
 There is no remote MCP yet (a URL to paste into Claude.ai or ChatGPT). Only clients running on your machine work today.
 
@@ -56,6 +56,21 @@ What an `agent` token may do in detail: [Permissions](/en/workspace/phan-quyen/)
 - A production plan returns `approval_url`: the console link where you approve it.
 - Error results carry `docs_url`: a link to [Error codes and fixes](/en/loi/), the same link the CLI prints.
 
+## Read-only and fewer tools
+
+From CLI 0.1.3.
+
+| You want | Do |
+|---|---|
+| The agent only looks: logs, metrics, state, docs | `embra login --agent --read-only`. A `viewer` token (7 days) replaces the agent token in `config.agent.json`. `embra mcp` then has only the 15 read tools, and the server refuses every build, deploy, plan or fork even if the client calls one. Any role can approve it, Viewer included. |
+| Hide write tools but keep the agent token | `embra mcp --read-only`. Hides them in the client only; not a security boundary. |
+| Fewer tools | `embra mcp --toolsets deploy,diagnose`. Groups: `deploy`, `diagnose`, `plan`, `fork`, `docs`; the `read` group (workspace, projects, environments, operations, URL) is always on. A wrong name stops the server. |
+| One project | `embra mcp --project shop`. `environment_id` can be just `dev`; other projects are refused and `embra_projects` is hidden. Client-side pinning, not a security boundary. |
+
+`embra_workspace` returns `read_only` and `pinned_project` so the agent knows which mode it is in.
+
+Get write access back: run `embra login --agent` (without `--read-only`).
+
 ## Common errors
 
 When `embra mcp` does not start, the client reports a server error; the reason is in the client's MCP log.
@@ -64,6 +79,8 @@ When `embra mcp` does not start, the client reports a server error; the reason i
 |---|---|
 | ``thiếu token agent. Chạy `embra login --agent` …`` (no agent token) | Run `embra login --agent`. |
 | `token có quyền "…", không phải agent: …` (not an agent token) | `EMBRA_TOKEN` holds your own token. Remove it and run `embra login --agent`. |
+| `toolset "…" không có; chọn trong: …` (unknown toolset) | Fix the name in `--toolsets`. |
+| `--project "…": không có project này trong workspace` (no such project) | Fix the slug in `--project` (see `embra project list`). |
 | `API không chấp nhận token (HTTP 401). …` (token rejected) | The token expired or was revoked. Run `embra login --agent` again. |
 | The agent does not see `embra_deploy_directory` | The client started the server outside the project directory. Add `--root <project path>` to the args. |
 

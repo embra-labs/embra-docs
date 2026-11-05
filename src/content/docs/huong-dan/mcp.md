@@ -25,7 +25,7 @@ sidebar:
    | Codex | `codex mcp add embra -- embra mcp` | Chưa |
    | Cursor | `.cursor/mcp.json`: `{"mcpServers": {"embra": {"command": "embra", "args": ["mcp", "--root", "${workspaceFolder}"]}}}` | Chưa |
 
-4. Kiểm tra: bảo agent "gọi tool embra_workspace". Kết quả có `token_scope` là `agent`.
+4. Kiểm tra: bảo agent "gọi tool embra_workspace". Kết quả có `token_scope` là `agent` (hoặc `viewer` nếu dùng [chỉ đọc](#chỉ-đọc-và-giới-hạn-tool)).
 
 Chưa có MCP remote (URL dán vào Claude.ai hay ChatGPT). Hiện chỉ dùng được với client chạy trên máy bạn.
 
@@ -56,6 +56,21 @@ Quyền chi tiết của token `agent`: [Phân quyền](/workspace/phan-quyen/).
 - Plan production trả `approval_url`: link để bạn approve trên console.
 - Kết quả lỗi có `docs_url`: link tới [Mã lỗi và cách sửa](/loi/), cùng link CLI in ra.
 
+## Chỉ đọc và giới hạn tool
+
+Từ CLI 0.1.3.
+
+| Muốn | Làm |
+|---|---|
+| Agent chỉ xem: log, metrics, trạng thái, docs | `embra login --agent --read-only`. Token `viewer` (7 ngày) thay token agent trong `config.agent.json`. `embra mcp` chỉ có 15 tool đọc; server từ chối mọi build, deploy, plan, fork, kể cả khi client gọi. Duyệt được với mọi vai trò, kể cả Viewer. |
+| Ẩn tool ghi nhưng giữ token agent | `embra mcp --read-only`. Chỉ ẩn phía client, không phải lớp bảo vệ. |
+| Bớt tool | `embra mcp --toolsets deploy,diagnose`. Nhóm: `deploy`, `diagnose`, `plan`, `fork`, `docs`; nhóm `read` (workspace, project, environment, operation, URL) luôn bật. Tên sai thì server không khởi động. |
+| Một project | `embra mcp --project shop`. `environment_id` chỉ cần `dev`; project khác bị từ chối, `embra_projects` bị ẩn. Ghim phía client, không phải lớp bảo vệ. |
+
+`embra_workspace` trả `read_only` và `pinned_project` để agent biết mình đang ở chế độ nào.
+
+Lấy lại quyền ghi: chạy `embra login --agent` (không `--read-only`).
+
 ## Lỗi thường gặp
 
 `embra mcp` không khởi động thì client báo server lỗi; dòng lỗi nằm trong log MCP của client.
@@ -64,6 +79,8 @@ Quyền chi tiết của token `agent`: [Phân quyền](/workspace/phan-quyen/).
 |---|---|
 | ``thiếu token agent. Chạy `embra login --agent` …`` | Chạy `embra login --agent`. |
 | `token có quyền "…", không phải agent: …` | `EMBRA_TOKEN` đang chứa token của bạn. Bỏ biến đó, chạy `embra login --agent`. |
+| `toolset "…" không có; chọn trong: …` | Sửa tên trong `--toolsets`. |
+| `--project "…": không có project này trong workspace` | Sửa slug trong `--project` (xem `embra project list`). |
 | `API không chấp nhận token (HTTP 401). …` | Token hết hạn hoặc bị thu hồi. Chạy lại `embra login --agent`. |
 | Agent không thấy `embra_deploy_directory` | Thư mục client chạy server không phải thư mục dự án. Thêm `--root <đường dẫn dự án>` vào args. |
 
