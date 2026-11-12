@@ -1,5 +1,5 @@
 {
-	"source": "embra 5da9210 api/reasons.go",
+	"source": "embra 0b0cd9c api/reasons.go",
 	"reasons": [
 		{
 			"code": "OK",
@@ -553,6 +553,21 @@
 			"docs": {
 				"vi": "https://docs.embra.cloud/loi/#signup_closed",
 				"en": "https://docs.embra.cloud/en/loi/#signup_closed"
+			},
+			"next_step": {
+				"vi": "Không có, cố ý. Email hello@embra.cloud kèm `operation_id`",
+				"en": "None, on purpose. Email hello@embra.cloud with the `operation_id`"
+			}
+		},
+		{
+			"code": "WORKSPACE_DELETED",
+			"http": 403,
+			"retryable": false,
+			"next_action": "contact_operator",
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#workspace_deleted",
+				"en": "https://docs.embra.cloud/en/loi/#workspace_deleted"
 			},
 			"next_step": {
 				"vi": "Không có, cố ý. Email hello@embra.cloud kèm `operation_id`",
