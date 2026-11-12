@@ -1,5 +1,5 @@
 {
-	"source": "embra 0b0cd9c api/reasons.go",
+	"source": "embra a361069 api/reasons.go",
 	"reasons": [
 		{
 			"code": "OK",
@@ -572,6 +572,21 @@
 			"next_step": {
 				"vi": "Không có, cố ý. Email hello@embra.cloud kèm `operation_id`",
 				"en": "None, on purpose. Email hello@embra.cloud with the `operation_id`"
+			}
+		},
+		{
+			"code": "PLAN_REQUIRED",
+			"http": 403,
+			"retryable": false,
+			"next_action": "owner_review",
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#plan_required",
+				"en": "https://docs.embra.cloud/en/loi/#plan_required"
+			},
+			"next_step": {
+				"vi": "Owner hoặc Admin xem trên web",
+				"en": "Owner or Admin reviews on the web"
 			}
 		},
 		{
