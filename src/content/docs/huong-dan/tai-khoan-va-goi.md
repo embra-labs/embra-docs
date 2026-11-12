@@ -13,7 +13,7 @@ Vào console, bấm **"Đăng nhập bằng GitHub"**. Lần đầu login, Embra
 |---|---|
 | Tuổi account GitHub | Ít nhất **30 ngày**. Account mới hơn: gửi username GitHub tới hello@embra.cloud để được mở riêng |
 | Lượt dùng thử | Số lượt dùng thử mới mỗi ngày có giới hạn |
-| **"Đăng nhập bằng Google"** | Chỉ cho người được mời vào workspace có sẵn. Google không tạo workspace mới |
+| **"Đăng nhập bằng Google"** | Chỉ cho người được mời vào workspace có sẵn. Google không tạo workspace dùng thử |
 | Email GitHub đang có lời mời | Bạn vào thẳng workspace đó và **không** nhận gói dùng thử |
 
 Gặp **"Chưa vào được Embra"**? Có ba khả năng:
@@ -29,6 +29,7 @@ Cần giúp: email hello@embra.cloud.
 | Mục | Dùng thử |
 |---|---|
 | Thời hạn | 7 ngày |
+| Số lần | **Một lần mỗi account** |
 | App | 1 project, 1 environment (production) |
 | Postgres | 1 |
 | Domain riêng, preview theo PR, cron | Không có |
@@ -40,6 +41,14 @@ Hết hạn thì mọi thao tác bị chặn, kể cả xem. Sau đó **toàn b�
 
 Muốn giữ app thì **chọn gói và chuyển khoản trước khi hết hạn**. Embra gửi cảnh báo 24 giờ trước. Chỉ cần lấy data thì export ở **Cài đặt → Dữ liệu → Export** trước thời hạn.
 :::
+
+## Sau khi workspace bị xoá
+
+Mọi workspace của bạn đã bị xoá (bạn tự xoá, hoặc dùng thử hết hạn và bị dọn) thì lần login sau Embra mở một workspace **"Chưa có gói"**, bạn là Owner. Không có dùng thử lần hai.
+
+- Workspace "Chưa có gói" không tạo được project, environment hay fork: lỗi [`PLAN_REQUIRED`](/loi/#plan_required).
+- Chọn gói và chuyển khoản như bên dưới. Tiền về thì gói có hiệu lực, tạo project được ngay.
+- Data của workspace đã xoá không khôi phục được.
 
 ## Chọn gói và thanh toán
 

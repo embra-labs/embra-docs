@@ -13,7 +13,7 @@ Open the console and click **"Đăng nhập bằng GitHub"** (sign in with GitHu
 |---|---|
 | GitHub account age | At least **30 days**. Newer account: email your GitHub username to hello@embra.cloud to have it let in individually |
 | Trials | The number of new trials per day is limited |
-| **"Đăng nhập bằng Google"** (sign in with Google) | Only for people invited to an existing workspace. Google sign-in never creates a workspace |
+| **"Đăng nhập bằng Google"** (sign in with Google) | Only for people invited to an existing workspace. Google sign-in never creates a trial workspace |
 | GitHub email with a pending invite | You go straight into that workspace and do **not** get a trial |
 
 Seeing **"Chưa vào được Embra"** (you can't sign in yet)? Three possible reasons:
@@ -29,6 +29,7 @@ For help, email hello@embra.cloud.
 | Item | Trial |
 |---|---|
 | Length | 7 days |
+| How many | **Once per account** |
 | App | 1 project, 1 environment (production) |
 | Postgres | 1 |
 | Custom domains, PR previews, cron | Not included |
@@ -40,6 +41,14 @@ When the trial expires, every action is refused, including viewing. Then **the w
 
 To keep your app, **choose a plan and pay before the trial ends**. Embra warns you 24 hours before. If you only want your data, export it under **Cài đặt → Dữ liệu → Export** (settings, data, export) before the deadline.
 :::
+
+## After your workspace is deleted
+
+If every workspace you had is deleted (you deleted it, or the trial ended and was cleaned up), the next sign-in opens a workspace with **"Chưa có gói"** (no plan), with you as Owner. There is no second trial.
+
+- A workspace with no plan cannot create projects, environments or forks: error [`PLAN_REQUIRED`](/en/loi/#plan_required).
+- Choose a plan and pay as below. Once the money arrives the plan is active and you can create a project.
+- Data of a deleted workspace cannot be restored.
 
 ## Choosing a plan and paying
 
