@@ -36,7 +36,8 @@ Environment có Postgres được backup tự động, không cần bật.
 | Mục | Chi tiết |
 |---|---|
 | Liên tục | WAL ghi mọi thay đổi, đẩy vào backup ít nhất mỗi phút |
-| Bản đầy đủ | Mỗi 7 ngày, giữ 2 bản gần nhất. Sau mỗi bản, Embra tự restore thử |
+| Bản đầy đủ | Mỗi 7 ngày, giữ 2 bản gần nhất |
+| Restore thử | Gói trả phí mỗi ngày trên bản sao cách ly, có đo RTO; mỗi tuần từ bản copy ngoài server. Chi tiết ở [Backup của database](/huong-dan/rollback-va-khoi-phuc/#backup-của-database) |
 | Nơi lưu | Trên server, ổ đĩa riêng tách khỏi ổ chứa database, và bản copy trên object storage của Cloudfly tại Hà Nội (sync khoảng mỗi phút) |
 | Restore | Về một mốc thời gian, xem trước rồi Owner hoặc Admin approve. Không về được mốc trước một migration đã chạy |
 

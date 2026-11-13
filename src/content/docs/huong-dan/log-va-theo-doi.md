@@ -26,7 +26,7 @@ Dải đầu trang environment tóm tắt bằng một nhãn, kèm ba mục: **H
 |---|---|
 | **"Mọi thứ ổn"** | Health check đạt, bản mới nhất nhận toàn bộ traffic, backup đã restore thử thành công (nếu có database) |
 | **"Đang chạy"** | Health check đạt, nhưng còn mục chưa xác nhận, ví dụ backup chưa restore thử lần nào |
-| **"Cần bạn xem"** | Đang chuyển traffic sang bản mới, hoặc lần restore thử backup gần nhất fail |
+| **"Cần bạn xem"** | Đang chuyển traffic sang bản mới, lần restore thử backup gần nhất fail, hoặc kho backup thiếu dữ liệu |
 | **"Có sự cố"** | App không qua health check, thao tác gần nhất fail, hoặc environment bị chặn |
 | **"Chưa xác nhận"** | Chưa lấy được trạng thái mới, hoặc chưa có kết quả health check |
 | **"Chưa deploy"** | Environment chưa có bản deploy nào |

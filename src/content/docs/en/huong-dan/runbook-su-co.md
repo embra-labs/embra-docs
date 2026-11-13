@@ -77,11 +77,11 @@ Pick by what happened:
 | **Fix** | Click **"Liên hệ hỗ trợ"** (contact support). Say whether users are seeing errors |
 | **Verify** | As above |
 
-## Backup: "Restore thử thất bại" or "Restore thử thiếu dữ liệu"
+## Backup: "Restore thử thất bại", "Restore thử thiếu dữ liệu" or "Kho backup thiếu dữ liệu"
 
 | | |
 |---|---|
-| **Cause** | The database couldn't be rebuilt from the backup, or WAL is missing a segment ([`BACKUP_WAL_GAP`](/en/loi/#backup_wal_gap)) |
+| **Cause** | The database couldn't be rebuilt from the backup, WAL is missing a segment ([`BACKUP_WAL_GAP`](/en/loi/#backup_wal_gap)), or the backup or its offsite copy is missing files |
 | **Impact** | The app runs normally. The restore window may not be usable |
 | **Fix** | Email hello@embra.cloud. For important data, export now (**"Cài đặt"** → **"Dữ liệu"** → **"Export"**) |
 | **Verify** | **Backup** returns to **"Restore thử đạt"** (restore test passed) after the next restore test |

@@ -13,7 +13,7 @@ Embra is a hosting platform for Vietnam: connect a GitHub repo → Embra builds 
 |---|---|
 | Build + deploy from git | The GitHub App receives pushes, builds with Railpack or your Dockerfile in a microVM, produces an image pinned by digest, then makes a plan with an estimated price. Production deploys always need an Owner or Admin to approve |
 | Migrations behind a gate | Migrations are classified and rehearsed on a clone before they run for real. If the outcome is unclear, Embra stops and waits for a person instead of retrying |
-| Dedicated Postgres per environment | Continuous backup (WAL) + a full backup every 7 days on a separate disk, with an automatic test restore after each full backup. Copied off-server (object storage in Hanoi). Point-in-time restore (PITR) goes into a new database; an Owner or Admin approves before the switch |
+| Dedicated Postgres per environment | Continuous backup (WAL) + a full backup every 7 days on a separate disk. Paid plans get a test restore every day on an isolated copy, with the measured recovery time (RTO). Copied off-server (object storage in Hanoi). Point-in-time restore (PITR) goes into a new database; an Owner or Admin approves before the switch |
 | Other resources | Workers, cron, an object storage bucket, custom domains with automatic HTTPS, preview environments per PR, pause / resume, full export of the app and data |
 
 ## Concepts
