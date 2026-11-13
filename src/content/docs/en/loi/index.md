@@ -795,7 +795,7 @@ Like [`WORKSPACE_SUSPENDED`](#workspace_suspended), but for one environment. Its
 
 | HTTP | Auto retry | `next_action` | Exit code | Next step |
 |---|---|---|---|---|
-| 409 | Yes | `wait` | `75` | `embra wait <op_id>`, or wait and retry |
+| 503 | Yes | `wait` | `75` | `embra wait <op_id>`, or wait and retry |
 
 <!-- /reason-meta -->
 

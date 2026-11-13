@@ -795,7 +795,7 @@ Như [`WORKSPACE_SUSPENDED`](#workspace_suspended) nhưng chỉ một environmen
 
 | HTTP | Retry tự động | `next_action` | Exit code | Lệnh tiếp |
 |---|---|---|---|---|
-| 409 | Có | `wait` | `75` | `embra wait <op_id>`, hoặc chờ rồi thử lại |
+| 503 | Có | `wait` | `75` | `embra wait <op_id>`, hoặc chờ rồi thử lại |
 
 <!-- /reason-meta -->
 
