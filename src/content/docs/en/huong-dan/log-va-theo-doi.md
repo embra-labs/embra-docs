@@ -26,7 +26,7 @@ The band at the top of the environment page sums things up in one label, plus th
 |---|---|
 | **"Mọi thứ ổn"** (all good) | Health check passing, the latest version has all traffic, the backup passed a restore test (if there is a database) |
 | **"Đang chạy"** (running) | Health check passing, but something is not confirmed yet, for example the backup has never been restore-tested |
-| **"Cần bạn xem"** (needs a look) | Traffic is switching to a new version, or the latest backup restore test failed |
+| **"Cần bạn xem"** (needs a look) | Traffic is switching to a new version, the latest backup restore test failed, or the backup is missing data |
 | **"Có sự cố"** (problem) | The app is failing its health check, the latest operation failed, or the environment is blocked |
 | **"Chưa xác nhận"** (not confirmed) | Fresh status could not be read, or there is no health check result yet |
 | **"Chưa deploy"** (not deployed) | The environment has no deploy yet |

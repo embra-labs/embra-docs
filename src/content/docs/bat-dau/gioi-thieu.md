@@ -13,7 +13,7 @@ Embra là nền tảng hosting cho Việt Nam: connect repo GitHub → Embra bui
 |---|---|
 | Build + deploy từ git | GitHub App nhận push, build bằng Railpack hoặc Dockerfile trong microVM, ra image theo digest, rồi tạo plan kèm giá dự kiến. Deploy production luôn cần Owner hoặc Admin approve |
 | Migration có gate | Migration được phân loại và chạy thử trên bản clone trước khi chạy thật. Không rõ kết quả thì Embra dừng chờ người xử lý, không tự retry |
-| Postgres riêng mỗi environment | Backup liên tục (WAL) + full backup mỗi 7 ngày trên ổ riêng, tự restore thử sau mỗi full backup. Có bản copy ngoài server (object storage tại Hà Nội). Restore về một thời điểm (PITR) ra DB mới, Owner hoặc Admin approve rồi mới chuyển |
+| Postgres riêng mỗi environment | Backup liên tục (WAL) + full backup mỗi 7 ngày trên ổ riêng. Gói trả phí được restore thử mỗi ngày trên bản sao cách ly, có đo thời gian khôi phục (RTO). Có bản copy ngoài server (object storage tại Hà Nội). Restore về một thời điểm (PITR) ra DB mới, Owner hoặc Admin approve rồi mới chuyển |
 | Tài nguyên khác | Worker, cron, bucket object storage, domain riêng + HTTPS tự cấp, preview environment theo PR, tạm dừng / chạy lại, export toàn bộ app và data |
 
 ## Khái niệm

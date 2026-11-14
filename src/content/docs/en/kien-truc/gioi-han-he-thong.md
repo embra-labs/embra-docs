@@ -25,7 +25,8 @@ What Embra does **not** do yet, written down so you can decide what you need on 
 | Restore window | From the oldest kept full backup to about 1–2 minutes ago. A database running more than 2 weeks: 7 to 14 days |
 | Location | Same server, a separate disk from the database, plus a copy on Cloudfly object storage in Hanoi (synced about every minute) |
 | Whole server lost | The database on the server is lost; the backup copy in Hanoi remains. Rebuilding on another server is done by hand by the Embra team, with no committed time. Bucket files are lost |
-| Test restore | Every 7 days, automatic. Result under **Backup** at the top of the environment |
+| Test restore | Paid plans: every day on an isolated copy (with the measured RTO), every week from the offsite copy. Trial: every 7 and 30 days. Result under **Backup** at the top of the environment |
+| Backup checks | WAL has no gap: every hour. Files compared with the offsite copy: every day. Checksum of the whole backup: after each full backup |
 | Restore to before an applied migration | Not possible ([`MIGRATION_AFTER_RESTORE_POINT`](/en/loi/#migration_after_restore_point)) |
 
 Details and how to restore: [Rollback and restoring backups](/en/huong-dan/rollback-va-khoi-phuc/).

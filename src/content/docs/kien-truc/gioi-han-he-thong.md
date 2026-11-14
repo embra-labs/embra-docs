@@ -25,7 +25,8 @@ Những gì Embra **chưa** làm, ghi ra để bạn tự quyết cần thêm g�
 | Khoảng restore được | Từ full backup cũ nhất còn giữ tới khoảng 1–2 phút trước. Database chạy hơn 2 tuần: 7 tới 14 ngày |
 | Nơi lưu | Cùng server, ổ đĩa riêng tách khỏi ổ chứa database, và bản copy trên object storage của Cloudfly tại Hà Nội (sync khoảng mỗi phút) |
 | Mất cả server | Database trên server mất; bản copy backup ở Hà Nội vẫn còn. Dựng lại trên server khác do đội Embra làm tay, chưa có thời gian cam kết. File trong bucket mất |
-| Restore thử | Mỗi 7 ngày, tự động. Kết quả ở mục **Backup** đầu trang environment |
+| Restore thử | Gói trả phí: mỗi ngày trên bản sao cách ly (có đo RTO), mỗi tuần từ bản copy ngoài server. Gói dùng thử: 7 ngày và 30 ngày. Kết quả ở mục **Backup** đầu trang environment |
+| Kiểm backup | WAL liền mạch: mỗi giờ. So file với bản copy ngoài server: mỗi ngày. Checksum toàn bộ backup: sau mỗi bản đầy đủ |
 | Restore về trước một migration đã chạy | Không được ([`MIGRATION_AFTER_RESTORE_POINT`](/loi/#migration_after_restore_point)) |
 
 Chi tiết và cách restore: [Rollback và khôi phục backup](/huong-dan/rollback-va-khoi-phuc/).

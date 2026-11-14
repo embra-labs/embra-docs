@@ -77,11 +77,11 @@ Chọn cách theo việc đã xảy ra:
 | **Xử lý** | Bấm **"Liên hệ hỗ trợ"**. Ghi rõ app có đang lỗi với người dùng không |
 | **Kiểm lại** | Như trên |
 
-## Backup: "Restore thử thất bại" hoặc "Restore thử thiếu dữ liệu"
+## Backup: "Restore thử thất bại", "Restore thử thiếu dữ liệu" hoặc "Kho backup thiếu dữ liệu"
 
 | | |
 |---|---|
-| **Nguyên nhân** | Không dựng lại được database từ backup, hoặc WAL thiếu một đoạn ([`BACKUP_WAL_GAP`](/loi/#backup_wal_gap)) |
+| **Nguyên nhân** | Không dựng lại được database từ backup, WAL thiếu một đoạn ([`BACKUP_WAL_GAP`](/loi/#backup_wal_gap)), hoặc backup hay bản copy ngoài server thiếu file |
 | **Ảnh hưởng** | App vẫn chạy bình thường. Khoảng restore có thể không dùng được |
 | **Xử lý** | Email hello@embra.cloud. Data quan trọng thì export ngay (**"Cài đặt"** → **"Dữ liệu"** → **"Export"**) |
 | **Kiểm lại** | Mục **Backup** về **"Restore thử đạt"** sau lần restore thử kế tiếp |

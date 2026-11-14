@@ -65,7 +65,8 @@ Every environment with Postgres is backed up automatically; nothing to turn on.
 | Full backups | Every 7 days; the 2 most recent are kept |
 | Restorable range | From the oldest full backup kept up to about 1–2 minutes ago. New database: starts at the first full backup. Database older than 2 weeks: 7 to 14 days long, depending on when the latest full backup ran |
 | Where | On the server, on a separate disk from the database, plus a copy on Cloudfly object storage in Hanoi (synced about every minute) |
-| Restore tests | Every 7 days Embra rebuilds the database from the backup to make sure it works. The result shows under **Backup** in the status band at the top of the environment page |
+| Restore tests | Paid plans: **every day** Embra rebuilds the database on an isolated copy (snapshot + WAL), checks data integrity (databases up to 10 GiB) and measures the recovery time (RTO); **every week** it test-restores the offsite copy. Trial: every 7 and 30 days. The result shows under **Backup** in the status band at the top of the environment page |
+| Backup checks | Every hour Embra checks that the WAL in the backup has no gap, every day it compares the files with the offsite copy, and after each full backup it verifies the checksum of the whole backup |
 
 | Console shows | Meaning |
 |---|---|
@@ -73,6 +74,10 @@ Every environment with Postgres is backed up automatically; nothing to turn on.
 | **"Chưa restore thử"** (not restore-tested) | New database, first restore test not run yet |
 | **"Restore thử thiếu dữ liệu"** (restore test came up short) | The backup is missing a stretch ([`BACKUP_WAL_GAP`](/en/loi/#backup_wal_gap)) |
 | **"Restore thử thất bại"** (restore test failed) | The backup could not be rebuilt. Don't rely on the restore range; email hello@embra.cloud |
+| **"Dữ liệu có trang hỏng"** (damaged pages) | The restore test rebuilt the database, but the integrity check found damaged pages in the original database ([`BACKUP_DATA_CORRUPT`](/en/loi/#backup_data_corrupt)). Don't restore over it; email hello@embra.cloud |
+| **"Kho backup thiếu dữ liệu"** (backup missing data) | The latest restore test passed, but the backup is missing WAL, has damaged metadata, or the offsite copy is missing files, so some points in time cannot be restored yet. The Embra team has been alerted |
+
+Details: **Kiến trúc** (architecture) → click the database → **Kiểm khôi phục** (restore checks). It shows the latest restore test and its RTO, each backup check, the checks of the last 30 days, and **Kiểm ngay** (check now) for Owner, Admin and Developer.
 
 Backups pause while the database is stopped or the environment is blocked after an incident.
 
