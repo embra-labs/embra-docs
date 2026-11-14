@@ -1,5 +1,5 @@
 {
-	"source": "embra a361069 api/reasons.go",
+	"source": "embra c0e4652 api/reasons.go",
 	"reasons": [
 		{
 			"code": "OK",
@@ -740,6 +740,21 @@
 			}
 		},
 		{
+			"code": "BACKUP_DATA_CORRUPT",
+			"http": 200,
+			"retryable": false,
+			"next_action": "contact_operator",
+			"exit": 10,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#backup_data_corrupt",
+				"en": "https://docs.embra.cloud/en/loi/#backup_data_corrupt"
+			},
+			"next_step": {
+				"vi": "Không có, cố ý. Email hello@embra.cloud kèm `operation_id`",
+				"en": "None, on purpose. Email hello@embra.cloud with the `operation_id`"
+			}
+		},
+		{
 			"code": "SOURCE_ARCHIVE_INVALID",
 			"http": 400,
 			"retryable": false,
@@ -793,6 +808,21 @@
 			"docs": {
 				"vi": "https://docs.embra.cloud/loi/#temporarily_unavailable",
 				"en": "https://docs.embra.cloud/en/loi/#temporarily_unavailable"
+			},
+			"next_step": {
+				"vi": "`embra wait <op_id>`, hoặc chờ rồi thử lại",
+				"en": "`embra wait <op_id>`, or wait and retry"
+			}
+		},
+		{
+			"code": "CAPACITY_UNAVAILABLE",
+			"http": 503,
+			"retryable": true,
+			"next_action": "wait",
+			"exit": 75,
+			"docs": {
+				"vi": "https://docs.embra.cloud/loi/#capacity_unavailable",
+				"en": "https://docs.embra.cloud/en/loi/#capacity_unavailable"
 			},
 			"next_step": {
 				"vi": "`embra wait <op_id>`, hoặc chờ rồi thử lại",
