@@ -79,6 +79,31 @@ Environment nào có Postgres cũng được backup tự động, không cần b
 
 Chi tiết: **Kiến trúc** → bấm vào database → mục **Kiểm khôi phục**. Ở đó có lần restore thử gần nhất và RTO, kết quả từng lần kiểm backup, các lần kiểm 30 ngày qua, và nút **Kiểm ngay** (Owner, Admin, Developer).
 
+### Khoá backup offsite
+
+Gói trả phí: bản copy ở Cloudfly bị khoá bằng S3 Object Lock (chế độ COMPLIANCE). Trong thời gian khoá **không ai xoá được bản đó, kể cả Embra**, kể cả khi có key tài khoản Cloudfly hay quyền root trên server.
+
+| Mục | Chi tiết |
+|---|---|
+| Thời gian khoá | 3 tới 4 ngày, gia hạn liên tục: còn dưới 3 ngày thì Embra đẩy lên lại 4 ngày (kiểm mỗi 10 phút) |
+| Kiểm khoá | Mỗi giờ đọc khoá trực tiếp từ S3; mỗi ngày thử xoá một bản đã khoá, S3 phải từ chối |
+| Gói dùng thử | Không khoá |
+| Xoá environment | Bản ở Cloudfly hết khoá rồi tự xoá, theo thời hạn ở [chính sách bảo mật](https://embra.cloud/privacy/#xoa-env) |
+
+Dòng khoá trong mục **Kiểm khôi phục**:
+
+| Console hiện | Nghĩa |
+|---|---|
+| **"Backup offsite khoá tới &lt;ngày giờ&gt;, không ai xoá được trước lúc đó, kể cả Embra"** | Ngày lấy từ lần đọc khoá trên S3 gần nhất, không lấy từ sổ của Embra |
+| **"S3 từ chối lệnh xoá thử &lt;thời điểm&gt;"** | Lần thử xoá hằng ngày bị S3 chặn: khoá có hiệu lực |
+| **"Khoá backup offsite còn dưới 2 ngày"** | Gia hạn khoá không chạy. Đội Embra đã nhận cảnh báo |
+| **"Backup offsite bị khoá dài bất thường, đội Embra đang kiểm"** | Có khoá dài hơn mức Embra đặt, nghĩa là có người khác đặt khoá |
+| **"Lệnh xoá thử backup offsite không bị chặn, đội Embra đang kiểm"** | Lần thử xoá hằng ngày không bị S3 chặn |
+| **"Chưa đọc được khoá backup offsite"** | Lần đọc khoá gần nhất lỗi hoặc đã quá 3 giờ. Không có nghĩa là mất khoá |
+| **"Backup offsite chưa khoá (chỉ gói trả phí)"** | Database thuộc gói dùng thử |
+
+CLI: `embra db insurance --env <project>/<env>` in dòng `Khoá offsite: …`; `--json` có `offsite_lock_state` (`locked`, `short`, `tampered`, `unknown`, `not_covered`) và `offsite_locked_until` trong `repo`.
+
 Backup tạm ngừng khi database đang dừng hoặc environment bị chặn sau sự cố.
 
 ## Khôi phục database về một mốc thời gian
