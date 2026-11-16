@@ -79,6 +79,31 @@ Every environment with Postgres is backed up automatically; nothing to turn on.
 
 Details: **Kiến trúc** (architecture) → click the database → **Kiểm khôi phục** (restore checks). It shows the latest restore test and its RTO, each backup check, the checks of the last 30 days, and **Kiểm ngay** (check now) for Owner, Admin and Developer.
 
+### Offsite backup lock
+
+Paid plans: the copy on Cloudfly is locked with S3 Object Lock (COMPLIANCE mode). While it is locked **nobody can delete it, not even Embra**, not even with the Cloudfly account key or root on the server.
+
+| Item | Detail |
+|---|---|
+| Lock length | 3 to 4 days, extended continuously: when less than 3 days are left Embra moves it back to 4 days (checked every 10 minutes) |
+| Lock checks | Every hour Embra reads the lock directly from S3; every day it tries to delete a locked copy, and S3 must refuse |
+| Trial | Not locked |
+| Deleting an environment | The Cloudfly copy is deleted once its lock ends, within the limit in the [privacy policy](https://embra.cloud/privacy/#xoa-env) |
+
+The lock line under **Kiểm khôi phục** (restore checks):
+
+| Console shows | Meaning |
+|---|---|
+| **"Backup offsite khoá tới &lt;date&gt;, không ai xoá được trước lúc đó, kể cả Embra"** (locked until …, nobody can delete it before then, not even Embra) | The date comes from the latest lock read on S3, not from Embra's own records |
+| **"S3 từ chối lệnh xoá thử &lt;time&gt;"** (S3 refused a test delete) | The daily test delete was blocked by S3: the lock holds |
+| **"Khoá backup offsite còn dưới 2 ngày"** (lock has less than 2 days left) | Lock extension is not running. The Embra team has been alerted |
+| **"Backup offsite bị khoá dài bất thường, đội Embra đang kiểm"** (locked unusually long) | A lock is longer than the one Embra sets, so someone else set it |
+| **"Lệnh xoá thử backup offsite không bị chặn, đội Embra đang kiểm"** (test delete not blocked) | The daily test delete was not blocked by S3 |
+| **"Chưa đọc được khoá backup offsite"** (could not read the lock) | The latest lock read failed or is more than 3 hours old. It does not mean the lock is gone |
+| **"Backup offsite chưa khoá (chỉ gói trả phí)"** (not locked, paid plans only) | The database is on a trial |
+
+CLI: `embra db insurance --env <project>/<env>` prints a `Khoá offsite: …` line; `--json` has `offsite_lock_state` (`locked`, `short`, `tampered`, `unknown`, `not_covered`) and `offsite_locked_until` under `repo`.
+
 Backups pause while the database is stopped or the environment is blocked after an incident.
 
 ## Restoring the database to a point in time
